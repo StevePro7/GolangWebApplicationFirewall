@@ -1,3 +1,5 @@
 readme
 17/10/2021
 
+
+#cgo LDFLAGS: /usr/local/modsecurity/lib/libmodsecurity.so
