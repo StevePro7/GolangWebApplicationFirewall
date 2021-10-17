@@ -30,3 +30,7 @@ go run main.go
 DEBUGGING cgo
 https://stackoverflow.com/questions/45328414/how-can-i-debug-c-code-called-with-cgo
 https://gist.github.com/dwbuiten/c9865c4afb38f482702e
+
+
+Reference
+https://pkg.go.dev/cmd/cgo
