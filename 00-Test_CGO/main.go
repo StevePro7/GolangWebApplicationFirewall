@@ -1,12 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 // #include "hello.c"
 import "C"
 
 func main() {
-	fmt.Println("start")
+	fmt.Println("start!")
 
+	_, err := C.Hello()
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("-end-")
 }
