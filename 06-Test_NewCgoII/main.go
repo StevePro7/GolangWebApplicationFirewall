@@ -5,7 +5,11 @@ package main
 // #include "modsec.c"
 import "C"
 
-import "log"
+import (
+	"log"
+	"time"
+	"unsafe"
+)
 
 func InitModSec() {
 	log.Println("initModSec start")
@@ -15,8 +19,14 @@ func InitModSec() {
 
 func modsec(url string) int {
 	log.Println("modsec start ", url)
+	Curi := C.CString(url)
+	defer C.free(unsafe.Pointer(Curi))
+	start := time.Now()
+	inter := int(C.MyCProcess(Curi))
+	elapsed := time.Since(start)
+	log.Printf("modsec()=%i, elapsed: %s", inter, elapsed)
 	log.Println("modsec -end-")
-	return 1
+	return inter
 }
 
 func LimitMiddleware() {

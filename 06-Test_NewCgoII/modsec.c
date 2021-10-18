@@ -29,3 +29,10 @@ void MyCInit()
     printf("MyCInit -end-\n");
     return;
 }
+
+int MyCProcess(const char *uri)
+{
+    printf("MyCProcess start [%s]\n", uri);
+    printf("MyCProcess -end- [%s]\n", uri);
+    return 22;
+}
