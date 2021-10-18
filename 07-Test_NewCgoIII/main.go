@@ -126,7 +126,8 @@ func main() {
 	bind := ":3080"
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
-	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
+	//gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
+	gmux.HandleFunc("/test", TestFunc).Methods("GET")
 
 	admin := mux.NewRouter()
 	admin.HandleFunc("/admin", AdminFunc).Methods("GET")
