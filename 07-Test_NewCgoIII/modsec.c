@@ -34,26 +34,29 @@ void MyCInit()
 
 int MyCProcess(const char *uri)
 {
-    //printf("MyCProcess start [%s]\n", uri);
+    printf("MyCProcess start [%s]\n", uri);
 
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
-    msc_process_connection(transaction, "127.0.0.1", 80, "127.0.0.1", 80);
+    msc_process_connection(transaction, "127.0.0.1", 3081, "127.0.0.1", 3082);
     fprintf(stderr, "URI='%s'\n", uri);
 
     msc_process_uri(transaction, uri, "CONNECT", "1.1");
     msc_process_request_headers(transaction);
     msc_process_request_body(transaction);
+    //msc_process_response_headers(transaction);
+    //emsc_process_response_body(transaction);
 
     ModSecurityIntervention intervention;
     intervention.status = 200;
     intervention.url = NULL;
     intervention.log = NULL;
     intervention.disruptive = 0;
+    printf("intervention vals not set...\n");
 
     int inter = msc_intervention(transaction, &intervention);
-    fprintf(stderr, "intervention=%i\n", inter);
+    fprintf(stderr, "intervention=%d\n", inter);
 
- //   printf("MyCProcess -end-...!!! [%s]\n", uri);
+    printf("MyCProcess -end-...!!! [%s]\n", uri);
     return inter;
 }

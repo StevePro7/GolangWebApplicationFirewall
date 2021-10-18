@@ -61,6 +61,7 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 		req.Host = req.URL.Host
 		req.URL.Path = urlx.Path
 	}
+	log.Print("Serving request")
 	proxy.ServeHTTP(w, r)
 }
 
