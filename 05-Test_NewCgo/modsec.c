@@ -2,6 +2,6 @@
 
 void MyCInit()
 {
-    printf("MyCInit start\n");
-    printf("MyCInit -end-\n");
+    printf("MyCInit start!\n");
+    printf("MyCInit -end-!\n");
 }
