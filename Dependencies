@@ -1,0 +1,28 @@
+dependencies
+18/10/2021
+
+
+sudo apt-get install -y apt-utils
+sudo apt-get install -y autoconf
+sudo apt-get install -y automake
+sudo apt-get install -y build-essential
+sudo apt-get install -y git
+sudo apt-get install -y libcurl4-openssl-dev
+sudo apt-get install -y libgeoip-dev
+sudo apt-get install -y liblmdb-dev
+sudo apt-get install -y libpcre++-dev
+sudo apt-get install -y libtool
+sudo apt-get install -y libxml2-dev
+sudo apt-get install -y libyajl-dev
+sudo apt-get install -y pkgconf wget
+sudo apt-get install -y zlib1g-dev
+
+
+
+Installed
+sudo apt-get install -y libcurl4-openssl-dev
+sudo apt-get install -y liblmdb-dev
+sudo apt-get install -y pkgconf wget
+
+sudo apt-get update
+sudo apt -f install
