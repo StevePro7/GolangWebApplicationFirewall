@@ -57,12 +57,31 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	proxy.ServeHTTP(w, r)
 }
 
+func limitMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf("req.URL %s", r.URL)
+		var inter int
+		inter = 0
+		//if r.RequestURI == "/test/artists.php" {
+		//	inter = 1
+		//}
+
+		if inter > 0 {
+			log.Printf("==== Mod Security Blocked! ====")
+			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+			return
+		}
+
+		next.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	log.Println("testing")
 	bind := ":3080"
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
-	gmux.HandleFunc("/test", TestFunc).Methods("GET")
+	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
 
 	admin := mux.NewRouter()
 	admin.HandleFunc("/admin", AdminFunc).Methods("GET")
@@ -73,7 +92,7 @@ func main() {
 	}()
 
 	log.Printf("starting smart reverse proxy on [%s]", bind)
-	if err := http.ListenAndServe(bind, gmux); err != nil {
+	if err := http.ListenAndServe(bind, limitMiddleware(gmux)); err != nil {
 		log.Fatalf("unable to start web server: %s", err.Error())
 	}
 }
