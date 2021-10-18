@@ -16,5 +16,5 @@ func InitModSec() {
 func main() {
 	log.Println("start")
 	InitModSec()
-	log.Println("-end-!")
+	log.Println("-end-")
 }

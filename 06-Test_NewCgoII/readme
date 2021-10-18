@@ -16,10 +16,69 @@ go build main.go
 go run main.go
 
 
+Terminal
 export LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
+go clean -cache
 go run main.go
+
+Edit configurations
+once start to integrate CGO code with ModSecurity you MUST set the following export via Environment
+export LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
+
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
 
 
 IMPORTANT
 when change C code must change main.go to ensure that C changes are detected
 otherwise they seem to be cached!!
+
+Seems best to force failure i.e. rename C function so compilation error
+then aligh C function name change so update detected and re-built!
+
+
+However, if this does not work then try this at terminal
+go clean -cache
+
+Reference:
+https://github.com/golang/go/issues/25419
+
+
+Simple example using C
+https://github.com/SpiderLabs/ModSecurity
+
+the code used in the article
+https://medium.com/lightbaseio/web-application-firewall-in-go-feat-owasp-modsecurity-core-rule-set-3f97a26e3311
+
+is reminiscent of the SpiderLabs example in the readme
+
+
+#include "modsecurity/modsecurity.h"
+#include "modsecurity/transaction.h"
+
+
+char main_rule_uri[] = "basic_rules.conf";
+
+int main (int argc, char **argv)
+{
+    ModSecurity *modsec = NULL;
+    Transaction *transaction = NULL;
+    Rules *rules = NULL;
+
+    modsec = msc_init();
+
+    rules = msc_create_rules_set();
+    msc_rules_add_file(rules, main_rule_uri);
+
+    transaction = msc_new_transaction(modsec, rules);
+
+    msc_process_connection(transaction, "127.0.0.1");
+    msc_process_uri(transaction, "http://www.modsecurity.org/test?key1=value1&key2=value2&key3=value3&test=args&test=test");
+    msc_process_request_headers(transaction);
+    msc_process_request_body(transaction);
+    msc_process_response_headers(transaction);
+    msc_process_response_body(transaction);
+
+    return 0;
+}
