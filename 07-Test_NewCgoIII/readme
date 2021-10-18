@@ -18,3 +18,8 @@ Package =>  File
 Edit configurations | Environment | click "+"
 Name    LD_LIBRARY_PATH
 Value   /usr/local/modsecurity/lib/
+
+
+Now begin to integrate code from project "04"
+go get "github.com/gorilla/mux"
+go mod tidy
