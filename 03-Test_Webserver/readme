@@ -1,0 +1,30 @@
+readme
+18/10/2021
+
+
+Outline
+install dependencies
+already have ModSecurity installed 
+
+
+/usr/local/modsecurity/include
+/usr/local/modsecurity/lib
+
+
+
+Install configuration
+curl -O https://raw.githubusercontent.com/lsgroup/SmartReverseProxy/master/modsecdefault.conf
+curl https://raw.githubusercontent.com/coreruleset/coreruleset/v3.3/dev/crs-setup.conf.example > crs-setup.conf
+curl -O https://raw.githubusercontent.com/coreruleset/coreruleset/v3.3/dev/rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+
+
+Basic web server
+Terminal #1
+go build main.go
+go run   main.go
+
+Terminal #2
+curl http://localhost:3080
+
+If port 3080 already in use
+sudo fuser -k 3080/tcp
