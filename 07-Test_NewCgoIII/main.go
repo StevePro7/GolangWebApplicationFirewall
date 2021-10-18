@@ -77,7 +77,7 @@ func modsec(url string) int {
 	start := time.Now()
 	inter := int(C.MyCProcess(Curi))
 	elapsed := time.Since(start)
-	log.Printf("modsec()=%i, elapsed: %s", inter, elapsed)
+	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
 	//log.Println("modsec -end-")
 	return inter
 }
