@@ -1,6 +1,10 @@
 readme
 18/10/2021
 
+TWO options during development:
+01. place all go code in main.go and switch build config from package to file
+02. place code in multiple go files but launch from Terminal as go run *.go
+
 Edit configurations
 BEFORE
 Run kind        Package
