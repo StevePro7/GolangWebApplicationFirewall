@@ -32,8 +32,8 @@ func modsec(url string) int {
 func LimitMiddleware() {
 	//log.Println("LimitMiddleware start")
 	var url string
-	url = "http://localhost:3080/test/artists.php"
-	//url = "http://http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
+	//url = "http://localhost:3080/test/artists.php"
+	url = "http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
 
 	inter := modsec(url)
 	log.Println("Intervention??:", inter)
