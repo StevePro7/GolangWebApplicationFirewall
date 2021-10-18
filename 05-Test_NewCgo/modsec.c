@@ -1,8 +1,7 @@
-// modsec.c
 #include <stdio.h>
 
-void MyInit()
+void MyCInit()
 {
-    printf("MyInit start\n");
-    printf("MyInit -end-\n");
+    printf("MyCInit start\n");
+    printf("MyCInit -end-\n");
 }

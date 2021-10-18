@@ -9,7 +9,7 @@ import "C"
 
 func initModSec() {
 	log.Println("initModSec start")
-	C.MyInit()
+	C.MyCInit()
 	log.Println("initModSec -end-")
 }
 
