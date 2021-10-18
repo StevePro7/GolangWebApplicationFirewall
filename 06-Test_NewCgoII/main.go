@@ -18,14 +18,14 @@ func InitModSec() {
 }
 
 func modsec(url string) int {
-	log.Println("modsec start ", url)
+	//log.Println("modsec start ", url)
 	Curi := C.CString(url)
 	defer C.free(unsafe.Pointer(Curi))
 	start := time.Now()
 	inter := int(C.MyCProcess(Curi))
 	elapsed := time.Since(start)
 	log.Printf("modsec()=%i, elapsed: %s", inter, elapsed)
-	log.Println("modsec -end-")
+	//log.Println("modsec -end-")
 	return inter
 }
 

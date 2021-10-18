@@ -34,7 +34,7 @@ void MyCInit()
 
 int MyCProcess(const char *uri)
 {
-    printf("MyCProcess start [%s]\n", uri);
+    //printf("MyCProcess start [%s]\n", uri);
 
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
@@ -54,6 +54,6 @@ int MyCProcess(const char *uri)
     int inter = msc_intervention(transaction, &intervention);
     fprintf(stderr, "intervention=%i\n", inter);
 
-    printf("MyCProcess -end-...!!! [%s]\n", uri);
+ //   printf("MyCProcess -end-...!!! [%s]\n", uri);
     return inter;
 }
