@@ -141,7 +141,7 @@ func main() {
 	log.Printf("initialize mod sec")
 	InitModSec()
 
-	log.Printf("listening!")
+	log.Printf("listening!!")
 	if err := http.ListenAndServe(bind, LimitMiddleware(gmux)); err != nil {
 		log.Fatalf("unable to start web server: %s", err.Error())
 	}
