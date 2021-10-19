@@ -48,6 +48,7 @@ int MyCProcess(char *uri, char *body)
     intervention.disruptive = 0;
     int inter = msc_intervention(transaction, &intervention);
     fprintf(stderr, "intervention=%i\n", inter);
+    fprintf(stderr, "inter status=%i\n", intervention.status);
     return inter;
 }
 
