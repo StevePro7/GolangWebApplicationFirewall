@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -71,12 +72,14 @@ func InitModSec() {
 	//log.Println("initModSec -end-")
 }
 
-func modsec(url string) int {
+func modsec(url string, buf string) int {
 	//log.Println("modsec start ", url)
 	Curi := C.CString(url)
+	Cbuf := C.CString(buf)
 	defer C.free(unsafe.Pointer(Curi))
+	defer C.free(unsafe.Pointer(Cbuf))
 	start := time.Now()
-	inter := int(C.MyCProcess(Curi))
+	inter := int(C.MyCProcess(Curi, Cbuf))
 	elapsed := time.Since(start)
 	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
 	//log.Println("modsec -end-")
@@ -86,9 +89,17 @@ func modsec(url string) int {
 func LimitMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("req.URL : \"%s\"", r.URL)
+		log.Printf("Methods : \"%s\"", r.Method)
 
 		urlx := r.URL.String()
-		inter := modsec(urlx)
+		bodyBytes, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		bodyString := string(bodyBytes)
+		log.Println("body = '" + bodyString + "'..!")
+
+		inter := modsec(urlx, bodyString)
 		//var inter int
 		//inter = 0
 		//if r.RequestURI == "/test/artists.php" {
@@ -127,7 +138,7 @@ func main() {
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
 	//gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
-	gmux.HandleFunc("/test", TestFunc).Methods("GET")
+	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
 
 	admin := mux.NewRouter()
 	admin.HandleFunc("/admin", AdminFunc).Methods("GET")
@@ -142,7 +153,7 @@ func main() {
 	log.Printf("initialize mod sec")
 	InitModSec()
 
-	log.Printf("listening!!")
+	log.Printf("listening [deny] ??")
 	if err := http.ListenAndServe(bind, LimitMiddleware(gmux)); err != nil {
 		log.Fatalf("unable to start web server: %s", err.Error())
 	}
