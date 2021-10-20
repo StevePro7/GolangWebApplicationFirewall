@@ -14,12 +14,9 @@ curl "http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%
 
 
 02. docker
-Add Dockerfile via VS Code
-right click Dockerfile | Build image
-docker build --pull --rm -f "Dockerfile" -t 10testapi:latest "."
+docker build -t stevepro/mytestapi:2.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
 
-right click "10testapi" image | Run interactve
-docker run --rm -it  -p 3080:3080/tcp 10testapi:latest
 
 right click "10testapi:latest" container | View logs
 curl http://localhost:3080
