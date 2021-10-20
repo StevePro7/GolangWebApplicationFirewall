@@ -13,15 +13,23 @@ curl http://localhost:3080/test/artists.php
 curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 
+CGO_ENABLED=1 error
+The command '/bin/sh -c CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o /test/app/awesome -v ./...' returned a non-zero code: 2
+
+
+Update Dockerfile
+#RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o /test/app/awesome -v ./...
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /test/app/awesome -v ./...
+
+Do I need gcc
+apt-get install -y apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2-dev libyajl-dev pkgconf wget zlib1g-dev
+
+
+
+
 02. docker
-first attempt to simply copy the files
-docker build -t stevepro/mytestapi:2.0 .
-docker run --rm -it  stevepro/mytestapi:2.0
-
-
-second attempt
-docker build -t stevepro/mytestapi:2.0 .
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
+docker build -t stevepro/mytestapi:3.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:3.0
 
 
 03. kubernetes

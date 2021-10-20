@@ -9,11 +9,11 @@ import (
 )
 
 func HomeFunc(w http.ResponseWriter, r *http.Request) {
-	log.Println("API Home -start")
-	log.Println("API url:", r.URL)
+	log.Println("xAPI Home -start")
+	log.Println("xAPI url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "API Home function"
+	data := "xAPI Home function"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
@@ -21,15 +21,15 @@ func HomeFunc(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 	}
-	log.Println("API Home --end-")
+	log.Println("xAPI Home --end-")
 }
 
 func TestFunc(w http.ResponseWriter, r *http.Request) {
-	log.Println("API Test -start")
-	log.Println("API url:", r.URL)
+	log.Println("xAPI Test -start")
+	log.Println("xAPI url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "API Test function"
+	data := "xAPI Test function"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
@@ -37,15 +37,15 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 	}
-	log.Println("API Test --end-")
+	log.Println("xAPI Test --end-")
 }
 
 func main() {
-	log.Println("API start [3.0]")
+	log.Println("xAPI start [3.0]")
 	bind := ":3080"
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
 	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
-	log.Printf("API listen on [%s]\n", bind)
+	log.Printf("xAPI listen on [%s]\n", bind)
 	log.Fatal(http.ListenAndServe(bind, gmux))
 }
