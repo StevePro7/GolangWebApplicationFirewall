@@ -1,0 +1,7 @@
+API
+20/10/2021
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
