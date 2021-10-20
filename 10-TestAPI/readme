@@ -10,6 +10,7 @@ go get "github.com/gorilla/mux"
 go run main.go
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
+curl "http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 
 02. docker
@@ -51,3 +52,4 @@ http://192.168.49.2:31828
 
 curl http://192.168.49.2:31828/
 curl http://192.168.49.2:31828/test/artists.php
+curl http://192.168.49.2:31828/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user

@@ -8,8 +8,9 @@ import (
 	"net/http"
 )
 
-func HomeFunc(w http.ResponseWriter, _ *http.Request) {
+func HomeFunc(w http.ResponseWriter, r *http.Request) {
 	log.Println("API Home -start")
+	log.Println("API url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	data := "API Home function"
@@ -23,8 +24,9 @@ func HomeFunc(w http.ResponseWriter, _ *http.Request) {
 	log.Println("API Home --end-")
 }
 
-func TestFunc(w http.ResponseWriter, _ *http.Request) {
+func TestFunc(w http.ResponseWriter, r *http.Request) {
 	log.Println("API Test -start")
+	log.Println("API url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	data := "API Test function"
