@@ -19,6 +19,10 @@ docker build -t stevepro/mytestapi:2.0 .
 docker run --rm -it  stevepro/mytestapi:2.0
 
 
+second attempt
+docker build -t stevepro/mytestapi:2.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
+
 
 
 docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
