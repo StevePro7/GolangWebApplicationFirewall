@@ -25,9 +25,6 @@ docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
 
 
 
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:2.0
-
-
 right click "10testapi:latest" container | View logs
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
