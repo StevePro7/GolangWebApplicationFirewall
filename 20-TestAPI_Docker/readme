@@ -1,0 +1,55 @@
+API
+20/10/2021
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
+
+01. locally
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl "http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+02. docker
+Add Dockerfile via VS Code
+right click Dockerfile | Build image
+docker build --pull --rm -f "Dockerfile" -t 10testapi:latest "."
+
+right click "10testapi" image | Run interactve
+docker run --rm -it  -p 3080:3080/tcp 10testapi:latest
+
+right click "10testapi:latest" container | View logs
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+
+
+03. kubernetes
+clean up docker outside Minikube from above
+navigate to Terminal that is running Minikube
+run the following if not already running
+
+cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/10-TestAPI
+> minikube docker-env
+export DOCKER_TLS_VERIFY=1"
+export DOCKER_HOST=tcp://172.17.0.2:2376"
+export DOCKER_CERT_PATH=/home/user/.minikube/certs
+export MINIKUBE_ACTIVE_DOCKERD=minikube
+# To point your shell to minikubes docker-daemon, run:
+# eval $(minikube -p minikube docker-env)
+
+eval $(minikube -p minikube docker-env)
+docker build -t stevepro/mytestapi:1.0 .
+
+kubectl apply -f k8s-deployment.yml
+kubectl apply -f k8s-service.yml
+
+minikube service mytestapi-service --url
+e.g.
+http://192.168.49.2:31828
+
+curl http://192.168.49.2:31828/
+curl http://192.168.49.2:31828/test/artists.php
+curl http://192.168.49.2:31828/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
