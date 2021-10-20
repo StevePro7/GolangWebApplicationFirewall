@@ -6,6 +6,26 @@ go mod init waftesting
 touch main.go
 go get "github.com/gorilla/mux"
 
+01. locally
 go run main.go
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
+
+
+02. docker
+Add Dockerfile via VS Code
+right click Dockerfile | Build image
+docker build --pull --rm -f "Dockerfile" -t 10testapi:latest "."
+
+right click "10testapi" image | Run interactve
+docker run --rm -it  -p 3080:3080/tcp 10testapi:latest
+
+right click "10testapi:latest" container | View logs
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+
+
+03. kubernetes
+clean up docker outside Minikube from above
+navigate to Terminal that is running Minikube
+run the following if not already running
