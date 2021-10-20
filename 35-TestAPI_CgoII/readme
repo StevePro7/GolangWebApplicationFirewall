@@ -1,0 +1,65 @@
+API
+20/10/2021
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
+
+01. locally
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+CGO_ENABLED=1 error
+The command '/bin/sh -c CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o /test/app/awesome -v ./...' returned a non-zero code: 2
+
+
+Update Dockerfile
+#RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o /test/app/awesome -v ./...
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o /test/app/awesome -v ./...
+
+Do I need gcc
+apt-get install -y apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2-dev libyajl-dev pkgconf wget zlib1g-dev
+
+
+
+
+02. docker
+docker build -t stevepro/mytestapi:3.1 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:3.1
+
+
+03. kubernetes
+clean up docker outside Minikube from above
+navigate to Terminal that is running Minikube
+run the following if not already running
+
+cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/30-TestAPI
+> minikube docker-env
+
+eval $(minikube -p minikube docker-env)
+
+IMPORTANT
+ensure that the following returns empty!
+docker ps | grep steve
+
+~/GitHub/StevePro7/GolangWebApplicationFirewall/30-TestAPI_CGO
+docker build -t stevepro/mytestapi:3.1 .
+
+kubectl apply -f k8s-deployment.yml
+kubectl apply -f k8s-service.yml
+
+minikube service mytestapi-service --url
+e.g.
+http://192.168.49.2:32534
+
+curl http://192.168.49.2:32534/
+curl http://192.168.49.2:32534/test/artists.php
+curl http://192.168.49.2:32534/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+kubectl delete -f k8s-service.yml
+kubectl delete -f k8s-deployment.yml
