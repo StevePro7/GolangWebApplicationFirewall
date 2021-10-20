@@ -5,3 +5,7 @@ cd 10-TestAPI/
 go mod init waftesting
 touch main.go
 go get "github.com/gorilla/mux"
+
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
