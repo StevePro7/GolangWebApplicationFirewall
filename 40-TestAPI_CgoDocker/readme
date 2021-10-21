@@ -34,3 +34,8 @@ https://stackoverflow.com/questions/64413161/undefined-references-golang-cgo-bui
 
 quote
 to get more feature and reolsve missing CGO dependencies use non-alpine version of GO
+
+
+IMPORTANT
+in the end I used project calico go-build Dockerfile as reference to get this working
+https://github.com/projectcalico/go-build/blob/master/Dockerfile.amd64
