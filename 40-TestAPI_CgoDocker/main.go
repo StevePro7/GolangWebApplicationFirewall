@@ -1,6 +1,10 @@
 package main
 
+// #cgo CPPFLAGS: -I/usr/local/modsecurity/include
+// #cgo LDFLAGS: /usr/local/modsecurity/lib/libmodsecurity.so
+// #include "modsec.c"
 import "C"
+
 import (
 	"encoding/json"
 	"fmt"
@@ -9,12 +13,12 @@ import (
 	"net/http"
 )
 
-//func InitModSec() {
-//	log.Println("cAPI initModSec start")
-//	age := int(C.MyCInit())
-//	log.Println("cAPI AGE :", age)
-//	log.Println("cAPI initModSec -end-")
-//}
+func InitModSec() {
+	log.Println("cAPI initModSec start")
+	age := int(C.MyCInit())
+	log.Println("cAPI AGE :", age)
+	log.Println("cAPI initModSec -end-")
+}
 
 func HomeFunc(w http.ResponseWriter, r *http.Request) {
 	log.Println("eAPI Home -start")
@@ -51,7 +55,7 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 func main() {
 	log.Println("eAPI start [3.0]")
 	bind := ":3080"
-	//	InitModSec()
+	InitModSec()
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
 	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
