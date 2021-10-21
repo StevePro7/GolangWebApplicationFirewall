@@ -55,5 +55,5 @@ curl http://192.168.49.2:31828/test/artists.php?artist=0+div+1+union%23foo*%2F*b
 
 
 Cleanup
-kubectl apply -f k8s-service.yml
-kubectl apply -f k8s-deployment.yml
+kubectl delete -f k8s-service.yml
+kubectl delete -f k8s-deployment.yml
