@@ -39,3 +39,13 @@ to get more feature and reolsve missing CGO dependencies use non-alpine version 
 IMPORTANT
 in the end I used project calico go-build Dockerfile as reference to get this working
 https://github.com/projectcalico/go-build/blob/master/Dockerfile.amd64
+
+
+02. docker
+docker build -t stevepro/mytestapi:4.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:4.0
+
+
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
