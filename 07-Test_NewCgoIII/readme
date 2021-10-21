@@ -23,3 +23,14 @@ Value   /usr/local/modsecurity/lib/
 Now begin to integrate code from project "04"
 go get "github.com/gorilla/mux"
 go mod tidy
+
+
+RUN
+curl http://localhost:3080/
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+OR launch browser
+http://localhost:3080/
+http://localhost:3080/test/artists.php
+http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
