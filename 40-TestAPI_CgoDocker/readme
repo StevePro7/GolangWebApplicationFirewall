@@ -1,0 +1,29 @@
+API
+20/10/2021
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
+
+
+// #cgo CPPFLAGS: -I/usr/local/modsecurity/include
+// #cgo LDFLAGS: /usr/local/modsecurity/lib/libmodsecurity.so
+// #include "modsec.c"
+import "C"
+
+
+func InitModSec() {
+	log.Println("cAPI initModSec start")
+	age := int(C.MyCInit())
+	log.Println("cAPI AGE :", age)
+	log.Println("cAPI initModSec -end-")
+}
+
+
+
+01. locally
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
