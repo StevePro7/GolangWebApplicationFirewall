@@ -26,34 +26,3 @@ go run main.go
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
 curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
-
-
-02. minikube
-set up for minikube first
-
-cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/45-*
-minikube docker-env
-eval $(minikube -p minikube docker-env)
-
-
-02. docker
-docker images | grep steve
-docker build -t stevepro/mytestapi:4.5 .
-
-
-03. kubernetes
-kubectl apply -f k8s-deployment.yml
-kubectl apply -f k8s-service.yml
-
-minikube service mytestapi-service --url
-e.g.
-http://192.168.49.2:30405
-
-curl http://192.168.49.2:30405/
-curl http://192.168.49.2:30405/test/artists.php
-curl http://192.168.49.2:30405/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
-
-
-Cleanup
-kubectl delete -f k8s-service.yml
-kubectl delete -f k8s-deployment.yml
