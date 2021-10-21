@@ -1,7 +1,5 @@
 package main
 
-// #cgo CPPFLAGS: -I/usr/local/modsecurity/include
-// #cgo LDFLAGS: /usr/local/modsecurity/lib/libmodsecurity.so
 // #include "modsec.c"
 import "C"
 
@@ -21,11 +19,11 @@ func InitModSec() {
 }
 
 func HomeFunc(w http.ResponseWriter, r *http.Request) {
-	log.Println("eAPI Home -start")
-	log.Println("eAPI url:", r.URL)
+	log.Println("fAPI Home -start")
+	log.Println("fAPI url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "eAPI Home function"
+	data := "fAPI Home function"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
@@ -33,15 +31,15 @@ func HomeFunc(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 	}
-	log.Println("eAPI Home --end-")
+	log.Println("fAPI Home --end-")
 }
 
 func TestFunc(w http.ResponseWriter, r *http.Request) {
-	log.Println("eAPI Test -start")
-	log.Println("eAPI url:", r.URL)
+	log.Println("fAPI Test -start")
+	log.Println("fAPI url:", r.URL)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "eAPI Test function"
+	data := "fAPI Test function"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
@@ -49,16 +47,16 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 			log.Fatalln(err)
 		}
 	}
-	log.Println("eAPI Test --end-")
+	log.Println("fAPI Test --end-")
 }
 
 func main() {
-	log.Println("eAPI start [3.0]")
+	log.Println("fAPI start [3.0]")
 	bind := ":3080"
 	InitModSec()
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
 	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
-	log.Printf("eAPI listen on [%s]\n", bind)
+	log.Printf("fAPI listen on [%s]\n", bind)
 	log.Fatal(http.ListenAndServe(bind, gmux))
 }
