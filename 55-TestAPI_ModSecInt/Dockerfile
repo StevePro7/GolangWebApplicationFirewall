@@ -37,6 +37,6 @@ RUN /test/app/bootstrap.sh
 ENV LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
 
 
-#RUN go build main.go
-#ENTRYPOINT /test/app/main
-#EXPOSE 3080
+RUN go build main.go
+ENTRYPOINT /test/app/main
+EXPOSE 3080
