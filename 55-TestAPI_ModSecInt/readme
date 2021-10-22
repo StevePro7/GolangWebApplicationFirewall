@@ -1,0 +1,33 @@
+API
+21/10/2021
+
+Docker example with CGO
+https://github.com/projectcalico/go-build
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
+
+
+00. Goland
+GoLand
+Edit configurations
+Package =>  File
+
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
+
+
+01. locally
+F5 or
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+02. docker
+must replicate the actions from ModSecurity envoy proto
+that is to git clone the modsec code and make, build and install in container
