@@ -1,8 +1,5 @@
 API
-21/10/2021
-
-Docker example with CGO
-https://github.com/projectcalico/go-build
+22/10/2021
 
 cd 10-TestAPI/
 go mod init waftesting

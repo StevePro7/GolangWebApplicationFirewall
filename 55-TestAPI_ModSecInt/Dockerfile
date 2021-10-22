@@ -28,16 +28,14 @@ ENV GOCGO=/usr/local/go-cgo
 ENV CGO_ENABLED=1
 
 
-#RUN ./configure
-#RUN make
-#RUN sudo make install
-
 WORKDIR /test/app
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
 RUN /test/app/bootstrap.sh
+ENV LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
+
 
 #RUN go build main.go
 #ENTRYPOINT /test/app/main
