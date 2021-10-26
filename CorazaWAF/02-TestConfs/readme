@@ -9,6 +9,17 @@ go get "github.com/jptosso/coraza-waf"
 go get "github.com/jptosso/coraza-waf/seclang"
 
 
+Load 3x configuration files
+
+Errors
+aa.
+modsecdefault.conf
+01.
+invalid SecDebugLogLevel value
+change from 9 to 3
+
+
+
 01. locally
 F5 or
 go run main.go
