@@ -11,7 +11,13 @@ go get "github.com/jptosso/coraza-waf/seclang"
 
 Load 3x configuration files
 
+these 2nd two conf files seem OK
+i.e. no errors thrown
+crs-setup.conf
+REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+
 Errors
+
 aa.
 modsecdefault.conf
 01.
@@ -28,7 +34,11 @@ SecAuditLog /tmp/modsec_audit.log
 args    /tmp/modsec_audit.log
 buffer overrun
 args := utils.ArgsToMap(spl[1])
+comment out
 
+04.
+Unsupported directive SecStatusEngine
+can't see listed in the parser.go so comment out
 
 
 
