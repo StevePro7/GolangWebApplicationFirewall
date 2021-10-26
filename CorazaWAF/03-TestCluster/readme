@@ -29,19 +29,25 @@ curl http://localhost:3080/test/artists.php
 curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 
-
 03. kubernetes
 Launch terminal
 
+minikube start
+minikube dashboard &
+docker images
+
 minikube docker-env
 eval $(minikube -p minikube docker-env)
+docker images
 
 IMPORTANT
 ensure that the following returns empty!
 docker ps | grep steve
 
 ~/GitHub/StevePro7/GolangWebApplicationFirewall/55-TestAPI_Docker
-docker build -t stevepro/mytestapi:5.5 .
+docker build -t stevepro/mytestapi:9.3 .
+
+Ensure matching version in k8s-deployment.yml
 
 kubectl apply -f k8s-deployment.yml
 kubectl apply -f k8s-service.yml
@@ -50,11 +56,12 @@ minikube service mytestapi-service --url
 e.g.
 http://192.168.49.2:30985
 
-curl http://192.168.49.2:30985/
+curl http://192.168.49.2:30985
 curl http://192.168.49.2:30985/test/artists.php
 curl http://192.168.49.2:30985/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 
+Cleanup
 kubectl delete -f k8s-service.yml
 kubectl delete -f k8s-deployment.yml
 
