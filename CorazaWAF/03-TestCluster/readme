@@ -19,11 +19,15 @@ curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0
 
 
 
-
-
 02. docker
-docker build -t stevepro/mytestapi:5.5 .
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:5.5
+first attempt to simply copy the files
+docker build -t stevepro/mytestapi:0.3 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:0.3
+
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
 
 
 03. kubernetes
