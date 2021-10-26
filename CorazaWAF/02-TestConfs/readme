@@ -20,6 +20,14 @@ change from 9 to 3
 
 02.
 Unsupported directive SecAuditLogType
+comment out line
+
+03.
+panic
+SecAuditLog /tmp/modsec_audit.log
+args    /tmp/modsec_audit.log
+buffer overrun
+args := utils.ArgsToMap(spl[1])
 
 
 
