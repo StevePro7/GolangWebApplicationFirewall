@@ -18,6 +18,10 @@ modsecdefault.conf
 invalid SecDebugLogLevel value
 change from 9 to 3
 
+02.
+Unsupported directive SecAuditLogType
+
+
 
 
 01. locally
