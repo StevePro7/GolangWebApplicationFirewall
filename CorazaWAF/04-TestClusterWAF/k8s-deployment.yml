@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mytestapi
-          image: stevepro/mytestapi:9.3
+          image: stevepro/mytestapi:9.4
           imagePullPolicy: Never
           ports:
             - containerPort: 3080 

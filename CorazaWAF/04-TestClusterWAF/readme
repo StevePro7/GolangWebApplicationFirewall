@@ -21,8 +21,8 @@ curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0
 
 02. docker
 first attempt to simply copy the files
-docker build -t stevepro/mytestapi:0.3 .
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:0.3
+docker build -t stevepro/mytestapi:0.4 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:0.4
 
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
@@ -45,7 +45,7 @@ ensure that the following returns empty!
 docker ps | grep steve
 
 ~/GitHub/StevePro7/GolangWebApplicationFirewall/55-TestAPI_Docker
-docker build -t stevepro/mytestapi:9.3 .
+docker build -t stevepro/mytestapi:9.4 .
 
 Ensure matching version in k8s-deployment.yml
 

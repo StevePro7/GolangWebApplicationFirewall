@@ -47,30 +47,6 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	proxy.ServeHTTP(w, r)
 }
 
-func InitModSec() {
-	log.Println("initModSec start")
-	waf := coraza.NewWaf()
-	parser, _ := seclang.NewParser(waf)
-
-	// Now we parse our rules
-	//err := parser.FromFile("modsecdefault.conf")
-	//if err != nil {
-	//	log.Fatal(err)
-	//	return
-	//}
-	err := parser.FromFile("crs-setup.conf")
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	err = parser.FromFile("rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf")
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	log.Println("initModSec -end-")
-}
-
 func modsec(url string, buf string) int {
 	log.Println("modsec start ", url)
 	log.Println("URL  ", url)
@@ -82,12 +58,12 @@ func modsec(url string, buf string) int {
 	parser, _ := seclang.NewParser(waf)
 
 	// Now we parse our rules
-	err := parser.FromFile("modsecdefault.conf")
-	if err != nil {
-		log.Fatal(err)
-		return 0
-	}
-	err = parser.FromFile("crs-setup.conf")
+	//err := parser.FromFile("modsecdefault.conf")
+	//if err != nil {
+	//	log.Fatal(err)
+	//	return 0
+	//}
+	err := parser.FromFile("crs-setup.conf")
 	if err != nil {
 		log.Fatal(err)
 		return 0
@@ -169,7 +145,7 @@ func main() {
 	log.Printf("starting smart reverse proxy on [%s]", bind)
 
 	log.Printf("initialize mod sec")
-	InitModSec()
+	//InitModSec()
 
 	log.Printf("listening [deny] ??")
 	if err := http.ListenAndServe(bind, LimitMiddleware(gmux)); err != nil {
