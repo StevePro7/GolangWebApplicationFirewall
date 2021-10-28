@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/envoyproxy/go-control-plane v0.9.10-0.20210907150352-cf90f659a021
 	github.com/gogo/googleapis v1.4.1
+	github.com/sirupsen/logrus v1.8.1
 	golang.org/x/net v0.0.0-20211020060615-d418f374d309
 	google.golang.org/genproto v0.0.0-20211027162914-98a5263abeca
 	google.golang.org/grpc v1.41.0

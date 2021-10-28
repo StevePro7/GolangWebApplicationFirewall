@@ -1,9 +1,5 @@
 package main
 
-/*
-  This is close variation of jbarratt@ repo here
-  https://github.com/jbarratt/envoy_ratelimit_example/blob/master/extauth/main.go
-*/
 import (
 	"encoding/json"
 	"flag"
@@ -16,57 +12,49 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/health"
-	healthpb "google.golang.org/grpc/health/grpc_health_v1"
-	"google.golang.org/grpc/status"
-
+	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	rpcstatus "google.golang.org/genproto/googleapis/rpc/status"
 
-	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
-
 	auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
-	envoy_type "github.com/envoyproxy/go-control-plane/envoy/type/v3"
+	envoytype "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 	"github.com/gogo/googleapis/google/rpc"
+
+	mylog "github.com/sirupsen/logrus"
 )
 
 var (
 	grpcport = flag.String("grpcport", ":50051", "grpcport")
-	conn     *grpc.ClientConn
-	hs       *health.Server
 )
-
-const (
-	address string = ":50051"
-)
-
-type healthServer struct{}
-
-func (s *healthServer) Check(ctx context.Context, in *healthpb.HealthCheckRequest) (*healthpb.HealthCheckResponse, error) {
-	log.Printf("Handling grpc Check request")
-	// yeah, right, open 24x7, like 7-11
-	return &healthpb.HealthCheckResponse{Status: healthpb.HealthCheckResponse_SERVING}, nil
-}
-
-func (s *healthServer) Watch(in *healthpb.HealthCheckRequest, srv healthpb.Health_WatchServer) error {
-	return status.Error(codes.Unimplemented, "Watch is not implemented")
-}
 
 type AuthorizationServer struct{}
 
 func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest) (*auth.CheckResponse, error) {
-	log.Println(">>> Authorization called check()")
+	log.Println(">>> stevepro Authorization called check() start")
+
+	log.Println(">>> stevepro request information: start")
+
+	fields := mylog.Fields{
+		"context":         ctx,
+		"Req.Method":      req.GetAttributes().GetRequest().GetHttp().GetMethod(),
+		"Req.Path":        req.GetAttributes().GetRequest().GetHttp().GetPath(),
+		"Req.Protocol":    req.GetAttributes().GetRequest().GetHttp().GetProtocol(),
+		"Req.Source":      req.GetAttributes().GetSource(),
+		"Req.Destination": req.GetAttributes().GetDestination(),
+	}
+	mylog.WithFields(fields).Debug("stevepro Check start")
+
+	log.Println(">>> stevepro request information: -end-")
 
 	b, err := json.MarshalIndent(req.Attributes.Request.Http.Headers, "", "  ")
 	if err == nil {
 		log.Println("Inbound Headers: ")
-		log.Println((string(b)))
+		log.Println(string(b))
 	}
 
 	ct, err := json.MarshalIndent(req.Attributes.ContextExtensions, "", "  ")
 	if err == nil {
 		log.Println("Context Extensions: ")
-		log.Println((string(ct)))
+		log.Println(string(ct))
 	}
 
 	authHeader, ok := req.Attributes.Request.Http.Headers["authorization"]
@@ -103,8 +91,8 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 				},
 				HttpResponse: &auth.CheckResponse_DeniedResponse{
 					DeniedResponse: &auth.DeniedHttpResponse{
-						Status: &envoy_type.HttpStatus{
-							Code: envoy_type.StatusCode_Unauthorized,
+						Status: &envoytype.HttpStatus{
+							Code: envoytype.StatusCode_Unauthorized,
 						},
 						Body: "PERMISSION_DENIED",
 					},
@@ -120,8 +108,8 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 		},
 		HttpResponse: &auth.CheckResponse_DeniedResponse{
 			DeniedResponse: &auth.DeniedHttpResponse{
-				Status: &envoy_type.HttpStatus{
-					Code: envoy_type.StatusCode_Unauthorized,
+				Status: &envoytype.HttpStatus{
+					Code: envoytype.StatusCode_Unauthorized,
 				},
 				Body: "Authorization Header malformed or not provided",
 			},
@@ -134,7 +122,11 @@ func main() {
 	flag.Parse()
 
 	if *grpcport == "" {
-		fmt.Fprintln(os.Stderr, "missing -grpcport flag (:50051)")
+		_, err := fmt.Fprintln(os.Stderr, "missing -grpcport flag (:50051)")
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
 		flag.Usage()
 		os.Exit(2)
 	}
@@ -150,9 +142,12 @@ func main() {
 	s := grpc.NewServer(opts...)
 
 	auth.RegisterAuthorizationServer(s, &AuthorizationServer{})
-	healthpb.RegisterHealthServer(s, &healthServer{})
 
 	log.Printf("Starting gRPC Server at %s", *grpcport)
-	s.Serve(lis)
+	err = s.Serve(lis)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
 
 }
