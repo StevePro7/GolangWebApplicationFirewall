@@ -1,0 +1,16 @@
+Envoy External Authorization server (envoy.ext_authz) HelloWorld
+28/10/2021
+
+https://medium.com/google-cloud/envoy-external-authorization-server-envoy-ext-authz-helloworld-82eedc7f8122
+
+
+Source code
+https://github.com/salrashid123/envoy_external_authz
+
+
+envoy -c basic.yaml
+
+
+CODE
+authz_server
+backend_server
