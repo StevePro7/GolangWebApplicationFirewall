@@ -12,3 +12,21 @@ https://github.com/tigera/app-policy-private/blob/master/checker/server.go
 		"Req.Source":      req.GetAttributes().GetSource(),
 		"Req.Destination": req.GetAttributes().GetDestination(),
 	}).Debug("Check start")
+	
+	
+	
+google
+envoyproxy/go-control-plane/envoy/service/auth/v3 tutorial
+
+
+https://salmaan-rashid.medium.com/envoy-control-plane-hello-world-2f49b2865f29
+
+
+github.com/envoyproxy/go-control-plane/envoy/service/auth/v3
+
+github.com/envoyproxy/go-control-plane/envoy/service/auth/v3
+
+
+Good example
+https://medium.com/google-cloud/envoy-external-authorization-server-envoy-ext-authz-helloworld-82eedc7f8122
+https://github.com/salrashid123/envoy_external_authz

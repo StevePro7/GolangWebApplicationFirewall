@@ -1,0 +1,47 @@
+Tutorial: Standalone Envoy
+28/10/2021
+
+https://www.openpolicyagent.org/docs/v0.27.1/envoy-tutorial-standalone-envoy
+
+minikube start
+
+envoy.yaml
+
+kubectl create configmap proxy-config --from-file envoy.yaml
+
+policy.rego
+
+kubectl create secret generic opa-policy --from-file policy.rego
+
+deployment.yaml
+
+kubectl apply -f deployment.yaml
+
+minikube tunnel
+
+kubectl expose deployment example-app --type=LoadBalancer --name=example-app-service --port=8080
+
+export SERVICE_HOST=$(kubectl get service example-app-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+export SERVICE_URL=$SERVICE_HOST:8080
+echo $SERVICE_URL
+
+
+10.111.97.68:8080
+
+
+export ALICE_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiZ3Vlc3QiLCJzdWIiOiJZV3hwWTJVPSIsIm5iZiI6MTUxNDg1MTEzOSwiZXhwIjoxNjQxMDgxNTM5fQ.K5DnnbbIOspRbpCr2IKXE9cPVatGOCBrBQobQmBmaeU"
+export BOB_TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYWRtaW4iLCJzdWIiOiJZbTlpIiwibmJmIjoxNTE0ODUxMTM5LCJleHAiOjE2NDEwODE1Mzl9.WCxNAveAVAdRCmkpIObOTaSd0AJRECY2Ch2Qdic3kU8"
+
+
+curl -i -H "Authorization: Bearer $ALICE_TOKEN" http://$SERVICE_URL/people
+curl -i -H "Authorization: Bearer $ALICE_TOKEN" -d '{"firstname":"Charlie", "lastname":"OPA"}' -H "Content-Type: application/json" -X POST http://$SERVICE_URL/people
+
+
+
+
+curl -i -H "Authorization: Bearer $BOB_TOKEN" http://$SERVICE_URL/people
+curl -i -H "Authorization: Bearer $BOB_TOKEN" -d '{"firstname":"Charlie", "lastname":"Opa"}' -H "Content-Type: application/json" -X POST http://$SERVICE_URL/people
+
+
+
+curl -i  -H "Authorization: Bearer $BOB_TOKEN" -d '{"firstname":"Bob", "lastname":"Rego"}' -H "Content-Type: application/json" -X POST http://$SERVICE_URL/people
