@@ -1,0 +1,14 @@
+Read Me
+28/10/2021
+
+https://github.com/tigera/app-policy-private/blob/master/checker/server.go
+
+
+	log.WithFields(log.Fields{
+		"context":         ctx,
+		"Req.Method":      req.GetAttributes().GetRequest().GetHttp().GetMethod(),
+		"Req.Path":        req.GetAttributes().GetRequest().GetHttp().GetPath(),
+		"Req.Protocol":    req.GetAttributes().GetRequest().GetHttp().GetProtocol(),
+		"Req.Source":      req.GetAttributes().GetSource(),
+		"Req.Destination": req.GetAttributes().GetDestination(),
+	}).Debug("Check start")
