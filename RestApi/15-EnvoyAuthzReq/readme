@@ -15,6 +15,24 @@ Envoy Authz API
 https://www.envoyproxy.io/docs/envoy/latest/api-v3/service/auth/v3/attribute_context.proto#envoy-v3-api-msg-service-auth-v3-attributecontext
 
 
+2021/10/28 17:32:14 >>> stevepro Authorization called check() start
+2021/10/28 17:32:14 >>> stevepro request information: start
+2021/10/28 17:32:14 >>> GetId() >>   4659778945856471928
+2021/10/28 17:32:14 >>> GetMethod() >>   GET
+2021/10/28 17:32:14 >>> GetHeaders() >>   map[:authority:localhost:8080 :method:GET :path:/ :scheme:http accept:*/* user-agent:curl/7.68.0 x-forwarded-proto:http x-request-id:7c473404-53bd-4425-a26f-1292c3f7bca2]
+2021/10/28 17:32:14 >>> GetPath() >>   /
+2021/10/28 17:32:14 >>> GetHost() >>   localhost:8080
+2021/10/28 17:32:14 >>> GetScheme() >>   http
+2021/10/28 17:32:14 >>> GetQuery() >>   
+2021/10/28 17:32:14 >>> GetFragment() >>   
+2021/10/28 17:32:14 >>> GetSize() >>   0
+2021/10/28 17:32:14 >>> GetProtocol() >>   HTTP/1.1
+2021/10/28 17:32:14 >>> GetBody() >>   
+2021/10/28 17:32:14 >>> GetRawBody() >>   []
+2021/10/28 17:32:14 >>> stevepro request information: -end-
+
+
+
 CODE
 authz_server
 backend_server
