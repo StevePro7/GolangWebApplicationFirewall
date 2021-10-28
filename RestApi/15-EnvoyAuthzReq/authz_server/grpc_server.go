@@ -18,8 +18,6 @@ import (
 	auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
 	envoytype "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 	"github.com/gogo/googleapis/google/rpc"
-
-	mylog "github.com/sirupsen/logrus"
 )
 
 var (
@@ -33,15 +31,29 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 
 	log.Println(">>> stevepro request information: start")
 
-	fields := mylog.Fields{
-		"context":         ctx,
-		"Req.Method":      req.GetAttributes().GetRequest().GetHttp().GetMethod(),
-		"Req.Path":        req.GetAttributes().GetRequest().GetHttp().GetPath(),
-		"Req.Protocol":    req.GetAttributes().GetRequest().GetHttp().GetProtocol(),
-		"Req.Source":      req.GetAttributes().GetSource(),
-		"Req.Destination": req.GetAttributes().GetDestination(),
-	}
-	mylog.WithFields(fields).Debug("stevepro Check start")
+	//fields := mylog.Fields{
+	//	"context":         ctx,
+	//	"":      req.GetAttributes().GetRequest().GetHttp().GetMethod(),
+	//	"Req.Path":        req.GetAttributes().GetRequest().GetHttp().GetPath(),
+	//	"Req.Protocol":    req.GetAttributes().GetRequest().GetHttp().GetProtocol(),
+	//	"Req.Source":      req.GetAttributes().GetSource(),
+	//	"Req.Destination": req.GetAttributes().GetDestination(),
+	//}
+	//mylog.WithFields(fields).Debug("stevepro Check start")
+
+	myhttp := req.GetAttributes().GetRequest().GetHttp()
+	log.Println(">>> GetId() >>  ", myhttp.GetId())
+	log.Println(">>> GetMethod() >>  ", myhttp.GetMethod())
+	log.Println(">>> GetHeaders() >>  ", myhttp.GetHeaders())
+	log.Println(">>> GetPath() >>  ", myhttp.GetPath())
+	log.Println(">>> GetHost() >>  ", myhttp.GetHost())
+	log.Println(">>> GetScheme() >>  ", myhttp.GetScheme())
+	log.Println(">>> GetQuery() >>  ", myhttp.GetQuery())
+	log.Println(">>> GetFragment() >>  ", myhttp.GetFragment())
+	log.Println(">>> GetSize() >>  ", myhttp.GetSize())
+	log.Println(">>> GetProtocol() >>  ", myhttp.GetProtocol())
+	log.Println(">>> GetBody() >>  ", myhttp.GetBody())
+	log.Println(">>> GetRawBody() >>  ", myhttp.GetRawBody())
 
 	log.Println(">>> stevepro request information: -end-")
 

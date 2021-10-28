@@ -11,21 +11,25 @@ https://github.com/salrashid123/envoy_external_authz
 envoy -c basic.yaml
 
 
+Envoy Authz API
+https://www.envoyproxy.io/docs/envoy/latest/api-v3/service/auth/v3/attribute_context.proto#envoy-v3-api-msg-service-auth-v3-attributecontext
+
+
 CODE
 authz_server
 backend_server
 
 Launch terminal
+cd backend_server
+go run http_server.go
 
-01.
-cd backend_server/
-go run http_server.go &
 
-02.
-cd authz_server/
+Launch terminal
+cd authz_server
 go run grpc_server.go &
 
-03.
+
+Launch terminal
 cd ..
 envoy -c basic.yaml
 
