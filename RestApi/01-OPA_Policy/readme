@@ -45,3 +45,8 @@ curl -i -H "Authorization: Bearer $BOB_TOKEN" -d '{"firstname":"Charlie", "lastn
 
 
 curl -i  -H "Authorization: Bearer $BOB_TOKEN" -d '{"firstname":"Bob", "lastname":"Rego"}' -H "Content-Type: application/json" -X POST http://$SERVICE_URL/people
+
+
+TODO
+https://github.com/ashutosh-narkar/go-test-server
+
