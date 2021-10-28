@@ -1,0 +1,58 @@
+Envoy External Authorization server (envoy.ext_authz) HelloWorld
+28/10/2021
+
+https://medium.com/google-cloud/envoy-external-authorization-server-envoy-ext-authz-helloworld-82eedc7f8122
+
+
+Source code
+https://github.com/salrashid123/envoy_external_authz
+
+
+envoy -c basic.yaml
+
+
+CODE
+authz_server
+backend_server
+
+Launch terminal
+
+01.
+cd backend_server/
+go run http_server.go &
+
+02.
+cd authz_server/
+go run grpc_server.go &
+
+03.
+cd ..
+envoy -c basic.yaml
+
+
+Send Requests
+
+01. No Header
+curl -vv -w "\n"  http://localhost:8080
+
+02. Send Incorrect Header
+curl -vv -H "Authorization: Bearer bar" -w "\n"  http://localhost:8080
+
+03. Send Correct Header
+curl -vv -H "Authorization: Bearer foo" -w "\n"  http://localhost:8080
+
+04. Send Custom Headers to ext_authz server
+curl -vv -H "Authorization: Bearer foo" -H "Host: s2.domain.com" -H "foo: bar" http://localhost:8080
+
+
+
+
+kill signal
+01. backend server
+sudo fuser -k 11000/tcp
+
+02. auth server
+sudo fuser -k 50051/tcp
+
+03. curl
+sudo fuser -k 8080/tcp
