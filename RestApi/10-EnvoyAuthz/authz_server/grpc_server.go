@@ -1,15 +1,20 @@
 package main
 
+/*
+  This is close variation of jbarratt@ repo here
+  https://github.com/jbarratt/envoy_ratelimit_example/blob/master/extauth/main.go
+*/
 import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
 	"strings"
+
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/health"
@@ -107,8 +112,8 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 			}, nil
 
 		}
-	}
 
+	}
 	return &auth.CheckResponse{
 		Status: &rpcstatus.Status{
 			Code: int32(rpc.UNAUTHENTICATED),
@@ -129,7 +134,7 @@ func main() {
 	flag.Parse()
 
 	if *grpcport == "" {
-		fmt.Fprintln(os.Stderr, "missing grpcport flag (:50051)")
+		fmt.Fprintln(os.Stderr, "missing -grpcport flag (:50051)")
 		flag.Usage()
 		os.Exit(2)
 	}
@@ -149,4 +154,5 @@ func main() {
 
 	log.Printf("Starting gRPC Server at %s", *grpcport)
 	s.Serve(lis)
+
 }
