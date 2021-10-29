@@ -56,18 +56,20 @@ func InitModSec() {
 	//log.Println("initModSec -end-")
 }
 
-func modsec(url string, protocol string, httpVersion string) int {
+func modsec(url string, httpMethod string, httpProtocol string, httpVersion string) int {
 	log.Println("modsec start ", url)
 	Curi := C.CString(url)
-	Cprotocol := C.CString(protocol)
+	ChttpMethod := C.CString(httpMethod)
+	ChttpProtocol := C.CString(httpProtocol)
 	ChttpVersion := C.CString(httpVersion)
 
 	defer C.free(unsafe.Pointer(Curi))
-	defer C.free(unsafe.Pointer(Cprotocol))
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	defer C.free(unsafe.Pointer(ChttpProtocol))
 	defer C.free(unsafe.Pointer(ChttpVersion))
 
 	start := time.Now()
-	inter := int(C.MyCProcess(Curi, Cprotocol, ChttpVersion))
+	inter := int(C.MyCProcess(Curi, ChttpMethod, ChttpProtocol, ChttpVersion))
 	elapsed := time.Since(start)
 	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
 	log.Println("modsec -end-")
@@ -79,16 +81,17 @@ func LimitMiddleware(next http.Handler) http.Handler {
 		log.Printf("req.URL : \"%s\"", r.URL)
 		log.Printf("Methods : \"%s\"", r.Method)
 
-		urlx := r.URL.String()
-		//protocol := "HTTP"
-		protocol := "CONNECT"
+		uri := r.URL.String()
+		httpMethod := "GET"
+		//protocol := "HTTP/1.1"
+		httpProtocol := "HTTP"
 		httpVersion := "1.1"
 
 		//clientSocket := "127.0.0.1:80"
 		//serverSocket := "127.0.0.1:80"
 		//clientPort := C.int(80)
 
-		inter := modsec(urlx, protocol, httpVersion)
+		inter := modsec(uri, httpMethod, httpProtocol, httpVersion)
 		if inter > 0 {
 			log.Printf("==== Mod Security Blocked! ====")
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)

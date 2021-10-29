@@ -34,15 +34,16 @@ void MyCInit()
 
 //int MyCProcess(char *uri, char *protocol, char *version)
 //int MyCProcess(char *uri)
-int MyCProcess(char *uri, char *protocol, char *http_version)
+int MyCProcess(char *uri, char *http_method, char *http_protocol, char *http_version)
 {
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
     msc_process_connection(transaction, "127.0.0.1", 80, "127.0.0.1", 80);
     fprintf(stderr, "URI='%s'\n", uri);
-    fprintf(stderr, "Protocol='%s'\n", protocol);
+    fprintf(stderr, "Method='%s'\n", http_method);
+    fprintf(stderr, "Protocol='%s'\n", http_protocol);
     fprintf(stderr, "Version='%s'\n", http_version);
-    msc_process_uri(transaction, uri, protocol, http_version);
+    msc_process_uri(transaction, uri, http_protocol, http_version);
 
     msc_process_request_headers(transaction);
     msc_process_request_body(transaction);
