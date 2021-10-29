@@ -32,8 +32,6 @@ void MyCInit()
     return;
 }
 
-//int MyCProcess(char *uri, char *protocol, char *version)
-//int MyCProcess(char *uri)
 int MyCProcess(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port)
 {
     Transaction *transaction = NULL;
@@ -56,6 +54,7 @@ int MyCProcess(char *uri, char *http_method, char *http_protocol, char *http_ver
     intervention.log = NULL;
     intervention.disruptive = 0;
     int inter = msc_intervention(transaction, &intervention);
+
     fprintf(stderr, "intervention=%i\n", inter);
     fprintf(stderr, "inter status=%i\n", intervention.status);
     return inter;
