@@ -9,7 +9,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -57,14 +56,18 @@ func InitModSec() {
 	//log.Println("initModSec -end-")
 }
 
-func modsec(url string, buf string) int {
+func modsec(url string, protocol string, httpVersion string) int {
 	log.Println("modsec start ", url)
 	Curi := C.CString(url)
-	Cbuf := C.CString(buf)
+	Cprotocol := C.CString(protocol)
+	ChttpVersion := C.CString(httpVersion)
+
 	defer C.free(unsafe.Pointer(Curi))
-	defer C.free(unsafe.Pointer(Cbuf))
+	defer C.free(unsafe.Pointer(Cprotocol))
+	defer C.free(unsafe.Pointer(ChttpVersion))
+
 	start := time.Now()
-	inter := int(C.MyCProcess(Curi, Cbuf))
+	inter := int(C.MyCProcess(Curi, Cprotocol, ChttpVersion))
 	elapsed := time.Since(start)
 	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
 	log.Println("modsec -end-")
@@ -77,14 +80,15 @@ func LimitMiddleware(next http.Handler) http.Handler {
 		log.Printf("Methods : \"%s\"", r.Method)
 
 		urlx := r.URL.String()
-		bodyBytes, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-		bodyString := string(bodyBytes)
-		log.Println("body = '" + bodyString + "'..!")
+		//protocol := "HTTP"
+		protocol := "CONNECT"
+		httpVersion := "1.1"
 
-		inter := modsec(urlx, bodyString)
+		//clientSocket := "127.0.0.1:80"
+		//serverSocket := "127.0.0.1:80"
+		//clientPort := C.int(80)
+
+		inter := modsec(urlx, protocol, httpVersion)
 		if inter > 0 {
 			log.Printf("==== Mod Security Blocked! ====")
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
@@ -107,7 +111,7 @@ func main() {
 	log.Printf("initialize mod sec")
 	InitModSec()
 
-	log.Printf("listening [deny] ??")
+	log.Printf("listening [deny]...")
 	if err := http.ListenAndServe(bind, LimitMiddleware(gmux)); err != nil {
 		log.Fatalf("unable to start web server: %s", err.Error())
 	}
