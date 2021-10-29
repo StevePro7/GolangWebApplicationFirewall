@@ -85,12 +85,6 @@ func LimitMiddleware(next http.Handler) http.Handler {
 		log.Println("body = '" + bodyString + "'..!")
 
 		inter := modsec(urlx, bodyString)
-		//var inter int
-		//inter = 0
-		//if r.RequestURI == "/test/artists.php" {
-		//	inter = 1
-		//}
-
 		if inter > 0 {
 			log.Printf("==== Mod Security Blocked! ====")
 			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
@@ -102,11 +96,6 @@ func LimitMiddleware(next http.Handler) http.Handler {
 }
 
 func main() {
-	//log.Println("start")
-	//InitModSec()
-	//LimitMiddleware()
-	//log.Println("-end-")
-
 	log.Println("testing")
 	bind := ":3080"
 	gmux := mux.NewRouter()
