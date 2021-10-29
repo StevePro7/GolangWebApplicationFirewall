@@ -58,7 +58,7 @@ func InitModSec() {
 }
 
 func modsec(url string, buf string) int {
-	//log.Println("modsec start ", url)
+	log.Println("modsec start ", url)
 	Curi := C.CString(url)
 	Cbuf := C.CString(buf)
 	defer C.free(unsafe.Pointer(Curi))
@@ -67,7 +67,7 @@ func modsec(url string, buf string) int {
 	inter := int(C.MyCProcess(Curi, Cbuf))
 	elapsed := time.Since(start)
 	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
-	//log.Println("modsec -end-")
+	log.Println("modsec -end-")
 	return inter
 }
 
@@ -111,7 +111,6 @@ func main() {
 	bind := ":3080"
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
-	//gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
 	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
 
 	log.Printf("starting smart reverse proxy on [%s]", bind)
