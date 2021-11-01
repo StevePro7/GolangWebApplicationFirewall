@@ -1,0 +1,32 @@
+Configure a Pod to Use a ConfigMap
+01/11/2021
+
+https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap
+
+
+
+# Create the local directory
+mkdir -p configure-pod-container/configmap/
+
+# Download the sample files into `configure-pod-container/configmap/` directory
+wget https://kubernetes.io/examples/configmap/game.properties -O configure-pod-container/configmap/game.properties
+wget https://kubernetes.io/examples/configmap/ui.properties -O configure-pod-container/configmap/ui.properties
+
+# Create the configmap
+kubectl create configmap game-config --from-file=configure-pod-container/configmap/
+
+
+
+kubectl describe configmaps game-config
+kubectl get configmaps game-config -o yaml
+
+
+Create ConfigMaps from files
+kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties
+
+
+wget https://kubernetes.io/examples/configmap/game-env-file.properties -O configure-pod-container/configmap/game-env-file.properties
+
+
+kubectl create configmap game-config-env-file \
+       --from-env-file=configure-pod-container/configmap/game-env-file.properties
