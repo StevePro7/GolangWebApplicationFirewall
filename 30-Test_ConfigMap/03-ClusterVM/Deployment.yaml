@@ -12,10 +12,6 @@ spec:
       labels:
         app: testwebapi
     spec:
-      volumes:
-        - name: myvolume
-          configMap:
-            name: myconfigmap
       containers:
         - name: testwebapi
           image: stevepro/testwebapi:1.0
@@ -28,4 +24,9 @@ spec:
             - containerPort: 8081
           volumeMounts:
             - mountPath: /etc/config
-              name: myvolumemount
+              name: volumeconfig
+              readOnly: True
+      volumes:
+        - name: volumeconfig
+          configMap:
+            name: myconfigmap
