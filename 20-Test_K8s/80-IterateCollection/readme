@@ -3,3 +3,8 @@ readme
 
 Iterate collection
 https://stackoverflow.com/questions/43198876/iterate-over-pointer-to-an-array-of-char-pointers
+
+
+cgo: How to pass []string to char** array
+https://stackoverflow.com/questions/45997786/passing-array-of-string-as-parameter-from-go-to-c-function
+https://groups.google.com/g/golang-nuts/c/pQueMFdY0mk/m/OAX5-Fqus0UJ
