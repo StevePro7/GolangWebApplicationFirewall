@@ -20,3 +20,6 @@ docker build -t stevepro/testwebapi:1.0 .
 kubectl apply -f Kubernetes.yaml
 minikube service testwebapi-service --url
 curl http://192.168.49.2:32143/test
+
+04. configmap
+kubectl create configmap myconfigmap --from-file=modsecdefault.conf

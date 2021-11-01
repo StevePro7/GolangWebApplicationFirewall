@@ -12,6 +12,10 @@ spec:
       labels:
         app: testwebapi
     spec:
+      volumes:
+        - name: myvolume
+          configMap:
+            name: myconfigmap
       containers:
         - name: testwebapi
           image: stevepro/testwebapi:1.0
@@ -22,3 +26,6 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 8081
+          volumeMounts:
+            - mountPath: /etc/config
+              name: myvolumemount
