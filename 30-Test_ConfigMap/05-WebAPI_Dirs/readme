@@ -38,3 +38,35 @@ curl http://192.168.49.2:32611/test/artists.php
 
 
 kubectl create configmap myconfigmap2 --from-file=REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+
+
+Q.
+The Deployment "testwebapi" is invalid: spec.template.spec.containers[0].volumeMounts[1].mountPath: Invalid value: "/etc/config/": must be unique
+
+how do I mount more than 1x core rule set i.e. more than 1x configMap at the same volume mount?
+
+If I mount 1x configMap but stores as symbolic link
+e.g.
+
+/etc/config/..2021_11_01_17_31_47.975319551/modsecdefault.conf
+/etc/config/..data
+/etc/config/modsecdefault.conf
+
+Shell into Pod
+cd /etc/config
+ls -l
+lrwxrwxrwx    1 root     root            25 Nov  1 17:31 modsecdefault.conf -> ..data/modsecdefault.conf
+
+
+Also, the SecRule is stored as configMap but is now key / value so will "read" correctly from ModSec?
+e.g.
+{
+	"modsecdefault.conf": "
+		# -- Rule engine initialization ----------------------------------------------
+
+		# Enable ModSecurity, attaching it to every transaction. Use detection
+		# only to start with, because that minimises the chances of post-installation
+		# disruption.
+		#
+		#SecRuleEngine DetectionOnly
+		SecRuleEngine On
