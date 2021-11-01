@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testwebapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testwebapi
+  template:
+    metadata:
+      labels:
+        app: testwebapi
+    spec:
+      containers:
+        - name: testwebapi
+          image: stevepro/testwebapi:1.0
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8081 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: testwebapi-service
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8081
+  selector:
+    app: testwebapi
