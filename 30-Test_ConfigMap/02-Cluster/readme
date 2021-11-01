@@ -2,3 +2,21 @@ Web API + configMap, volume, volumeMount
 01/11/2021
 
 
+01. local
+touch main.go
+go run main.go
+curl http://localhost:8081/test
+
+02. docker
+Right click Dockerfile | Build image... | 01example:latest
+Right click 01example:latest | Run interactive
+curl http://localhost:8081/test
+
+03. kubernetes
+minikube start
+minikube docker-env
+eval $(minikube -p minikube docker-env)
+docker build -t stevepro/testwebapi:1.0 .
+kubectl apply -f Kubernetes.yaml
+minikube service testwebapi-service --url
+curl http://192.168.49.2:32143/test
