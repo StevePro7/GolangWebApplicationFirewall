@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-void MyCInit()
+void MyCInit(char *file)
 {
     printf("MyCInit start\n");
+    printf("MyCInit file ='%s'\n", file);
     /*
     const char *error = NULL;
     msc_rules_add_file(rules, "modsecdefault.conf", &error);

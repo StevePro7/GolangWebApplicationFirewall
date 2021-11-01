@@ -15,12 +15,14 @@ GoLand
 Edit configurations
 Package =>  File
 
-Edit configurations | Environment | click "+"
-Name    LD_LIBRARY_PATH
-Value   /usr/local/modsecurity/lib/
+IMPORTANT
+Initially rec'd an error
+cgo could not determine kind of name for c.free
 
+Reference
+https://github.com/golang/go/issues/39871
 
-Now begin to integrate code from project "04"
-go get "github.com/gorilla/mux"
-go mod tidy
+What I need to do is add the following to the file
+modsec.c
 
+#include <stdlib.h>
