@@ -1,0 +1,26 @@
+readme
+18/10/2021
+
+Setup code for main.go and modsec.c
+Copy in from previous project 06
+
+01.
+Terminal
+cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/07-Test_NewCgoIII
+export LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
+./build.sh
+
+02.
+GoLand
+Edit configurations
+Package =>  File
+
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
+
+
+Now begin to integrate code from project "04"
+go get "github.com/gorilla/mux"
+go mod tidy
+
