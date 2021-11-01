@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -27,6 +28,34 @@ func HomeFunc(w http.ResponseWriter, _ *http.Request) {
 
 func TestFunc(w http.ResponseWriter, _ *http.Request) {
 	log.Print("TestFunc start")
+
+	log.Println("Directory walk start")
+
+	root := "/etc/config/"
+	//root := "./config/"
+	items, _ := ioutil.ReadDir(root)
+	for _, item := range items {
+		if item.IsDir() {
+			subFolder := root + item.Name() + "/"
+			subitems, _ := ioutil.ReadDir(subFolder)
+			for _, subitem := range subitems {
+				if !subitem.IsDir() {
+					// handle file there
+					subitemName := subFolder + subitem.Name()
+					//fmt.Println(item.Name() + "/" + subitemName)
+					fmt.Println(subitemName)
+				}
+			}
+		} else {
+			// handle file there
+			//fileName := item.Name()
+			fileName := root + item.Name()
+			fmt.Println(fileName)
+		}
+	}
+
+	log.Println("Directory walk -end-")
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	data := "Test Func...!!!!"
@@ -43,7 +72,6 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 }
 
 func main() {
-	log.Println("testing")
 	bind := ":3080"
 	log.Println("Start web server on port", bind)
 
