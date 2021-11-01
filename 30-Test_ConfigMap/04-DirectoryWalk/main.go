@@ -8,8 +8,8 @@ import (
 func main() {
 	fmt.Println("start")
 
-	//root := "/etc/config"
-	root := "./config/"
+	root := "/etc/config/"
+	//root := "./config/"
 	items, _ := ioutil.ReadDir(root)
 	for _, item := range items {
 		if item.IsDir() {
