@@ -95,7 +95,8 @@ func FileFunc(w http.ResponseWriter, _ *http.Request) {
 func TestFunc(w http.ResponseWriter, r *http.Request) {
 
 	log.Printf("Initialize ModSec start")
-	InitModSec()
+	fileName := getFile()
+	InitModSec(fileName)
 	log.Printf("Initialize ModSec -end-")
 
 	log.Printf("req.URL : \"%s\"", r.URL)
@@ -134,10 +135,12 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	proxy.ServeHTTP(w, r)
 }
 
-func InitModSec() {
-	//log.Println("initModSec start")
-	C.MyCInit()
-	//log.Println("initModSec -end-")
+func InitModSec(fileName string) {
+	log.Println("initModSec start")
+	CfileName := C.CString(fileName)
+	defer C.free(unsafe.Pointer(CfileName))
+	C.MyCInit(CfileName)
+	log.Println("initModSec -end-")
 }
 
 func modsec(url string, buf string) int {

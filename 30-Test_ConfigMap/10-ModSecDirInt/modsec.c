@@ -7,9 +7,10 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
-void MyCInit()
+void MyCInit(char *file_name)
 {
     printf("MyCInit start\n");
+    printf("MyCInit fileName='%s'\n", file_name);
     if (modsec != NULL)
     {
         return;
@@ -19,7 +20,8 @@ void MyCInit()
     rules = msc_create_rules_set();
 
     const char *error = NULL;
-    msc_rules_add_file(rules, "combined.conf", &error);
+    msc_rules_add_file(rules, file_name, &error);
+    //msc_rules_add_file(rules, "combined.conf", &error);
     //msc_rules_add_file(rules, "modsecdefault.conf", &error);
     //msc_rules_add_file(rules, "crs-setup.conf", &error);
     //msc_rules_add_file(rules, "rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", &error);
