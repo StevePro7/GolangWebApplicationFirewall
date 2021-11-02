@@ -32,32 +32,48 @@ func HomeFunc(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
+func getFile() string {
+	root := "/etc/config/"
+	//root := "./config/"
+	var fileName string
+	fileName = ""
+	items, _ := ioutil.ReadDir(root)
+	for _, item := range items {
+		if !item.IsDir() {
+			fileName = root + item.Name()
+		}
+	}
+	return fileName
+}
+
 func FileFunc(w http.ResponseWriter, _ *http.Request) {
 	log.Print("FileFunc start")
 
 	log.Println("Directory walk start")
 
-	root := "/etc/config/"
-	//root := "./config/"
-	items, _ := ioutil.ReadDir(root)
-	for _, item := range items {
-		if item.IsDir() {
-			subFolder := root + item.Name() + "/"
-			subitems, _ := ioutil.ReadDir(subFolder)
-			for _, subitem := range subitems {
-				if !subitem.IsDir() {
-					// handle file there
-					subitemName := subFolder + subitem.Name()
-					fmt.Println(subitemName)
-				}
-			}
-		} else {
-			// handle file there
-			//fileName := item.Name()
-			fileName := root + item.Name()
-			fmt.Println(fileName)
-		}
-	}
+	//root := "/etc/config/"
+	////root := "./config/"
+	//items, _ := ioutil.ReadDir(root)
+	//for _, item := range items {
+	//	if item.IsDir() {
+	//		subFolder := root + item.Name() + "/"
+	//		subitems, _ := ioutil.ReadDir(subFolder)
+	//		for _, subitem := range subitems {
+	//			if !subitem.IsDir() {
+	//				// handle file there
+	//				subitemName := subFolder + subitem.Name()
+	//				fmt.Println(subitemName)
+	//			}
+	//		}
+	//	} else {
+	//		// handle file there
+	//		//fileName := item.Name()
+	//		fileName := root + item.Name()
+	//		fmt.Println(fileName)
+	//	}
+	//}
+	fileName := getFile()
+	fmt.Println(fileName)
 
 	log.Println("Directory walk -end-")
 
