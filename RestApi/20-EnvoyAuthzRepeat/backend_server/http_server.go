@@ -31,6 +31,6 @@ func main() {
 		Addr: ":11000",
 	}
 	http2.ConfigureServer(server, &http2.Server{})
-	log.Println("Starting Server..")
+	log.Println("Starting http Server at :11000")
 	server.ListenAndServe()
 }

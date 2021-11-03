@@ -72,10 +72,10 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 		splitToken = strings.Split(authHeader, "Bearer ")
 	}
 
-	log.Println("Auth header = " + authHeader)
+	log.Println("Auth header= " + authHeader)
 
 	if len(splitToken) == 2 {
-		log.Println("Split token" + splitToken[1])
+		log.Println("Split token: " + splitToken[1])
 	}
 
 	//if len(splitToken) == 2 {

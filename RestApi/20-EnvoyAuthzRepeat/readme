@@ -7,6 +7,29 @@ https://github.com/salrashid123/envoy_external_authz
 basic.yaml
 Envoy config
 
+Method  launch 3x terminals:
+
+01. Terminal    http server
+cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi/20-EnvoyAuthzRepeat/backend_server
+sudo fuser -k 11000/tcp
+go run main.go
+
+02. GoLand      auth server
+grpc_server.go
+sudo fuser -k 50051/tcp
+Debug
+
+03. Terminal    envoy
+cd ~/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi/20-EnvoyAuthzRepeat
+sudo fuser -k 8080/tcp
+envoy -c basic.yaml
+
+04. Terminal    client
+curl -vv -w "\n"  http://localhost:8080/
+curl -vv -H "Authorization: Bearer bar" -w "\n"  http://localhost:8080/
+curl -vv -H "Authorization: Bearer foo" -w "\n"  http://localhost:8080/
+
+
 backend_server      service_backend     port_value      11000
 authz_server        ext-authz           port_value      50051
 socket_address      0.0.0.0             port_value      8080
