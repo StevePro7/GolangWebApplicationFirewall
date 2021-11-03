@@ -1,0 +1,21 @@
+Envoy External Authorization server (envoy.ext_authz) HelloWorld
+03/11/2021
+
+https://medium.com/google-cloud/envoy-external-authorization-server-envoy-ext-authz-helloworld-82eedc7f8122
+
+https://github.com/salrashid123/envoy_external_authz
+
+
+Create folder structure
+
+Launch GoLand
+open folder /home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi/20-EnvoyAuthzRepeat
+
+Terminal
+cd /home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi/20-EnvoyAuthzRepeat
+cd backend_server
+go mod init main
+touch http_server.go
+add import statements
+go mod tidy
+write code
