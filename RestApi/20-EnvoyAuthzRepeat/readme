@@ -13,9 +13,39 @@ open folder /home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi
 
 Terminal
 cd /home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/RestApi/20-EnvoyAuthzRepeat
+
+01.
 cd backend_server
 go mod init main
 touch http_server.go
 add import statements
 go mod tidy
 write code
+
+
+02.
+cd authz_server
+go mod init main
+touch grpc_server.go
+add import statements
+go mod tidy
+write code
+
+
+Launch
+01.
+cd backend_server
+go run http_server.go
+
+02.
+cd authz_server
+go run grpc_server.go
+
+03.
+cd ..
+envoy -c basic.yaml -l info
+
+
+curl -vv -w "\n"  http://localhost:8080/
+curl -vv -H "Authorization: Bearer bar" -w "\n"  http://localhost:8080/
+curl -vv -H "Authorization: Bearer foo" -w "\n"  http://localhost:8080/
