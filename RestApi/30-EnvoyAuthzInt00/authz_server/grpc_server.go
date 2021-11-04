@@ -55,6 +55,20 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 		log.Println("Split token: " + splitToken[1])
 	}
 
+	myhttp := req.GetAttributes().GetRequest().GetHttp()
+	log.Println(">>> GetId() >>  ", myhttp.GetId())
+	log.Println(">>> GetMethod() >>  ", myhttp.GetMethod())
+	log.Println(">>> GetHeaders() >>  ", myhttp.GetHeaders())
+	log.Println(">>> GetPath() >>  ", myhttp.GetPath())
+	log.Println(">>> GetHost() >>  ", myhttp.GetHost())
+	log.Println(">>> GetScheme() >>  ", myhttp.GetScheme())
+	log.Println(">>> GetQuery() >>  ", myhttp.GetQuery())
+	log.Println(">>> GetFragment() >>  ", myhttp.GetFragment())
+	log.Println(">>> GetSize() >>  ", myhttp.GetSize())
+	log.Println(">>> GetProtocol() >>  ", myhttp.GetProtocol())
+	log.Println(">>> GetBody() >>  ", myhttp.GetBody())
+	log.Println(">>> GetRawBody() >>  ", myhttp.GetRawBody())
+
 	log.Println("Auth Server Check() method -end-")
 	return &auth.CheckResponse{
 		Status: &rpcstatus.Status{
