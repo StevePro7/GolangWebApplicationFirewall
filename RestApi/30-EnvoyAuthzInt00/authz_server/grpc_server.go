@@ -3,11 +3,9 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"github.com/gogo/googleapis/google/rpc"
 	"log"
 	"net"
-	"os"
 	"strings"
 
 	"golang.org/x/net/context"
@@ -50,7 +48,6 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 	}
 
 	log.Println("Auth header= " + authHeader)
-
 	if len(splitToken) == 2 {
 		log.Println("Split token: " + splitToken[1])
 	}
@@ -77,14 +74,6 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 
 func main() {
 
-	flag.Parse()
-
-	if *grpcport == "" {
-		fmt.Fprintln(os.Stderr, "missing -grpcport flag (:50051)")
-		flag.Usage()
-		os.Exit(2)
-	}
-
 	lis, err := net.Listen("tcp", *grpcport)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -97,6 +86,8 @@ func main() {
 	auth.RegisterAuthorizationServer(s, &AuthorizationServer{})
 
 	log.Printf("Starting gRPC Server at %s", *grpcport)
-	s.Serve(lis)
-
+	err = s.Serve(lis)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
