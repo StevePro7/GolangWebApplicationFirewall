@@ -29,7 +29,7 @@ void MyCInit()
         printf("msc_rules_add_file error : '%s'\n", error);
     }
 
-    msc_rules_dump(rules);
+    //msc_rules_dump(rules);
     printf("MyCInit -end-\n");
     return;
 }
