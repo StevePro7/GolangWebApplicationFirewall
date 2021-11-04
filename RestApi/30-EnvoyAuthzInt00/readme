@@ -1,5 +1,13 @@
 Envoy External Authorization server (envoy.ext_authz) HelloWorld
-03/11/2021
+04/11/2021
+
+TODO
+01.
+check the URL
+
+02.
+check the bad request
+
 
 read HTTP payload into modsec
 
