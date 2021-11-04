@@ -1,5 +1,8 @@
 package main
 
+// #include "modsec.c"
+import "C"
+
 import (
 	"encoding/json"
 	"flag"
@@ -72,12 +75,20 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 	}, nil
 }
 
+func InitModSec() {
+	log.Println("initModSec start")
+	C.MyCInit()
+	log.Println("initModSec -end-")
+}
+
 func main() {
 
 	lis, err := net.Listen("tcp", *grpcport)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+
+	InitModSec()
 
 	opts := []grpc.ServerOption{grpc.MaxConcurrentStreams(10)}
 	opts = append(opts)
