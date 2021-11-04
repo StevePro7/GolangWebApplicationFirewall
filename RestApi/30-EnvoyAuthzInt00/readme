@@ -42,7 +42,17 @@ socket_address      0.0.0.0             port_value      8080
 
 
 INTEGRATION
+01.
 authz_server
 edit configuration
 change from package to file
 
+02.
+add grpc_server
+HTTP payload extraction
+
+03.
+configure GO for CGO
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
