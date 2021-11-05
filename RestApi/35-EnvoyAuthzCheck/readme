@@ -1,0 +1,58 @@
+Envoy External Authorization server (envoy.ext_authz) HelloWorld
+04/11/2021
+
+read HTTP payload into modsec
+
+Reference:
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/20-Test_K8s/65-TestAPI_ModSecInt_Inject/main.go
+
+https://medium.com/google-cloud/envoy-external-authorization-server-envoy-ext-authz-helloworld-82eedc7f8122
+https://github.com/salrashid123/envoy_external_authz
+
+basic.yaml
+Envoy config
+
+Method  launch 3x terminals:
+
+01. Terminal    http server
+cd ~/path/to/backend_server
+sudo fuser -k 11000/tcp
+go run http_server.go
+
+02. GoLand      auth server
+cd cd ~/path/to/authz_server
+grpc_server.go
+sudo fuser -k 50051/tcp
+Debug
+
+03. Terminal    envoy
+cd ~/path/to/
+sudo fuser -k 8080/tcp
+envoy -c basic.yaml
+
+04. Terminal    client
+curl http://localhost:8080
+curl http://localhost:8080/test/artists.php
+curl http://localhost:8080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+backend_server      service_backend     port_value      11000
+authz_server        ext-authz           port_value      50051
+socket_address      0.0.0.0             port_value      8080
+
+
+INTEGRATION
+01.
+authz_server
+edit configuration
+change from package to file
+
+02.
+add grpc_server
+HTTP payload extraction
+
+03.
+configure GO for CGO
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
