@@ -12,37 +12,85 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	rpcstatus "google.golang.org/genproto/googleapis/rpc/status"
-	"google.golang.org/grpc/health"
-
 	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
+	rpcstatus "google.golang.org/genproto/googleapis/rpc/status"
 
 	auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
-	envoy_type "github.com/envoyproxy/go-control-plane/envoy/type/v3"
+	envoytype "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 	"github.com/gogo/googleapis/google/rpc"
 )
 
 var (
 	grpcport = flag.String("grpcport", ":50051", "grpcport")
-	conn     *grpc.ClientConn
-	hs       *health.Server
 )
 
 type AuthorizationServer struct{}
 
-func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest) (*auth.CheckResponse, error) {
+func (a *AuthorizationServer) CheckOk(_ context.Context, _ *auth.CheckRequest) (*auth.CheckResponse, error) {
+	return &auth.CheckResponse{
+		Status: &rpcstatus.Status{
+			Code: int32(rpc.OK),
+		},
+		HttpResponse: &auth.CheckResponse_OkResponse{
+			OkResponse: &auth.OkHttpResponse{
+				Headers: []*core.HeaderValueOption{
+					{
+						Header: &core.HeaderValue{
+							Key:   "x-custom-header-from-authz",
+							Value: "some value",
+						},
+					},
+				},
+			},
+		},
+	}, nil
+}
+
+func (a *AuthorizationServer) CheckBadrequest(_ context.Context, _ *auth.CheckRequest) (*auth.CheckResponse, error) {
+	return &auth.CheckResponse{
+		Status: &rpcstatus.Status{
+			Code: int32(rpc.PERMISSION_DENIED),
+		},
+		HttpResponse: &auth.CheckResponse_DeniedResponse{
+			DeniedResponse: &auth.DeniedHttpResponse{
+				Status: &envoytype.HttpStatus{
+					Code: envoytype.StatusCode_BadRequest,
+				},
+				Body: "PERMISSION_DENIED",
+			},
+		},
+	}, nil
+}
+
+func (a *AuthorizationServer) CheckUnauthorized(_ context.Context, _ *auth.CheckRequest) (*auth.CheckResponse, error) {
+	return &auth.CheckResponse{
+		Status: &rpcstatus.Status{
+			Code: int32(rpc.UNAUTHENTICATED),
+		},
+		HttpResponse: &auth.CheckResponse_DeniedResponse{
+			DeniedResponse: &auth.DeniedHttpResponse{
+				Status: &envoytype.HttpStatus{
+					Code: envoytype.StatusCode_Unauthorized,
+				},
+				Body: "Authorization Header malformed or not provided",
+			},
+		},
+	}, nil
+}
+
+func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (*auth.CheckResponse, error) {
 	log.Println(">>> Authorization called check()")
 
 	b, err := json.MarshalIndent(req.Attributes.Request.Http.Headers, "", "  ")
 	if err == nil {
 		log.Println("Inbound Headers: ")
-		log.Println((string(b)))
+		log.Println(string(b))
 	}
 
 	ct, err := json.MarshalIndent(req.Attributes.ContextExtensions, "", "  ")
 	if err == nil {
 		log.Println("Context Extensions: ")
-		log.Println((string(ct)))
+		log.Println(string(ct))
 	}
 
 	authHeader, ok := req.Attributes.Request.Http.Headers["authorization"]
@@ -79,8 +127,8 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 				},
 				HttpResponse: &auth.CheckResponse_DeniedResponse{
 					DeniedResponse: &auth.DeniedHttpResponse{
-						Status: &envoy_type.HttpStatus{
-							Code: envoy_type.StatusCode_Unauthorized,
+						Status: &envoytype.HttpStatus{
+							Code: envoytype.StatusCode_Unauthorized,
 						},
 						Body: "PERMISSION_DENIED",
 					},
@@ -96,8 +144,8 @@ func (a *AuthorizationServer) Check(ctx context.Context, req *auth.CheckRequest)
 		},
 		HttpResponse: &auth.CheckResponse_DeniedResponse{
 			DeniedResponse: &auth.DeniedHttpResponse{
-				Status: &envoy_type.HttpStatus{
-					Code: envoy_type.StatusCode_Unauthorized,
+				Status: &envoytype.HttpStatus{
+					Code: envoytype.StatusCode_Unauthorized,
 				},
 				Body: "Authorization Header malformed or not provided",
 			},
