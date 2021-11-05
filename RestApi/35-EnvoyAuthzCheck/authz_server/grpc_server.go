@@ -6,10 +6,11 @@ package main
 import "C"
 
 import (
+	"encoding/json"
 	"flag"
-	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	"log"
 	"net"
+	"strconv"
 	"strings"
 	"time"
 	"unsafe"
@@ -19,7 +20,9 @@ import (
 
 	rpcstatus "google.golang.org/genproto/googleapis/rpc/status"
 
+	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
+	envoy_type "github.com/envoyproxy/go-control-plane/envoy/type/v3"
 	"github.com/gogo/googleapis/google/rpc"
 )
 
@@ -32,29 +35,72 @@ type AuthorizationServer struct{}
 func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (*auth.CheckResponse, error) {
 	log.Println("Auth Server Check() method start")
 
-	//b, err := json.MarshalIndent(req.Attributes.Request.Http.Headers, "", "  ")
-	//if err == nil {
-	//	log.Println("Inbound Headers: ")
-	//	log.Println(string(b))
-	//}
-	//
-	//ct, err := json.MarshalIndent(req.Attributes.ContextExtensions, "", "  ")
-	//if err == nil {
-	//	log.Println("Context Extensions: ")
-	//	log.Println(string(ct))
-	//}
-	//
-	//authHeader, ok := req.Attributes.Request.Http.Headers["authorization"]
-	//var splitToken []string
-	//
-	//if ok {
-	//	splitToken = strings.Split(authHeader, "Bearer ")
-	//}
-	//
-	//log.Println("Auth header= " + authHeader)
-	//if len(splitToken) == 2 {
-	//	log.Println("Split token: " + splitToken[1])
-	//}
+	b, err := json.MarshalIndent(req.Attributes.Request.Http.Headers, "", "  ")
+	if err == nil {
+		log.Println("Inbound Headers: ")
+		log.Println(string(b))
+	}
+
+	ct, err := json.MarshalIndent(req.Attributes.ContextExtensions, "", "  ")
+	if err == nil {
+		log.Println("Context Extensions: ")
+		log.Println(string(ct))
+	}
+
+	authHeader, ok := req.Attributes.Request.Http.Headers["authorization"]
+	var splitToken []string
+
+	if ok {
+		splitToken = strings.Split(authHeader, "Bearer ")
+	}
+
+	log.Println("Auth header= " + authHeader)
+	if len(splitToken) == 2 {
+		log.Println("Split token: " + splitToken[1])
+	}
+
+	myhttp := req.GetAttributes().GetRequest().GetHttp()
+	uri := myhttp.GetPath()
+	log.Println(">>> url() >>  ", uri)
+	httpMethod := myhttp.GetMethod()
+	log.Println(">>> GetMethod() >>  ", httpMethod)
+
+	tempProtocol := myhttp.GetProtocol()
+	httpProtocol, httpVersion := split(tempProtocol, "/")
+	log.Println(">>> 01() >>  ", httpProtocol)
+	log.Println(">>> 02() >>  ", httpVersion)
+
+	clientSocket := myhttp.GetHost()
+	clientLink, tempPort := split(clientSocket, ":")
+	clientPort, _ := strconv.Atoi(tempPort)
+	log.Println(">>> 01() >>  ", clientLink)
+	log.Println(">>> 02() >>  ", clientPort)
+
+	serverSocket := myhttp.GetHost()
+	serverLink, dataPort := split(serverSocket, ":")
+	serverPort, _ := strconv.Atoi(dataPort)
+	log.Println(">>> 01() >>  ", serverLink)
+	log.Println(">>> 02() >>  ", serverPort)
+
+	inter := modsec(uri, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	if inter > 0 {
+		log.Printf("==== Mod Security Blocked! ====")
+
+		// 400 BadRequest - Permission Denied in Response payload
+		return &auth.CheckResponse{
+			Status: &rpcstatus.Status{
+				Code: int32(rpc.PERMISSION_DENIED),
+			},
+			HttpResponse: &auth.CheckResponse_DeniedResponse{
+				DeniedResponse: &auth.DeniedHttpResponse{
+					Status: &envoy_type.HttpStatus{
+						Code: envoy_type.StatusCode_BadRequest,
+					},
+					Body: "PERMISSION_DENIED",
+				},
+			},
+		}, nil
+	}
 
 	log.Println("Auth Server Check() method -end-")
 
@@ -76,36 +122,6 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 			},
 		},
 	}, nil
-
-	// 401 Unauthorized - Permission Denied in Response payload
-	//return &auth.CheckResponse{
-	//	Status: &rpcstatus.Status{
-	//		Code: int32(rpc.PERMISSION_DENIED),
-	//	},
-	//	HttpResponse: &auth.CheckResponse_DeniedResponse{
-	//		DeniedResponse: &auth.DeniedHttpResponse{
-	//			Status: &envoy_type.HttpStatus{
-	//				Code: envoy_type.StatusCode_BadRequest,
-	//			},
-	//			Body: "PERMISSION_DENIED",
-	//		},
-	//	},
-	//}, nil
-
-	// 401 Unauthorized - custom message in Response payload
-	//return &auth.CheckResponse{
-	//	Status: &rpcstatus.Status{
-	//		Code: int32(rpc.UNAUTHENTICATED),
-	//	},
-	//	HttpResponse: &auth.CheckResponse_DeniedResponse{
-	//		DeniedResponse: &auth.DeniedHttpResponse{
-	//			Status: &envoy_type.HttpStatus{
-	//				Code: envoy_type.StatusCode_Unauthorized,
-	//			},
-	//			Body: "Authorization Header malformed or not provided",
-	//		},
-	//	},
-	//}, nil
 }
 
 func split(input, delim string) (left, right string) {
