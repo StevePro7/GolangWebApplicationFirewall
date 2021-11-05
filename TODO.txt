@@ -1,0 +1,14 @@
+TODO
+05/11/2021
+
+
+01.
+OkHttpResponse
+external_auth.pb.go
+
+is there an example of the HTTP response payload for this object in
+app-policy-private
+
+package envoy_service_auth_v3
+alias in grpc_server.go
+auth "github.com/envoyproxy/go-control-plane/envoy/service/auth/v3"
