@@ -25,7 +25,7 @@ Method  launch 3x terminals:
 01. Terminal    http server
 cd ~/path/to/backend_server
 sudo fuser -k 11000/tcp
-go run main.go
+go run http_server.go
 
 02. GoLand      auth server
 cd cd ~/path/to/authz_server

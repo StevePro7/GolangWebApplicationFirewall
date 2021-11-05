@@ -74,8 +74,9 @@ func (a *AuthorizationServer) Check(_ context.Context, req *auth.CheckRequest) (
 	//log.Println(">>> GetBody() >>  ", myhttp.GetBody())
 	//log.Println(">>> GetRawBody() >>  ", myhttp.GetRawBody())
 
-	// TODO - is the same as previous
-	// e.g.
+	// example URLs
+	// /
+	// /test/artists.php
 	// /test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 	uri := myhttp.GetPath()
