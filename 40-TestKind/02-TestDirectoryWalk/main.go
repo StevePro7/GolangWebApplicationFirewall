@@ -1,5 +1,8 @@
 package main
 
+// #include "test.c"
+import "C"
+
 import (
 	"encoding/json"
 	"fmt"
@@ -64,6 +67,16 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 		fmt.Println("next file = '" + file + "'")
 	}
 	log.Println("iterate -end-")
+
+	log.Println("Call C code start")
+	csize := C.int(len(files))
+	cargs := C.makeCharArray(csize)
+	defer C.freeCharArray(cargs, csize)
+	for i, s := range files {
+		C.setArrayString(cargs, C.CString(s), C.int(i))
+	}
+	C.processArrayString(cargs, csize)
+	log.Println("Call C code -end-")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
