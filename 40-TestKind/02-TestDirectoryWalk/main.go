@@ -31,6 +31,8 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 
 	log.Println("Directory walk start")
 
+	var files []string
+
 	root := "/etc/config/"
 	//root := "./config/"
 	items, _ := ioutil.ReadDir(root)
@@ -50,11 +52,18 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 		// handle file there
 		//fileName := item.Name()
 		fileName := root + item.Name()
+		files = append(files, fileName)
 		fmt.Println(fileName)
 		//}
 	}
 
 	log.Println("Directory walk -end-")
+
+	log.Println("iterate start")
+	for _, file := range files {
+		fmt.Println("next file = '" + file + "'")
+	}
+	log.Println("iterate -end-")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
