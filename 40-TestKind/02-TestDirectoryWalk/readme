@@ -8,6 +8,10 @@ C API
 https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/20-Test_K8s/90-Test_Slice_CharArray/main.go
 
 Dockerfile
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/10-Test/45-TestAPI_CgoKubernetes/Dockerfile
+
+Deployment
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/30-Test_ConfigMap/10-ModSecDirInt
 
 01. local
 curl http://localhost:3080
@@ -22,20 +26,24 @@ docker run --rm -it  -p 3080:3080 webapidockerkind:latest
 copy YAML files from here
 /home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/40-Test/01-XXXX
 
-docker build -t webapidockerkind:latest .
-kind load docker-image webapidockerkind:latest
+BEFORE
+//docker build -t webapidockerkind:latest .
+//kind load docker-image webapidockerkind:latest
+
+docker build -t stevepro/mytestapi:10.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:10.0
 
 04. configmap
 aa. single file
-kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+//kubectl create configmap myconfigmap --from-file=modsecdefault.conf
 
 ab. multiple files in single directory
 kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
 
 
 05. deployment
-kubectl apply -f k8s-deployment.yaml
-kubectl apply -f k8s-service.yaml
+kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
 
 
 kubectl get nodes -o wide       172.18.0.2
@@ -45,5 +53,5 @@ curl http://172.18.0.2:30457/test/artists.php
 
 
 06. cleanup
-kubectl delete -f Service.yaml
-kubectl delete -f Deployment.yaml
+kubectl apply -f Service.yaml
+kubectl apply -f Deployment.yaml
