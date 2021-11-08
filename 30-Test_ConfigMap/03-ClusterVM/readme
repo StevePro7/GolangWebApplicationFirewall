@@ -32,7 +32,10 @@ kind load docker-image stevepro/testwebapi:1.0
 
 
 04. configmap
+aa. single file
 kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+
+ab. multiple files in single directory
 kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
 
 05. deployment
