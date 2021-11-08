@@ -1,0 +1,16 @@
+KinD cluster
+08/11/2021
+
+kind create cluster
+
+want to replicate MiniKube
+simple web api
+docker
+kind
+
+
+01. locally
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
