@@ -31,7 +31,8 @@ BEFORE
 //kind load docker-image webapidockerkind:latest
 
 docker build -t stevepro/mytestapi:10.0 .
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:10.0
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:10.0
+kind load docker-image stevepro/mytestapi:10.0
 
 04. configmap
 aa. single file
@@ -47,9 +48,9 @@ kubectl apply -f Service.yaml
 
 
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             30457
-curl http://172.18.0.2:30457/
-curl http://172.18.0.2:30457/test/artists.php
+kubectl get service             32384
+curl http://172.18.0.2:32384/
+curl http://172.18.0.2:32384/test/artists.php
 
 
 06. cleanup
