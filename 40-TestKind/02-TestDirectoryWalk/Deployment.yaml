@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testwebapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testwebapi
+  template:
+    metadata:
+      labels:
+        app: testwebapi
+    spec:
+      containers:
+        - name: testwebapi
+          image: stevepro/mytestapi:10.0
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - mountPath: /etc/config/
+              name: volumeconfig
+              readOnly: True
+      volumes:
+        - name: volumeconfig
+          configMap:
+            name: myconfigmap
