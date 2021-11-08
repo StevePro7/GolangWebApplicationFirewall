@@ -54,5 +54,5 @@ curl http://172.18.0.2:32384/test/artists.php
 
 
 06. cleanup
-kubectl apply -f Service.yaml
-kubectl apply -f Deployment.yaml
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
