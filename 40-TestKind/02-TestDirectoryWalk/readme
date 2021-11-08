@@ -1,0 +1,14 @@
+Combine iterate directory walk and pass into C API
+08/11/2021
+
+
+Directory Walk
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/30-Test_ConfigMap/05-WebAPI_Dirs/main.go
+
+C API
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/20-Test_K8s/90-Test_Slice_CharArray/main.go
+
+
+01. local
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php

@@ -11,7 +11,11 @@ curl http://localhost:3080/test/artists.php
 
 02. docker
 Copy + paste Dockerfile
-Right click 05webtestdir:latest | Run interactive
+//Right click 05webtestdir:latest | Run interactive
+
+docker build -t stevepro/testwebapi:2.0 .
+docker run -p 3080:3080 stevepro/testwebapi:2.0
+
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
 
@@ -21,20 +25,34 @@ minikube docker-env
 eval $(minikube -p minikube docker-env)
 docker build -t stevepro/testwebapi:2.0 .
 
+
+03b. kind
+kind create cluster
+docker build -t stevepro/testwebapi:2.0 .
+kind load docker-image stevepro/testwebapi:2.0
+
+
 04. configmap
+aa. single file
 kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+
+ab. multiple files in single directory
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
 
 05. deployment
 kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
 
-06. service
-kubectl apply -f Service.yml
 
-minikube service testwebapi-service --url
-http://192.168.49.2:32611
+kubectl get nodes -o wide       172.18.0.2
+kubectl get service             31923
+curl http://172.18.0.2:31923/
+curl http://172.18.0.2:31923/test/artists.php
 
-curl http://192.168.49.2:32611
-curl http://192.168.49.2:32611/test/artists.php
+
+06. cleanup
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
 
 
 kubectl create configmap myconfigmap2 --from-file=REQUEST-942-APPLICATION-ATTACK-SQLI.conf
