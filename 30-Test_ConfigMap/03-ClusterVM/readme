@@ -8,8 +8,11 @@ go run main.go
 curl http://localhost:8081/test
 
 02. docker
-Right click Dockerfile | Build image... | 01example:latest
-Right click 01example:latest | Run interactive
+//Right click Dockerfile | Build image... | 01example:latest
+docker build -t stevepro/testwebapi:1.0 .
+
+//Right click 01example:latest | Run interactive
+docker run --rm -it  -p 8081:8081/tcp stevepro/testwebapi:1.0
 curl http://localhost:8081/test
 
 03. kubernetes
@@ -21,8 +24,22 @@ kubectl apply -f Kubernetes.yaml
 minikube service testwebapi-service --url
 curl http://192.168.49.2:32143/test
 
+
+03b. kind
+kind create cluster
+docker build -t stevepro/testwebapi:1.0 .
+kind load docker-image stevepro/testwebapi:1.0
+
+
 04. configmap
 kubectl create configmap myconfigmap --from-file=modsecdefault.conf
 
 05. deployment
 kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
+
+
+kubectl get nodes -o wide       172.18.0.2
+kubectl get service             32388
+curl http://172.18.0.2:30581/
+curl http://172.18.0.2:30581/test
