@@ -33,6 +33,7 @@ kind load docker-image stevepro/testwebapi:1.0
 
 04. configmap
 kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
 
 05. deployment
 kubectl apply -f Deployment.yaml
@@ -43,3 +44,8 @@ kubectl get nodes -o wide       172.18.0.2
 kubectl get service             32388
 curl http://172.18.0.2:30581/
 curl http://172.18.0.2:30581/test
+
+
+06. cleanup
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
