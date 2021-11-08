@@ -14,3 +14,62 @@ go run main.go
 curl http://localhost:3080
 curl http://localhost:3080/test/artists.php
 curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+02. docker
+copy Dockerfile from here
+/home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/10-Test/20-TestAPI_Docker
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/10-Test/20-TestAPI_Docker/Dockerfile
+
+VS Code
+right click Dockerfile  build image 01webapidockerkind   latest
+right click image       01webapidockerkind   latest         Run interactive
+
+OR
+docker build -t webapidockerkind:latest .
+
+curl http://localhost:3080/
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+03. kind
+copy YAML files from here
+/home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/10-Test/20-TestAPI_Docker
+
+docker build -t webapidockerkind:latest .
+kind load docker-image webapidockerkind:latest
+
+kubectl apply -f k8s-deployment.yml
+
+kubectl apply -f k8s-service.yml
+
+OR
+kubectl expose deployment webapidockerkind --type=NodePort --name=webapidockerkind-service
+
+How do I know what IP address to curl?
+
+Reference:
+https://kubernetes.io/docs/tasks/access-application-cluster/service-access-application-cluster
+
+Get the public IP address of one of your nodes that is running the pod
+
+kubectl get nodes -o wide
+NAME                 STATUS   ROLES                  AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION           CONTAINER-RUNTIME
+kind-control-plane   Ready    control-plane,master   2d20h   v1.21.1   172.18.0.2    <none>        Ubuntu 21.04   5.14.14-051414-generic   containerd://1.5.2
+
+kubectl get svc
+NAME                       TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+kubernetes                 ClusterIP   10.96.0.1     <none>        443/TCP          2d20h
+webapidockerkind-service   NodePort    10.96.81.31   <none>        3080:30590/TCP   7m34s
+
+
+Use the combination of kind-control-plane INTERNAL-IP [172.18.0.2] and the NodePort [30590]
+i.e.
+curl http://172.18.0.2:30590/
+curl http://172.18.0.2:30590/test/artists.php
+curl http://172.18.0.2:30590/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+In another terminal window tail the logs for the underlying pod
+k logs -f webapidockerkind-6bbbf98984-6g87h
