@@ -26,7 +26,7 @@ static void processArrayString(char **array, int size) {
 
     for( i = 0; i < size; i++ )
     {
-        printf( "%s\n", ( array[ i ] ) );
+        printf( "code file '%s'\n", ( array[ i ] ) );
     }
 
     printf("processArrayString -end-\n");

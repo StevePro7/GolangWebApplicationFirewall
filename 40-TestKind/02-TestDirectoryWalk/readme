@@ -30,9 +30,9 @@ BEFORE
 //docker build -t webapidockerkind:latest .
 //kind load docker-image webapidockerkind:latest
 
-docker build -t stevepro/mytestapi:10.0 .
-//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:10.0
-kind load docker-image stevepro/mytestapi:10.0
+docker build -t stevepro/mytestapi:11.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:11.0
+kind load docker-image stevepro/mytestapi:11.0
 
 04. configmap
 aa. single file
@@ -47,10 +47,12 @@ kubectl apply -f Deployment.yaml
 kubectl apply -f Service.yaml
 
 
+ kubectl logs -f testwebapi-7c979f874d-wpjmg
+
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             32384
-curl http://172.18.0.2:32384/
-curl http://172.18.0.2:32384/test/artists.php
+kubectl get service             31657/TCP
+curl http://172.18.0.2:31657/
+curl http://172.18.0.2:31657/test/artists.php
 
 
 06. cleanup
