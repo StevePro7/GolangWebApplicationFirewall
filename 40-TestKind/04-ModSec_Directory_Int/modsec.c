@@ -1,5 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "modsecurity/modsecurity.h"
+#include "modsecurity/rules_set.h"
+#include "modsecurity/transaction.h"
+#include "modsecurity/intervention.h"
+
+ModSecurity *modsec = NULL;
+RulesSet *rules = NULL;
 
 static char **makeCharArray(int size) {
     fprintf(stderr, "  C makeCharArray\n");
@@ -20,16 +27,26 @@ static void setArrayString(char **a, char *s, int n) {
     fprintf(stderr, "setArrayString [%d] = '%s' -end-\n", n, s);
 }
 
+// Function was previously MyCInit()
 static void processArrayString(char **array, int size) {
     int i = 0;
     char *fileName;
-    fprintf(stderr, "  C processArrayString start [%d]\n", i);
+    const char *error = NULL;
 
-    for( i = 0; i < size; i++ )
+    fprintf(stderr, "  C processArrayString start\n");
+    if (modsec == NULL)
     {
-        fileName = array[ i ] ;
-        //fprintf(stderr, "  C code file '%s' [%d]\n", ( array[ i ] ), i );
-        fprintf(stderr, "  C code file!! '%s'\n", fileName );
+        fprintf(stderr, "  C msc_init\n");
+        modsec = msc_init();
+
+        fprintf(stderr, "  C msc_create_rules_set\n");
+        rules = msc_create_rules_set();
+
+        for( i = 0; i < size; i++ )
+        {
+            fileName = array[ i ] ;
+            fprintf(stderr, "  C code file '%s'\n", fileName );
+        }
     }
 
     fprintf(stderr, "  C processArrayString -end-\n");

@@ -1,5 +1,7 @@
 package main
 
+// #cgo CPPFLAGS: -I/usr/local/modsecurity/include
+// #cgo LDFLAGS: /usr/local/modsecurity/lib/libmodsecurity.so
 // #include "modsec.c"
 import "C"
 
