@@ -42,7 +42,6 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 		fileName := root + item.Name()
 		files = append(files, fileName)
 	}
-
 	log.Println("Directory walk -end-")
 
 	log.Println("iterate start")
@@ -51,19 +50,19 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 	}
 	log.Println("iterate -end-")
 
-	//log.Println("Call C code start")
-	//csize := C.int(len(files))
-	//cargs := C.makeCharArray(csize)
-	//defer C.freeCharArray(cargs, csize)
-	//for i, s := range files {
-	//	C.setArrayString(cargs, C.CString(s), C.int(i))
-	//}
-	//C.processArrayString(cargs, csize)
-	//log.Println("Call C code -end-")
+	log.Println("Call C code start")
+	csize := C.int(len(files))
+	cargs := C.makeCharArray(csize)
+	defer C.freeCharArray(cargs, csize)
+	for i, s := range files {
+		C.setArrayString(cargs, C.CString(s), C.int(i))
+	}
+	C.processArrayString(cargs, csize)
+	log.Println("Call C code -end-")
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "Test Func...!!!!"
+	data := "Test Func...!!!! XYZ"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
