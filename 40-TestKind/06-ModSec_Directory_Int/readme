@@ -1,0 +1,69 @@
+API
+22/10/2021
+
+cd 10-TestAPI/
+go mod init waftesting
+touch main.go
+go get "github.com/gorilla/mux"
+
+
+00. Goland
+GoLand
+Edit configurations
+Package =>  File
+
+Edit configurations | Environment | click "+"
+Name    LD_LIBRARY_PATH
+Value   /usr/local/modsecurity/lib/
+
+
+01. locally
+F5 or
+go run main.go
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+
+02. docker
+docker build -t webapidockerkind:latest .
+docker run --rm -it  -p 3080:3080 webapidockerkind:latest
+
+03. kind
+copy YAML files from here
+/home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/40-Test/01-XXXX
+
+BEFORE
+//docker build -t webapidockerkind:latest .
+//kind load docker-image webapidockerkind:latest
+
+docker build -t stevepro/mytestapi:20.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:20.0
+kind load docker-image stevepro/mytestapi:20.0
+
+04. configmap
+aa. single file
+//kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+
+ab. multiple files in single directory
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configsII
+
+
+05. deployment
+kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
+
+kubectl get po | grep testwebapi
+kubectl logs -f testwebapi-749c96b8dc-vdzsk
+
+kubectl get nodes -o wide       172.18.0.2
+kubectl get service             31941/TCP
+curl http://172.18.0.2:32267/
+curl http://172.18.0.2:32267/test/artists.php
+curl http://172.18.0.2:32267/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+
+06. cleanup
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
+
+kubectl delete configmap myconfigmap

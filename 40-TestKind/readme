@@ -1,0 +1,13 @@
+readme
+22/11/2021
+
+04
+integrate directory walk with modsec but run locally only
+i.e. F5 debug
+
+05
+copy 04 but deploy and run in Kind cluster
+NB: each GET request to test/artists.php will load rules
+
+06.
+copy 05 but init rule load function once only
