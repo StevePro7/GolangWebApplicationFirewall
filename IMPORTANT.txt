@@ -1,0 +1,17 @@
+IMPORTANTTODO
+21/11/2021
+
+
+In order to include logging for BOTH Go and C you must use the following
+
+Go
+log.Println()
+
+C
+#include <stdio.h>
+fprintf(stderr, "intervention=%i\n", inter);
+
+
+References:
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/00-Test/07-Test_NewCgoIII/modsec.c
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/40-TestKind/02-TestDirectoryWalk/test.c
