@@ -37,9 +37,9 @@ BEFORE
 //docker build -t webapidockerkind:latest .
 //kind load docker-image webapidockerkind:latest
 
-docker build -t stevepro/mytestapi:12.0 .
-//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:12.0
-kind load docker-image stevepro/mytestapi:12.0
+docker build -t stevepro/mytestapi:20.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:20.0
+kind load docker-image stevepro/mytestapi:20.0
 
 04. configmap
 aa. single file
