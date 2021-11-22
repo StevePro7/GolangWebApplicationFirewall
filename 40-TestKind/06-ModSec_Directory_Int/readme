@@ -37,9 +37,9 @@ BEFORE
 //docker build -t webapidockerkind:latest .
 //kind load docker-image webapidockerkind:latest
 
-docker build -t stevepro/mytestapi:20.0 .
-//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:20.0
-kind load docker-image stevepro/mytestapi:20.0
+docker build -t stevepro/mytestapi:22.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:22.0
+kind load docker-image stevepro/mytestapi:22.0
 
 04. configmap
 aa. single file
@@ -54,13 +54,13 @@ kubectl apply -f Deployment.yaml
 kubectl apply -f Service.yaml
 
 kubectl get po | grep testwebapi
-kubectl logs -f testwebapi-749c96b8dc-vdzsk
+kubectl logs -f testwebapi-6db697d84d-xc2f2
 
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             31941/TCP
-curl http://172.18.0.2:32267/
-curl http://172.18.0.2:32267/test/artists.php
-curl http://172.18.0.2:32267/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+kubectl get service             31664
+curl http://172.18.0.2:31664/
+curl http://172.18.0.2:31664/test/artists.php
+curl http://172.18.0.2:31664/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 06. cleanup
 kubectl delete -f Service.yaml
