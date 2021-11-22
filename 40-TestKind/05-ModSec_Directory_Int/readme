@@ -26,37 +26,44 @@ curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0
 
 
 02. docker
-docker build -t stevepro/mytestapi:5.5 .
-docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:5.5
+docker build -t webapidockerkind:latest .
+docker run --rm -it  -p 3080:3080 webapidockerkind:latest
+
+03. kind
+copy YAML files from here
+/home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/40-Test/01-XXXX
+
+BEFORE
+//docker build -t webapidockerkind:latest .
+//kind load docker-image webapidockerkind:latest
+
+docker build -t stevepro/mytestapi:12.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:12.0
+kind load docker-image stevepro/mytestapi:12.0
+
+04. configmap
+aa. single file
+//kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+
+ab. multiple files in single directory
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
 
 
-03. kubernetes
-Launch terminal
+05. deployment
+kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
 
-minikube docker-env
-eval $(minikube -p minikube docker-env)
+kubectl get po | grep testwebapi
+kubectl logs -f testwebapi-749c96b8dc-vdzsk
 
-IMPORTANT
-ensure that the following returns empty!
-docker ps | grep steve
-
-~/GitHub/StevePro7/GolangWebApplicationFirewall/55-TestAPI_Docker
-docker build -t stevepro/mytestapi:5.5 .
-
-kubectl apply -f k8s-deployment.yml
-kubectl apply -f k8s-service.yml
-
-minikube service mytestapi-service --url
-e.g.
-http://192.168.49.2:30985
-http://192.168.49.2:30523
+kubectl get nodes -o wide       172.18.0.2
+kubectl get service             31941/TCP
+curl http://172.18.0.2:31941/
+curl http://172.18.0.2:31941/test/artists.php
 
 
-curl http://192.168.49.2:30985/
-curl http://192.168.49.2:30523/test/artists.php
-curl http://192.168.49.2:30523/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+06. cleanup
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
 
-
-kubectl delete -f k8s-service.yml
-kubectl delete -f k8s-deployment.yml
-
+kubectl delete configmap myconfigmap
