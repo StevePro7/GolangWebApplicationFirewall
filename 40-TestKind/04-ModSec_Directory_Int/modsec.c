@@ -66,16 +66,16 @@ int MyCProcess(char *uri, char *http_method, char *http_protocol, char *http_ver
     fprintf(stderr, "  C Client socket='%s:%d'\n", client_link, client_port);
     fprintf(stderr, "  C Server socket='%s:%d'\n", server_link, server_port);
 
-    fprintf(stderr, "  C msc_process_connection()\n", uri);
+    fprintf(stderr, "  C msc_process_connection()\n");
     msc_process_connection(transaction, client_link, client_port, server_link, server_port);
 
-    fprintf(stderr, "  C msc_process_uri()\n", uri);
+    fprintf(stderr, "  C msc_process_uri()\n");
     msc_process_uri(transaction, uri, http_protocol, http_version);
 
-    fprintf(stderr, "  C msc_process_request_headers()\n", uri);
+    fprintf(stderr, "  C msc_process_request_headers()\n");
     msc_process_request_headers(transaction);
 
-    fprintf(stderr, "  C msc_process_request_body()\n", uri);
+    fprintf(stderr, "  C msc_process_request_body()\n");
     msc_process_request_body(transaction);
 
     ModSecurityIntervention intervention;
