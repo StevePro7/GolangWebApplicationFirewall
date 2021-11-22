@@ -56,7 +56,7 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 		//fileName := item.Name()
 		fileName := root + item.Name()
 		files = append(files, fileName)
-		fmt.Println(fileName)
+		//fmt.Println(fileName)
 		//}
 	}
 

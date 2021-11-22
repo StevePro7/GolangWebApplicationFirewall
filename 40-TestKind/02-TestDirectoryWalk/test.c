@@ -2,32 +2,32 @@
 #include <stdlib.h>
 
 static char **makeCharArray(int size) {
-    printf( "makeCharArray\n");
+    fprintf(stderr, "  C makeCharArray %i\n", size);
     return calloc(sizeof(char*), size);
 }
 
 static void freeCharArray(char **a, int size) {
     int i;
-    printf( "freeCharArray\n");
+    fprintf(stderr, "  C freeCharArray %d\n", size);
     for (i = 0; i < size; i++)
         free(a[i]);
     free(a);
 }
 
 static void setArrayString(char **a, char *s, int n) {
-    printf("setArrayString [%d] = '%s' start\n", n, s);
+    fprintf(stderr, "  C setArrayString [%d] = '%s' start\n", n, s);
     a[n] = s;
-    printf("setArrayString [%d] = '%s' -end-\n", n, s);
+    fprintf(stderr, "  C setArrayString [%d] = '%s' -end-\n", n, s);
 }
 
 static void processArrayString(char **array, int size) {
     int i = 0;
-    printf("processArrayString start\n");
+    fprintf(stderr, "  C processArrayString start [%d]\n", i);
 
     for( i = 0; i < size; i++ )
     {
-        printf( "code file '%s'\n", ( array[ i ] ) );
+        fprintf(stderr, "  C code file '%s' [%d]\n", ( array[ i ] ), i );
     }
 
-    printf("processArrayString -end-\n");
+    fprintf(stderr, "  C processArrayString -end- %i\n", i);
 }
