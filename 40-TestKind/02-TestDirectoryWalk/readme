@@ -46,15 +46,17 @@ kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/conf
 kubectl apply -f Deployment.yaml
 kubectl apply -f Service.yaml
 
-
- kubectl logs -f testwebapi-7c979f874d-wpjmg
+kubectl get po | grep testwebapi
+kubectl logs -f testwebapi-749c96b8dc-vdzsk
 
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             31657/TCP
-curl http://172.18.0.2:31657/
-curl http://172.18.0.2:31657/test/artists.php
+kubectl get service             31941/TCP
+curl http://172.18.0.2:31941/
+curl http://172.18.0.2:31941/test/artists.php
 
 
 06. cleanup
 kubectl delete -f Service.yaml
 kubectl delete -f Deployment.yaml
+
+kubectl delete configmap myconfigmap

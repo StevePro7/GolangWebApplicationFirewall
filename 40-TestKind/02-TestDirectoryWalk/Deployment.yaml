@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: testwebapi
-          image: stevepro/mytestapi:11.0
+          image: stevepro/mytestapi:12.0
           imagePullPolicy: Never
           resources:
             limits:
