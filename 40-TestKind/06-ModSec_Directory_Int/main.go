@@ -33,34 +33,8 @@ func HomeFunc(w http.ResponseWriter, _ *http.Request) {
 	log.Print("HomeFunc -end-")
 }
 
-func modsec(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
-	log.Println("modsec start ", url)
-	Curi := C.CString(url)
-	ChttpMethod := C.CString(httpMethod)
-	ChttpProtocol := C.CString(httpProtocol)
-	ChttpVersion := C.CString(httpVersion)
-	CclientLink := C.CString(clientLink)
-	CclientPort := C.int(clientPort)
-	CserverLink := C.CString(serverLink)
-	CserverPort := C.int(serverPort)
-
-	defer C.free(unsafe.Pointer(Curi))
-	defer C.free(unsafe.Pointer(ChttpMethod))
-	defer C.free(unsafe.Pointer(ChttpProtocol))
-	defer C.free(unsafe.Pointer(ChttpVersion))
-	defer C.free(unsafe.Pointer(CclientLink))
-	defer C.free(unsafe.Pointer(CserverLink))
-
-	start := time.Now()
-	inter := int(C.MyCProcess(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
-	elapsed := time.Since(start)
-	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
-	log.Println("modsec -end-")
-	return inter
-}
-
-func TestFunc(w http.ResponseWriter, r *http.Request) {
-	log.Print("TestFunc start")
+func InitModSec() {
+	log.Println("initModSec start")
 
 	// 01. Directory walk
 	log.Println("Directory walk start")
@@ -92,12 +66,45 @@ func TestFunc(w http.ResponseWriter, r *http.Request) {
 	C.processArrayString(cargs, csize)
 	log.Println("Call C code -end-")
 
+	log.Println("initModSec -end-")
+}
+
+func modsec(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
+	log.Println("modsec start ", url)
+	Curi := C.CString(url)
+	ChttpMethod := C.CString(httpMethod)
+	ChttpProtocol := C.CString(httpProtocol)
+	ChttpVersion := C.CString(httpVersion)
+	CclientLink := C.CString(clientLink)
+	CclientPort := C.int(clientPort)
+	CserverLink := C.CString(serverLink)
+	CserverPort := C.int(serverPort)
+
+	defer C.free(unsafe.Pointer(Curi))
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	defer C.free(unsafe.Pointer(ChttpProtocol))
+	defer C.free(unsafe.Pointer(ChttpVersion))
+	defer C.free(unsafe.Pointer(CclientLink))
+	defer C.free(unsafe.Pointer(CserverLink))
+
+	start := time.Now()
+	inter := int(C.MyCProcess(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
+	elapsed := time.Since(start)
+	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
+	log.Println("modsec -end-")
+	return inter
+}
+
+func TestFunc(w http.ResponseWriter, r *http.Request) {
+	log.Print("TestFunc start")
+
 	// 03. ModSec check
 	log.Printf("req.URL : \"%s\"", r.URL)
 	log.Printf("Methods : \"%s\"", r.Method)
 
 	uri := r.URL.String()
-	httpMethod := "GET"
+	//httpMethod := "GET"
+	httpMethod := r.Method
 
 	//protocol := "HTTP/1.1"
 	httpProtocol := "HTTP"
@@ -140,6 +147,9 @@ func main() {
 	gmux := mux.NewRouter()
 	gmux.HandleFunc("/", HomeFunc).Methods("GET")
 	gmux.HandleFunc("/test/artists.php", TestFunc).Methods("GET")
+
+	log.Printf("InitModSec...")
+	InitModSec()
 
 	log.Printf("Listening...")
 	if err := http.ListenAndServe(bind, gmux); err != nil {
