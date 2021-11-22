@@ -54,13 +54,13 @@ kubectl apply -f Deployment.yaml
 kubectl apply -f Service.yaml
 
 kubectl get po | grep testwebapi
-kubectl logs -f testwebapi-6db697d84d-xc2f2
+kubectl logs -f testwebapi-84fb95b7c4-tsbnf
 
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             31664
-curl http://172.18.0.2:31664/
-curl http://172.18.0.2:31664/test/artists.php
-curl http://172.18.0.2:31664/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+kubectl get service             31285
+curl http://172.18.0.2:31285/
+curl http://172.18.0.2:31285/test/artists.php
+curl http://172.18.0.2:31285/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 06. cleanup
 kubectl delete -f Service.yaml
