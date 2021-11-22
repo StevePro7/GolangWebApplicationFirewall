@@ -12,6 +12,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
+	"unsafe"
 )
 
 func HomeFunc(w http.ResponseWriter, _ *http.Request) {
@@ -31,9 +33,36 @@ func HomeFunc(w http.ResponseWriter, _ *http.Request) {
 	log.Print("HomeFunc -end-")
 }
 
-func TestFunc(w http.ResponseWriter, _ *http.Request) {
+func modsec(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
+	log.Println("modsec start ", url)
+	Curi := C.CString(url)
+	ChttpMethod := C.CString(httpMethod)
+	ChttpProtocol := C.CString(httpProtocol)
+	ChttpVersion := C.CString(httpVersion)
+	CclientLink := C.CString(clientLink)
+	CclientPort := C.int(clientPort)
+	CserverLink := C.CString(serverLink)
+	CserverPort := C.int(serverPort)
+
+	defer C.free(unsafe.Pointer(Curi))
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	defer C.free(unsafe.Pointer(ChttpProtocol))
+	defer C.free(unsafe.Pointer(ChttpVersion))
+	defer C.free(unsafe.Pointer(CclientLink))
+	defer C.free(unsafe.Pointer(CserverLink))
+
+	start := time.Now()
+	inter := int(C.MyCProcess(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
+	elapsed := time.Since(start)
+	log.Printf("modsec()=%d, elapsed: %s", inter, elapsed)
+	log.Println("modsec -end-")
+	return inter
+}
+
+func TestFunc(w http.ResponseWriter, r *http.Request) {
 	log.Print("TestFunc start")
 
+	// 01. Directory walk
 	log.Println("Directory walk start")
 	var files []string
 
@@ -52,6 +81,7 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 	}
 	log.Println("iterate -end-")
 
+	// 02. Load rules via C code
 	log.Println("Call C code start")
 	csize := C.int(len(files))
 	cargs := C.makeCharArray(csize)
@@ -62,9 +92,34 @@ func TestFunc(w http.ResponseWriter, _ *http.Request) {
 	C.processArrayString(cargs, csize)
 	log.Println("Call C code -end-")
 
+	// 03. ModSec check
+	log.Printf("req.URL : \"%s\"", r.URL)
+	log.Printf("Methods : \"%s\"", r.Method)
+
+	uri := r.URL.String()
+	httpMethod := "GET"
+
+	//protocol := "HTTP/1.1"
+	httpProtocol := "HTTP"
+	httpVersion := "1.1"
+
+	//clientSocket := "127.0.0.1:80"
+	clientLink := "127.0.0.1"
+	clientPort := 80
+	//serverSocket := "127.0.0.1:80"
+	serverLink := "127.0.0.1"
+	serverPort := 80
+
+	inter := modsec(uri, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	if inter > 0 {
+		log.Printf("==== Mod Security Blocked! ====")
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	data := "Test Func...!!!! XYZ"
+	data := "Test Func...!!!! ABC"
 	err := json.NewEncoder(w).Encode(data)
 	if err != nil {
 		_, err := fmt.Fprintf(w, "%s", err.Error())
