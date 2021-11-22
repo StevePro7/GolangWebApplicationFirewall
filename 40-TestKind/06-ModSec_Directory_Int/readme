@@ -46,7 +46,7 @@ aa. single file
 //kubectl create configmap myconfigmap --from-file=modsecdefault.conf
 
 ab. multiple files in single directory
-kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configsII
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configsIII
 
 
 05. deployment
@@ -57,13 +57,23 @@ kubectl get po | grep testwebapi
 kubectl logs -f testwebapi-84fb95b7c4-tsbnf
 
 kubectl get nodes -o wide       172.18.0.2
-kubectl get service             31285
-curl http://172.18.0.2:31285/
-curl http://172.18.0.2:31285/test/artists.php
-curl http://172.18.0.2:31285/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+kubectl get service             31500
+curl http://172.18.0.2:31500/
+curl http://172.18.0.2:31500/test/artists.php
+curl http://172.18.0.2:31830/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 06. cleanup
+30656
 kubectl delete -f Service.yaml
 kubectl delete -f Deployment.yaml
-
 kubectl delete configmap myconfigmap
+
+
+IMPORTANT
+the 2x files that will cause the SQL injection to be detected by ModSec are:
+- modsecdefault.conf
+- REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+
+if the 2x files are the following then SQL injection will not be detected by ModSec
+- crs-setup.conf
+- REQUEST-942-APPLICATION-ATTACK-SQLI.conf
