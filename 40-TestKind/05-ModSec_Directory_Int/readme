@@ -46,7 +46,7 @@ aa. single file
 //kubectl create configmap myconfigmap --from-file=modsecdefault.conf
 
 ab. multiple files in single directory
-kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configsII
 
 
 05. deployment
@@ -58,9 +58,9 @@ kubectl logs -f testwebapi-749c96b8dc-vdzsk
 
 kubectl get nodes -o wide       172.18.0.2
 kubectl get service             31941/TCP
-curl http://172.18.0.2:31941/
-curl http://172.18.0.2:31941/test/artists.php
-
+curl http://172.18.0.2:32267/
+curl http://172.18.0.2:32267/test/artists.php
+curl http://172.18.0.2:32267/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 06. cleanup
 kubectl delete -f Service.yaml
