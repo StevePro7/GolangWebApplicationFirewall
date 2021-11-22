@@ -30,7 +30,7 @@ static void setArrayString(char **a, char *s, int n) {
 // Function was previously MyCInit()
 static void processArrayString(char **array, int size) {
     int i = 0;
-    char *fileName;
+    const char *file;
     const char *error = NULL;
 
     fprintf(stderr, "  C processArrayString start\n");
@@ -44,8 +44,10 @@ static void processArrayString(char **array, int size) {
 
         for( i = 0; i < size; i++ )
         {
-            fileName = array[ i ] ;
-            fprintf(stderr, "  C code file '%s'\n", fileName );
+            file = array[ i ] ;
+            fprintf(stderr, "  C code file[%d] start '%s'\n", i, file );
+            msc_rules_add_file(rules, file, &error);
+            fprintf(stderr, "  C code file[%d] -end- '%s'\n", i, file );
         }
     }
 
