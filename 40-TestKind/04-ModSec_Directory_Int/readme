@@ -1,0 +1,62 @@
+Combine iterate directory walk and pass into C API
+08/11/2021
+
+Directory Walk
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/30-Test_ConfigMap/05-WebAPI_Dirs/main.go
+
+C API
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/20-Test_K8s/90-Test_Slice_CharArray/main.go
+
+Dockerfile
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/10-Test/45-TestAPI_CgoKubernetes/Dockerfile
+
+Deployment
+https://github.com/StevePro7/GolangWebApplicationFirewall/blob/main/30-Test_ConfigMap/10-ModSecDirInt
+
+01. local
+curl http://localhost:3080
+curl http://localhost:3080/test/artists.php
+
+
+02. docker
+docker build -t webapidockerkind:latest .
+docker run --rm -it  -p 3080:3080 webapidockerkind:latest
+
+03. kind
+copy YAML files from here
+/home/stevepro/GitHub/StevePro7/GolangWebApplicationFirewall/40-Test/01-XXXX
+
+BEFORE
+//docker build -t webapidockerkind:latest .
+//kind load docker-image webapidockerkind:latest
+
+docker build -t stevepro/mytestapi:12.0 .
+//docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:12.0
+kind load docker-image stevepro/mytestapi:12.0
+
+04. configmap
+aa. single file
+//kubectl create configmap myconfigmap --from-file=modsecdefault.conf
+
+ab. multiple files in single directory
+kubectl create configmap myconfigmap --from-file=/home/stevepro/Steven/YAML/configs
+
+
+05. deployment
+kubectl apply -f Deployment.yaml
+kubectl apply -f Service.yaml
+
+kubectl get po | grep testwebapi
+kubectl logs -f testwebapi-749c96b8dc-vdzsk
+
+kubectl get nodes -o wide       172.18.0.2
+kubectl get service             31941/TCP
+curl http://172.18.0.2:31941/
+curl http://172.18.0.2:31941/test/artists.php
+
+
+06. cleanup
+kubectl delete -f Service.yaml
+kubectl delete -f Deployment.yaml
+
+kubectl delete configmap myconfigmap
