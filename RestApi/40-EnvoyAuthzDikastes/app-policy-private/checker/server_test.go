@@ -19,5 +19,5 @@ func TestCheckNoStore(t *testing.T) {
 
 	//Expect(resp).To(BeNil())
 	Expect(err).To(BeNil())
-	Expect(resp.GetStatus().GetCode()).To(Equal(UNAVAILABLE))
+	Expect(resp.GetStatus().GetCode()).To(Equal(INTERNAL))
 }
