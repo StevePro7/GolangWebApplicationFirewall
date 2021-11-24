@@ -13,11 +13,18 @@ func TestCheckNoStore(t *testing.T) {
 	defer cancel()
 
 	uut := NewServer()
-	req := &authz.CheckRequest{}
+	req := &authz.CheckRequest{Attributes: &authz.AttributeContext{
+		Request: &authz.AttributeContext_Request{
+			Http: &authz.AttributeContext_HttpRequest{
+				Path: "/foo.com",
+			},
+		},
+	},
+	}
 
-	resp, err := uut.Check(ctx, req)
+	//resp, err := uut.Check(ctx, req)
+	path, err := uut.Check2(ctx, req)
 
-	//Expect(resp).To(BeNil())
 	Expect(err).To(BeNil())
-	Expect(resp.GetStatus().GetCode()).To(Equal(INTERNAL))
+	Expect(path).To(Equal("blah"))
 }

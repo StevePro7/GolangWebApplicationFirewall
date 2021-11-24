@@ -32,3 +32,10 @@ func (as *authServer) Check(ctx context.Context, req *authz.CheckRequest) (*auth
 
 	return &resp, nil
 }
+
+func (as *authServer) Check2(_ context.Context, req *authz.CheckRequest) (string, error) {
+
+	path := req.GetAttributes().GetRequest().GetHttp().GetPath()
+
+	return path, nil
+}
