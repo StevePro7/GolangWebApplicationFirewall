@@ -8,7 +8,15 @@ pretty much used the same / similar Makefile from app-policy public
 
 app-policy02
 extend 01 by introducing simplest CGO code
+
 IMPORTANT
 initially added the code to waf.c but got Linker errors
 I noticed that the bulk felix CGO code used header files
 so copied this model and worked OK - did not change Makefile
+
+IMPORTANT
+must have CGO_ENABLED=1 otherwise this will not
+make build
+
+
+app-policy03
