@@ -8,5 +8,7 @@ func MyGoAdd(x, y int) int {
 }
 
 func MyCGoAdd(x, y int) int {
-	return int(C.TheCAdd(x, y))
+	cx := C.int(x)
+	cy := C.int(y)
+	return int(C.TheCAdd(cx, cy))
 }
