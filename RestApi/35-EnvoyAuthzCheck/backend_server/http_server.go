@@ -19,7 +19,7 @@ func fronthandler(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(string(requestDump))
 	w.Header().Set("X-Custom-Header-From-Backend", "from backend")
-	fmt.Fprint(w, "ok")
+	//fmt.Fprint(w, "ok")
 }
 
 func main() {

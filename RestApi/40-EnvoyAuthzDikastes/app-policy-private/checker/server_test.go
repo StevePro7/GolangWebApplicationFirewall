@@ -17,9 +17,9 @@ func TestCheckNoStore(t *testing.T) {
 		Request: &authz.AttributeContext_Request{
 			Http: &authz.AttributeContext_HttpRequest{
 				Path: "/foo.com",
+				},
 			},
 		},
-	},
 	}
 
 	//resp, err := uut.Check(ctx, req)

