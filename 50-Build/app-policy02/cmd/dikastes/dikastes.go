@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
-	z := waf.MyAdd(5, 3)
-	fmt.Println("MyAdd = ", z)
+	a := waf.MyGoAdd(5, 3)
+	fmt.Println("MyGoAdd = ", a)
+
+	b := waf.MyCGoAdd(5, 3)
+	fmt.Println("MyCGoAdd = ", b)
 }
