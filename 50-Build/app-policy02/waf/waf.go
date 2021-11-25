@@ -1,6 +1,6 @@
 package waf
 
-// #include "waf.c"
+// #include "waf.h"
 import "C"
 
 func MyGoAdd(x, y int) int {
