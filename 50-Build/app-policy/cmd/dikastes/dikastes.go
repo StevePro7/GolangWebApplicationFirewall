@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	z := waf.MyAdd(4, 3)
+	z := waf.MyAdd(5, 3)
 	fmt.Println("MyAdd = ", z)
 }
