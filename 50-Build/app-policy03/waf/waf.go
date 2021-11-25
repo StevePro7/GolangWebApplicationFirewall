@@ -4,7 +4,7 @@ package waf
 import "C"
 
 func MyGoAdd(x, y int) int {
-	return x + y - 3
+	return x + y - 2
 }
 
 func MyCGoAdd(x, y int) int {
