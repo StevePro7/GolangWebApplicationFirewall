@@ -7,8 +7,8 @@ import (
 
 func main() {
 	a := waf.MyGoAdd(5, 3)
-	fmt.Println("MyGoAdd = ", a)
+	fmt.Println("MyGoAdd3 = ", a)
 
 	b := waf.MyCGoAdd(5, 3)
-	fmt.Println("MyCGoAdd = ", b)
+	fmt.Println("MyCGoAdd3 = ", b)
 }
