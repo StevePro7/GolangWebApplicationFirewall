@@ -42,7 +42,7 @@ endif
 
 ###############################################################################
 DOCKERFILE ?= Dockerfile.$(ARCH)
-VERSION ?= latest
+VERSION ?= stevepro
 DEFAULTIMAGE ?= calico/go-build:$(VERSION)
 ARCHIMAGE ?= $(DEFAULTIMAGE)-$(ARCH)
 BUILDIMAGE ?= $(DEFAULTIMAGE)-$(BUILDARCH)
