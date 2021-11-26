@@ -1,5 +1,5 @@
 PACKAGE_NAME?=github.com/projectcalico/app-policy
-GO_BUILD_VER?=v0.58
+GO_BUILD_VER?=stevepro-amd64
 
 ORGANIZATION=projectcalico
 SEMAPHORE_PROJECT_ID?=$(SEMAPHORE_APP_POLICY_PROJECT_ID)
@@ -65,7 +65,7 @@ endif
 #   Additions to EXTRA_DOCKER_ARGS need to happen before the include since
 #   that variable is evaluated when we declare DOCKER_RUN and siblings.
 ##############################################################################
-MAKE_BRANCH?=$(GO_BUILD_VER)
+MAKE_BRANCH?=v0.58
 MAKE_REPO?=https://raw.githubusercontent.com/projectcalico/go-build/$(MAKE_BRANCH)
 
 Makefile.common: Makefile.common.$(MAKE_BRANCH)
