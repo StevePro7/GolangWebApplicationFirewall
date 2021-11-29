@@ -1,0 +1,1 @@
+go build -v -o bin/dikastes-amd64 -v "github.com/projectcalico/app-policy/cmd/dikastes"

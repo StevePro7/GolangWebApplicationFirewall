@@ -1,0 +1,67 @@
+~/GitHubX/projectcalico4
+27/11/2021
+
+
+go-build
+stevepro@Alienware:~/GitHubX/projectcalico4/go-build$ d images
+REPOSITORY                   TAG             IMAGE ID       CREATED         SIZE
+calico/go-build              adriana-amd64   ed2fe2fb153e   2 minutes ago   2.44GB
+multiarch/qemu-user-static   register        2a05e31b1ab8   3 weeks ago     1.27MB
+goboring/golang              1.16.7b7        b86169335022   3 months ago    925MB
+
+
+
+stevepro@Alienware:/usr/local/modsecurity/lib$ ll
+total 417012
+drwxr-xr-x 3 root root      4096 Nov 25 19:15 ./
+drwxr-xr-x 5 root root      4096 Aug 16 12:02 ../
+-rw-r--r-- 1 root root 275816112 Nov 25 19:15 libmodsecurity.a
+-rwxr-xr-x 1 root root      1080 Nov 25 19:15 libmodsecurity.la*
+lrwxrwxrwx 1 root root        23 Nov 25 19:15 libmodsecurity.so -> libmodsecurity.so.3.0.6*
+lrwxrwxrwx 1 root root        23 Nov 25 19:15 libmodsecurity.so.3 -> libmodsecurity.so.3.0.6*
+-rwxr-xr-x 1 root root  75580376 Oct 19 16:07 libmodsecurity.so.3.0.5*
+-rwxr-xr-x 1 root root  75598296 Nov 25 19:15 libmodsecurity.so.3.0.6*
+
+
+
+Makefile
+# We need CGO to leverage Boring SSL.  However, the cross-compile doesn't support CGO yet.
+ifeq ($(ARCH), $(filter $(ARCH),amd64))
+CGO_ENABLED=1
+CGO_LDFLAGS="-L/usr/local/modsecurity/lib/ -lmodsecurity"
+CGO_CFLAGS="-I/usr/local/modsecurity/include"
+else
+CGO_ENABLED=0
+CGO_LDFLAGS=""
+CGO_CFLAGS=""
+endif
+
+
+~/GHx/pc4/app-policy
+make build
+error
+./bin/dikastes-amd64: error while loading shared libraries: libmodsecurity.so.3: cannot open shared object file: No such file or directory
+
+
+
+
+project calico 5
+replicate pc4
+but comment out the LD_LIBRARY_PATH
+
+add the ability to shell into build container and dump out the lib folder contents
+
+
+go-build container
+root@90727b96cd42:/go# cd 
+root@90727b96cd42:~# cd /usr/local/modsecurity/
+root@90727b96cd42:/usr/local/modsecurity# cd lib/
+root@90727b96cd42:/usr/local/modsecurity/lib# ls -l
+total 334840
+-rw-r--r-- 1 root root 269223872 Nov 27 20:16 libmodsecurity.a
+-rwxr-xr-x 1 root root      1079 Nov 27 20:16 libmodsecurity.la
+lrwxrwxrwx 1 root root        23 Nov 27 20:16 libmodsecurity.so -> libmodsecurity.so.3.0.6
+lrwxrwxrwx 1 root root        23 Nov 27 20:16 libmodsecurity.so.3 -> libmodsecurity.so.3.0.6
+-rwxr-xr-x 1 root root  73634752 Nov 27 20:16 libmodsecurity.so.3.0.6
+drwxr-xr-x 2 root root      4096 Nov 27 20:16 pkgconfig
+root@90727b96cd42:/usr/local/modsecurity/lib# 
