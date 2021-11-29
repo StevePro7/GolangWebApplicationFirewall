@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	x := 3
-	y := 4
+	x := 8
+	y := 7
 
 	a := waf.MyGoAdd(x, y)
 	fmt.Println("MyGoAdd4 = ", a)

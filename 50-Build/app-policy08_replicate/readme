@@ -1,1 +1,5 @@
-go build -v -o bin/dikastes-amd64 -v "github.com/projectcalico/app-policy/cmd/dikastes"
+go build -v -o bin/dikastes-amd64 -e CGO_ENABLED=1 -v "github.com/projectcalico/app-policy/cmd/dikastes"
+
+
+will fail unless we export the following environment variable
+export LD_LIBRARY_PATH=/usr/local/modsecurity/lib/
