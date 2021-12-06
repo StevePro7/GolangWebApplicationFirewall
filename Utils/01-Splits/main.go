@@ -5,12 +5,31 @@ import (
 	"strings"
 )
 
+func splitInput(input, delim, defaultLeft, defaultRight string) (actualLeft, actualRight string) {
+	splitN := strings.SplitN(input, delim, 2)
+	length := len(splitN)
+
+	actualLeft = defaultLeft
+	actualRight = defaultRight
+
+	if length == 1 && len(splitN[0]) > 0 {
+		actualLeft = splitN[0]
+	}
+	if length == 2 && len(splitN[1]) > 0 {
+		actualRight = splitN[1]
+	}
+
+	return actualLeft, actualRight
+}
+
 func main() {
 
-	//socket := "127.0.0.1:80"
-	socket := "127.0.0.1"
-	split := strings.SplitN(socket, ":", 2)
-	fmt.Println(len(split))
-	fmt.Println(split[0])
-	fmt.Println(split[1])
+	//tempProtocol :=""
+	//tempProtocol := "HTTP/2.0"
+	//tempProtocol := "HTTP"
+	tempProtocol := "/3.0"
+
+	httpProtocol, httpVersion := splitInput(tempProtocol, "/", "HTTP", "1.1")
+	fmt.Println(httpProtocol)
+	fmt.Println(httpVersion)
 }
