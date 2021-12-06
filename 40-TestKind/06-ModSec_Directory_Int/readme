@@ -26,8 +26,8 @@ curl http://localhost:3080/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0
 
 
 02. docker
-docker build -t webapidockerkind:latest .
-docker run --rm -it  -p 3080:3080 webapidockerkind:latest
+docker build -t stevepro/mytestapi:6.0 .
+docker run --rm -it  -p 3080:3080/tcp stevepro/mytestapi:6.0 .
 
 03. kind
 copy YAML files from here
