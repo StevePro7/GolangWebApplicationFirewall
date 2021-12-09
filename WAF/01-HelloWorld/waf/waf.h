@@ -6,6 +6,7 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
+// Helper function to initialize ModSec.
 static void initializeModSecurityImpl();
 
 int LoadModSecurityCoreRuleSet(char **array, int size)
@@ -31,7 +32,6 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
     return index;
 }
 
-// 04.
 int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port)
 {
     Transaction *transaction = NULL;
@@ -49,7 +49,6 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     return msc_intervention(transaction, &intervention);
 }
 
-// 00.
 void InitializeModSecurity()
 {
     ModSecurity *modsec = NULL;

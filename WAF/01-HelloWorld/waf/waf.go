@@ -15,34 +15,38 @@ import (
 // Directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
-// 04.
-func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
-	log.Printf("WAF Process Http Request URL '%s'", url)
-	Curi := C.CString(url)
-	ChttpMethod := C.CString(httpMethod)
-	ChttpProtocol := C.CString(httpProtocol)
-	ChttpVersion := C.CString(httpVersion)
-	CclientLink := C.CString(clientLink)
-	CclientPort := C.int(clientPort)
-	CserverLink := C.CString(serverLink)
-	CserverPort := C.int(serverPort)
-
-	defer C.free(unsafe.Pointer(Curi))
-	defer C.free(unsafe.Pointer(ChttpMethod))
-	defer C.free(unsafe.Pointer(ChttpProtocol))
-	defer C.free(unsafe.Pointer(ChttpVersion))
-	defer C.free(unsafe.Pointer(CclientLink))
-	defer C.free(unsafe.Pointer(CserverLink))
-
-	start := time.Now()
-	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
-	elapsed := time.Since(start)
-
-	log.Printf("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
-	return detection
+func InitializeModSecurity() {
+	C.InitializeModSecurity()
 }
 
-// 03.
+func DefineRulesSetDirectory(directory string) {
+	rulesetDirectory = directory
+
+	// Ensure rules directory ends with trailing slash.
+	if !strings.HasSuffix(rulesetDirectory, "/") {
+		rulesetDirectory = rulesetDirectory + "/"
+	}
+
+	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
+}
+
+func ExtractRulesSetFilenames() []string {
+
+	// Read all core rule set file names from rules directory.
+	var files []string
+	items, _ := ioutil.ReadDir(rulesetDirectory)
+
+	log.Printf("WAF Found %d Core Rules Sets", len(items))
+	for _, item := range items {
+
+		file := rulesetDirectory + item.Name()
+		files = append(files, file)
+		log.Printf("WAF Found Rule('%s')", file)
+	}
+
+	return files
+}
+
 func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	size := len(filenames)
@@ -72,40 +76,33 @@ func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 	return int(C.LoadModSecurityCoreRuleSet(carray, csize))
 }
 
-// 02.
-func ExtractRulesSetFilenames() []string {
+func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
+	log.Printf("WAF Process Http Request URL '%s'", url)
+	Curi := C.CString(url)
+	ChttpMethod := C.CString(httpMethod)
+	ChttpProtocol := C.CString(httpProtocol)
+	ChttpVersion := C.CString(httpVersion)
+	CclientLink := C.CString(clientLink)
+	CclientPort := C.int(clientPort)
+	CserverLink := C.CString(serverLink)
+	CserverPort := C.int(serverPort)
 
-	// Read all core rule set file names from rules directory.
-	var files []string
-	items, _ := ioutil.ReadDir(rulesetDirectory)
+	defer C.free(unsafe.Pointer(Curi))
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	defer C.free(unsafe.Pointer(ChttpProtocol))
+	defer C.free(unsafe.Pointer(ChttpVersion))
+	defer C.free(unsafe.Pointer(CclientLink))
+	defer C.free(unsafe.Pointer(CserverLink))
 
-	log.Printf("WAF Found %d Core Rules Sets", len(items))
-	for _, item := range items {
+	start := time.Now()
+	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
+	elapsed := time.Since(start)
 
-		file := rulesetDirectory + item.Name()
-		files = append(files, file)
-		log.Printf("WAF Found Rule('%s')", file)
-	}
-
-	return files
+	log.Printf("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
+	return detection
 }
 
-// 01.
-func DefineRulesSetDirectory(directory string) {
-	rulesetDirectory = directory
-
-	// Ensure rules directory ends with trailing slash.
-	if !strings.HasSuffix(rulesetDirectory, "/") {
-		rulesetDirectory = rulesetDirectory + "/"
-	}
-
-	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
-}
-
-func InitializeModSecurity() {
-	C.InitializeModSecurity()
-}
-
+// GetRulesDirectory public helper function for testing.
 func GetRulesDirectory() string {
 	return rulesetDirectory
 }
