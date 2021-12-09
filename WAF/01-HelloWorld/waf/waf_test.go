@@ -10,12 +10,12 @@ const directory = "/etc/waf"
 func TestExtractRulesSetFilenames(t *testing.T) {
 	InitializeModSecurity(directory)
 
-	expectFilenames := []string{"/etc/waf/crs-setup.conf"}
+	expectFilenames := []string{"/etc/waf/crs-setup.conf", "/etc/waf/crs-setup.conf", "/etc/waf/crs-setup.conf"}
 	actualFilenames := ExtractRulesSetFilenames()
 
 	test := reflect.DeepEqual(expectFilenames, actualFilenames)
 	if !test {
-		t.Errorf("exp '%s' act '%s'", expectFilenames, actualFilenames)
+		t.Errorf("Expect '%s' Actual '%s'", expectFilenames, actualFilenames)
 	}
 }
 
