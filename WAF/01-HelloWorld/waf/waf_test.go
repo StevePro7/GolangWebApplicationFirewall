@@ -1,27 +1,32 @@
 package waf
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 const directory = "/etc/waf"
 
-//func TestExtractRulesSetFilenames(t *testing.T) {
-//	InitializeModSecurity(directory)
-//
-//	expect_filenames := []string{"crs-setup.conf"}
-//	actual_filenames := ExtractRulesSetFilenames()
-//		//act := GetRulesDirectory()
-//		if exp != filenames{
-//		t.Errorf("exp '%s' act '%s'", exp, filenames)
-//	}
-
-func TestInitializeModSecurity(t *testing.T) {
-	exp := "/etc/waf/"
+func TestExtractRulesSetFilenames(t *testing.T) {
 	InitializeModSecurity(directory)
-	act := GetRulesDirectory()
-	if exp != act {
-		t.Errorf("exp '%s' act '%s'", exp, act)
+
+	expectFilenames := []string{"/etc/waf/crs-setup.conf"}
+	actualFilenames := ExtractRulesSetFilenames()
+
+	test := reflect.DeepEqual(expectFilenames, actualFilenames)
+	if !test {
+		t.Errorf("exp '%s' act '%s'", expectFilenames, actualFilenames)
 	}
 }
+
+//func TestInitializeModSecurity(t *testing.T) {
+//	exp := "/etc/waf/"
+//	InitializeModSecurity(directory)
+//	act := GetRulesDirectory()
+//	if exp != act {
+//		t.Errorf("exp '%s' act '%s'", exp, act)
+//	}
+//}
 
 //func
 //TestLoadModSecurityCoreRuleSet2(t * testing.T)

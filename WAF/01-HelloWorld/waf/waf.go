@@ -5,6 +5,7 @@ package waf
 // #include "waf.h"
 import "C"
 import (
+	"io/ioutil"
 	"log"
 	"strings"
 	"time"
@@ -15,8 +16,17 @@ import (
 var rulesetDirectory string
 
 // 02.
-func ExtractRulesSetFilenames() string {
-	return "bob"
+func ExtractRulesSetFilenames() []string {
+	// Read all core rule set file names from rules directory.
+	var files []string
+	items, _ := ioutil.ReadDir(rulesetDirectory)
+	for _, item := range items {
+
+		file := rulesetDirectory + item.Name()
+		files = append(files, file)
+		log.Printf("WAF Found Rule('%s')", file)
+	}
+	return files
 }
 
 // 01.
@@ -27,6 +37,8 @@ func InitializeModSecurity(directory string) {
 	if !strings.HasSuffix(rulesetDirectory, "/") {
 		rulesetDirectory = rulesetDirectory + "/"
 	}
+
+	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 }
 
 func InitModSec() {
