@@ -16,10 +16,10 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
         modsec = msc_init();
         rules = msc_create_rules_set();
 
-        // TODO - can I bubble up error to consumer
+        // TODO - can I bubble up error to consumer?
         for( index = 0; index < size; index++ )
         {
-            file = array[ index ] ;
+            file = array[index];
             msc_rules_add_file(rules, file, &error);
             if (error != NULL)
             {
