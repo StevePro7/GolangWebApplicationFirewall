@@ -13,7 +13,7 @@ func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 	//expectFilenames := []string{"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", "/etc/waf/crs-setup.conf", "/etc/waf/modsecdefault.conf"}
 	filenames := []string{"/etc/waf/crs-setup.conf"}
 
-	expect := "adriana"
+	expect := "stevepro"
 	actual := LoadModSecurityCoreRuleSet(filenames)
 
 	if expect != actual {

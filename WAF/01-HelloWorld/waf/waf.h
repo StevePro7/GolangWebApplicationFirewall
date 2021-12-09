@@ -6,6 +6,19 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
+const char* getString()
+{
+    const char *error = NULL;
+    return error;
+}
+
+//const char* LoadModSecurityCoreRuleSet()
+//{
+//    //const char *error = NULL;
+//    const char *error = "suzanne";
+//    return error;
+//}
+
 void InitModSec()
 {
     const char *error = NULL;

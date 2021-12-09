@@ -26,7 +26,18 @@ func LoadModSecurityCoreRuleSet(filenames []string) string {
 		C.setArrayString(carray, C.CString(filename), C.int(index))
 	}
 
-	return "testing"
+	// Finally, load ModSecurity core rule set from WAF wrapper code.
+	//err := C.LoadModSecurityCoreRuleSet(cargs, csize)
+	//err := C.LoadModSecurityCoreRuleSet()
+	p := C.getString()
+	s := C.GoString(p)
+	log.Println(s)
+	//C.free(unsafe.Pointer(p))
+	//defer C.free(unsafe.Pointer(p))
+
+	//defer C.free(unsafe.Pointer(p)
+	//return err
+	return s
 }
 
 // 02.
@@ -41,6 +52,7 @@ func ExtractRulesSetFilenames() []string {
 		files = append(files, file)
 		log.Printf("WAF Found Rule('%s')", file)
 	}
+
 	return files
 }
 
