@@ -26,7 +26,7 @@ func LoadModSecurityCoreRuleSet(filenames []string) string {
 		C.setArrayString(carray, C.CString(filename), C.int(index))
 	}
 
-	return "tes"
+	return "testing"
 }
 
 // 02.

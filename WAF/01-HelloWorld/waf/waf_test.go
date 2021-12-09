@@ -8,7 +8,6 @@ import (
 const directory = "/etc/waf"
 
 // 03.
-
 func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 
 	//expectFilenames := []string{"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", "/etc/waf/crs-setup.conf", "/etc/waf/modsecdefault.conf"}
