@@ -14,6 +14,12 @@ import (
 // Root directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
+// 02.
+func ExtractRulesSetFilenames() string {
+	return "bob"
+}
+
+// 01.
 func InitializeModSecurity(directory string) {
 	rulesetDirectory = directory
 
