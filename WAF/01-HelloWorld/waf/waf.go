@@ -19,7 +19,20 @@ var rulesetDirectory string
 func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	size := len(filenames)
-	log.Printf("WAF Starting load %d Core Rule Sets", size)
+	log.Printf("WAF Attempt load %d Core Rule Sets", size)
+
+	index := loadModSecurityCoreRuleSetImpl(filenames, size)
+	if index == size {
+		log.Printf("WAF Process load %d Core Rule Sets  SUCCESS", size)
+	} else {
+		errorFile := filenames[index]
+		log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  File: '%s'", size, errorFile)
+	}
+
+	return index
+}
+
+func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 
 	// Transfer core rule set file names to WAF wrapper code.
 	csize := C.int(size)
@@ -30,12 +43,7 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 	}
 
 	// Finally, load ModSecurity core rule set from WAF wrapper code.
-	index := int(C.LoadModSecurityCoreRuleSet(carray, csize))
-	if index == size {
-		log.Printf("WAF Complete load %d Core Rule Sets  SUCCESS", size)
-	}
-
-	return index
+	return int(C.LoadModSecurityCoreRuleSet(carray, csize))
 }
 
 // 02.
