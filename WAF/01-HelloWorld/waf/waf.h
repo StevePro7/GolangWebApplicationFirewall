@@ -6,6 +6,8 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
+static void initializeModSecurityImpl();
+
 int LoadModSecurityCoreRuleSet(char **array, int size)
 {
     int index = 0;
@@ -13,33 +15,23 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
     const char *error = NULL;
     if (modsec == NULL)
     {
-        modsec = msc_init();
-        rules = msc_create_rules_set();
+        initializeModSecurityImpl();
+    }
 
-        for( index = 0; index < size; index++ )
+    for( index = 0; index < size; index++ )
+    {
+        file = array[index];
+        msc_rules_add_file(rules, file, &error);
+        if (error != NULL)
         {
-            file = array[index];
-            msc_rules_add_file(rules, file, &error);
-            if (error != NULL)
-            {
-                break;
-            }
+            break;
         }
     }
 
     return index;
 }
 
-void InitModSec()
-{
-    const char *error = NULL;
-    modsec = msc_init();
-    rules = msc_create_rules_set();
-    msc_rules_add_file(rules, "/etc/waf/crs-setup.conf", &error);
-    msc_rules_add_file(rules, "/etc/waf/modsecdefault.conf", &error);
-    msc_rules_add_file(rules, "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", &error);
-}
-
+// 04.
 int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port)
 {
     Transaction *transaction = NULL;
@@ -57,7 +49,19 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     return msc_intervention(transaction, &intervention);
 }
 
+// 00.
+void InitializeModSecurity()
+{
+    ModSecurity *modsec = NULL;
+    RulesSet *rules = NULL;
 
+    initializeModSecurityImpl();
+}
+static void initializeModSecurityImpl()
+{
+    modsec = msc_init();
+    rules = msc_create_rules_set();
+}
 
 // Helper functions to store all core rule set file names in memory.
 static char **makeCharArray(int size) {

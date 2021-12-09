@@ -91,7 +91,7 @@ func ExtractRulesSetFilenames() []string {
 }
 
 // 01.
-func InitializeModSecurity(directory string) {
+func DefineRulesSetDirectory(directory string) {
 	rulesetDirectory = directory
 
 	// Ensure rules directory ends with trailing slash.
@@ -102,8 +102,8 @@ func InitializeModSecurity(directory string) {
 	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 }
 
-func InitModSec() {
-	C.InitModSec()
+func InitializeModSecurity() {
+	C.InitializeModSecurity()
 }
 
 func GetRulesDirectory() string {
