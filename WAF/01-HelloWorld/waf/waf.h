@@ -32,3 +32,26 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     intervention.disruptive = 0;
     return msc_intervention(transaction, &intervention);
 }
+
+
+
+// Helper functions to store all core rule set file names in memory.
+static char **makeCharArray(int size) {
+    //fprintf(stderr, "  C makeCharArray\n");
+    return calloc(sizeof(char*), size);
+}
+static void freeCharArray(char **args, int size) {
+    int i;
+    //fprintf(stderr, "  C freeCharArray\n");
+    for (i = 0; i < size; i++)
+    {
+        free(args[i]);
+    }
+
+    free(args);
+}
+static void setArrayString(char **args, char *file, int index) {
+    //fprintf(stderr, "setArrayString [%d] = '%s' start\n", index, file);
+    args[index] = file;
+    //fprintf(stderr, "setArrayString [%d] = '%s' -end-\n", index, file);
+}

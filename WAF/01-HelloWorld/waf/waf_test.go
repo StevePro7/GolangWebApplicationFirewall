@@ -7,6 +7,22 @@ import (
 
 const directory = "/etc/waf"
 
+// 03.
+
+func TestLoadModSecurityCoreRuleSet(t *testing.T) {
+
+	//expectFilenames := []string{"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", "/etc/waf/crs-setup.conf", "/etc/waf/modsecdefault.conf"}
+	filenames := []string{"/etc/waf/crs-setup.conf"}
+
+	expect := "sgb"
+	actual := LoadModSecurityCoreRuleSet(filenames)
+
+	if expect != actual {
+		t.Errorf("expect '%s' act '%s'", expect, actual)
+	}
+}
+
+// 02.
 func TestExtractRulesSetFilenames(t *testing.T) {
 	InitializeModSecurity(directory)
 
@@ -19,21 +35,12 @@ func TestExtractRulesSetFilenames(t *testing.T) {
 	}
 }
 
+// 01.
 //func TestInitializeModSecurity(t *testing.T) {
 //	exp := "/etc/waf/"
 //	InitializeModSecurity(directory)
 //	act := GetRulesDirectory()
 //	if exp != act {
 //		t.Errorf("exp '%s' act '%s'", exp, act)
-//	}
-//}
-
-//func
-//TestLoadModSecurityCoreRuleSet2(t * testing.T)
-//{
-//	exp := 5
-//	act := Add(1, 2)
-//	if exp != act {
-//		t.Errorf("exp %d act %d", exp, act)
 //	}
 //}
