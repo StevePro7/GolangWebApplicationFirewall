@@ -30,3 +30,12 @@ void getStringX(char *error)
 {
     error = "bob";
 }
+
+
+	// Finally, load ModSecurity core rule set from WAF wrapper code.
+	index := int(C.LoadModSecurityCoreRuleSet(carray, csize))
+
+	if index != size {
+		badFile := filenames[index]
+		log.Fatalf("WAF error loading Rule file '%s'", badFile)
+	}

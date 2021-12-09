@@ -6,10 +6,27 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
-int LoadModSecurityCoreRuleSet()
+int LoadModSecurityCoreRuleSet(char **array, int size)
 {
-    int index = -1;
+    int index = 0;
+    const char *file;
     const char *error = NULL;
+    if (modsec == NULL)
+    {
+        modsec = msc_init();
+        rules = msc_create_rules_set();
+
+        // TODO - can I bubble up error to consumer
+        for( index = 0; index < size; index++ )
+        {
+            file = array[ index ] ;
+            msc_rules_add_file(rules, file, &error);
+            if (error != NULL)
+            {
+                break;
+            }
+        }
+    }
 
     return index;
 }

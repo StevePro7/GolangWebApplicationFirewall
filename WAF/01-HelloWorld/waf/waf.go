@@ -12,14 +12,17 @@ import (
 	"unsafe"
 )
 
-// Root directory where the Core Rules Set are stored.
+// Directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
 // 03.
 func LoadModSecurityCoreRuleSet(filenames []string) int {
 
+	size := len(filenames)
+	log.Printf("WAF Starting load %d Core Rule Sets", size)
+
 	// Transfer core rule set file names to WAF wrapper code.
-	csize := C.int(len(filenames))
+	csize := C.int(size)
 	carray := C.makeCharArray(csize)
 	defer C.freeCharArray(carray, csize)
 	for index, filename := range filenames {
@@ -27,10 +30,12 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 	}
 
 	// Finally, load ModSecurity core rule set from WAF wrapper code.
-	//err := C.LoadModSecurityCoreRuleSet(cargs, csize)
-	//err := C.LoadModSecurityCoreRuleSet()
+	index := int(C.LoadModSecurityCoreRuleSet(carray, csize))
+	if index == size {
+		log.Printf("WAF Complete load %d Core Rule Sets  SUCCESS", size)
+	}
 
-	return -1
+	return index
 }
 
 // 02.
@@ -39,6 +44,8 @@ func ExtractRulesSetFilenames() []string {
 	// Read all core rule set file names from rules directory.
 	var files []string
 	items, _ := ioutil.ReadDir(rulesetDirectory)
+
+	log.Printf("WAF Found %d Core Rules Sets", len(items))
 	for _, item := range items {
 
 		file := rulesetDirectory + item.Name()
