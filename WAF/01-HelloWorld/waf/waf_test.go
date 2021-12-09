@@ -14,11 +14,11 @@ func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 	//expectFilenames := []string{"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf", "/etc/waf/crs-setup.conf", "/etc/waf/modsecdefault.conf"}
 	filenames := []string{"/etc/waf/crs-setup.conf"}
 
-	expect := "sgb"
+	expect := "adriana"
 	actual := LoadModSecurityCoreRuleSet(filenames)
 
 	if expect != actual {
-		t.Errorf("expect '%s' act '%s'", expect, actual)
+		t.Errorf("Expect: '%s' Actual: '%s'", expect, actual)
 	}
 }
 
@@ -36,11 +36,12 @@ func TestExtractRulesSetFilenames(t *testing.T) {
 }
 
 // 01.
-//func TestInitializeModSecurity(t *testing.T) {
-//	exp := "/etc/waf/"
-//	InitializeModSecurity(directory)
-//	act := GetRulesDirectory()
-//	if exp != act {
-//		t.Errorf("exp '%s' act '%s'", exp, act)
-//	}
-//}
+func TestInitializeModSecurity(t *testing.T) {
+
+	InitializeModSecurity(directory)
+	expect := "/etc/waf/"
+	actual := GetRulesDirectory()
+	if expect != actual {
+		t.Errorf("Expect: '%s' Actual: '%s'", expect, actual)
+	}
+}

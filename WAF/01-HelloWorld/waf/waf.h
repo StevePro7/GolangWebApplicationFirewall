@@ -40,18 +40,18 @@ static char **makeCharArray(int size) {
     //fprintf(stderr, "  C makeCharArray\n");
     return calloc(sizeof(char*), size);
 }
-static void freeCharArray(char **args, int size) {
-    int i;
+static void freeCharArray(char **array, int size) {
+    int index;
     //fprintf(stderr, "  C freeCharArray\n");
-    for (i = 0; i < size; i++)
+    for (index = 0; index < size; index++)
     {
-        free(args[i]);
+        free(array[index]);
     }
 
-    free(args);
+    free(array);
 }
-static void setArrayString(char **args, char *file, int index) {
+static void setArrayString(char **array, char *filename, int index) {
     //fprintf(stderr, "setArrayString [%d] = '%s' start\n", index, file);
-    args[index] = file;
+    array[index] = filename;
     //fprintf(stderr, "setArrayString [%d] = '%s' -end-\n", index, file);
 }

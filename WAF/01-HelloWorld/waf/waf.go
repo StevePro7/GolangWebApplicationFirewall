@@ -20,14 +20,13 @@ func LoadModSecurityCoreRuleSet(filenames []string) string {
 
 	// Transfer core rule set file names to WAF wrapper code.
 	csize := C.int(len(filenames))
-	cargs := C.makeCharArray(csize)
-	defer C.freeCharArray(cargs, csize)
+	carray := C.makeCharArray(csize)
+	defer C.freeCharArray(carray, csize)
 	for index, filename := range filenames {
-		//C.setArrayString(cargs, C.CString(filename), C.int(index))
-		C.setArrayString(cargs, C.CString(filename), C.int(index))
+		C.setArrayString(carray, C.CString(filename), C.int(index))
 	}
 
-	return "test"
+	return "tes"
 }
 
 // 02.
@@ -87,7 +86,6 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	return detection
 }
 
-// TODO delete this code... eventually!
 func GetRulesDirectory() string {
 	return rulesetDirectory
 }
