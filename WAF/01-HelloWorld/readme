@@ -3,6 +3,11 @@ readme
 
 
 #1
+SIMPLE way to replicate error is to try and load file that does not exist!
+OR
+another way is to duplicate the rule like SQL Injection attack
+e.g.
+'Rule id: 942011 is duplicated
 Not sure if can bubble const char* out of C function to Go
 but in the interim can return the index of the file that causes error
 in reality I have not seen any errors that have occurred loading rules
