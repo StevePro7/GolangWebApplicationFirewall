@@ -6,9 +6,26 @@ package waf
 import "C"
 import (
 	"log"
+	"strings"
 	"time"
 	"unsafe"
 )
+
+// Root directory where the Core Rules Set are stored.
+var rulesetDirectory string
+
+func InitializeModSecurity(directory string) {
+	rulesetDirectory = directory
+
+	// Ensure rules directory has trailing slash.
+	if !strings.HasSuffix(rulesetDirectory, "/") {
+		rulesetDirectory = rulesetDirectory + "/"
+	}
+}
+
+func GetBob() string {
+	return rulesetDirectory
+}
 
 func InitModSec() {
 	C.InitModSec()
@@ -38,4 +55,8 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	log.Printf("stevepro modsec()=%d, elapsed: %s", detection, elapsed)
 	log.Println("stevepro modsec -end-")
 	return detection
+}
+
+func Add(x, y int) int {
+	return x + y
 }
