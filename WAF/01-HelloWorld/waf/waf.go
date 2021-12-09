@@ -25,8 +25,8 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 	if index == size {
 		log.Printf("WAF Process load %d Core Rule Sets  SUCCESS", size)
 	} else {
-		errorFile := filenames[index]
-		log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  File: '%s'", size, errorFile)
+		badFile := filenames[index]
+		log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  Bad File: '%s'", size, badFile)
 	}
 
 	return index
