@@ -17,14 +17,10 @@ var rulesetDirectory string
 func InitializeModSecurity(directory string) {
 	rulesetDirectory = directory
 
-	// Ensure rules directory has trailing slash.
+	// Ensure rules directory ends with trailing slash.
 	if !strings.HasSuffix(rulesetDirectory, "/") {
 		rulesetDirectory = rulesetDirectory + "/"
 	}
-}
-
-func GetBob() string {
-	return rulesetDirectory
 }
 
 func InitModSec() {
@@ -57,6 +53,11 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	return detection
 }
 
+// TODO delete this code... eventually!
 func Add(x, y int) int {
 	return x + y
+}
+
+func GetRulesDirectory() string {
+	return rulesetDirectory
 }

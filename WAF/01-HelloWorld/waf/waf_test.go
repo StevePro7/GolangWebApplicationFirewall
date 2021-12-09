@@ -2,10 +2,10 @@ package waf
 
 import "testing"
 
-func TestLoadModSecurityCoreRuleSet(t *testing.T) {
+func TestInitializeModSecurity(t *testing.T) {
 	exp := "test"
 	InitializeModSecurity("/tmp")
-	act := GetBob()
+	act := GetRulesDirectory()
 	if exp != act {
 		t.Errorf("exp '%s' act '%s'", exp, act)
 	}
