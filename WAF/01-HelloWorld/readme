@@ -1,9 +1,21 @@
 readme
 09/12/2021
 
+
+#1
 Not sure if can bubble const char* out of C function to Go
 but in the interim can return the index of the file that causes error
 in reality I have not seen any errors that have occurred loading rules
+
+
+#2
+void ModSecurity::serverLog(void *data, std::shared_ptr<RuleMessage> rm) {
+    if (m_logCb == NULL) {
+        std::cerr << "Server log callback is not set -- " << rm->errorLog();
+        std::cerr << std::endl;
+        return;
+    }
+
 
 
 e.g.
