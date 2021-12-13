@@ -11,8 +11,5 @@ func Run() {
 
 //export GoAdd
 func GoAdd(a, b int) int {
-	//x := C.int(a)
-	//y := C.int(b)
-	//return x + y
 	return a + b
 }
