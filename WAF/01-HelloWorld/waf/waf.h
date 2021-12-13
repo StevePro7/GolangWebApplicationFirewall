@@ -49,6 +49,14 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     return msc_intervention(transaction, &intervention);
 }
 
+void MyFuncPtr(void *foo, const void *bar)
+{
+    fprintf(stderr, "MyFuncPtr start\n");
+    fprintf(stderr, "MyFuncPtr '%s'\n", foo);
+    fprintf(stderr, "MyFuncPtr '%s'\n", bar);
+    fprintf(stderr, "MyFuncPtr -end-\n");
+}
+
 void InitializeModSecurity()
 {
     ModSecurity *modsec = NULL;
@@ -59,6 +67,9 @@ void InitializeModSecurity()
 static void initializeModSecurityImpl()
 {
     modsec = msc_init();
+    fprintf(stderr, "  C msc_set_log_cb start\n");
+    msc_set_log_cb(modsec, MyFuncPtr);
+    fprintf(stderr, "  C msc_set_log_cb -end-\n");
     rules = msc_create_rules_set();
 }
 
