@@ -5,9 +5,10 @@ import "C"
 
 func Run() {
 	// call the wrapper
-	//C.pass_GoAdd()
+	C.pass_GoAdd()
 }
 
-func GoAdd(x, y int) int {
-	return x + y
+//export GoAdd
+func GoAdd(a, b int) int {
+	return a + b
 }
