@@ -1,8 +1,8 @@
 package callback
 
 // #include "calladd.h"
-// #include "funcwrap.h"
 import "C"
+
 import (
 	"fmt"
 )
