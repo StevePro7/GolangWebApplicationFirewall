@@ -1,6 +1,6 @@
 package callback
 
-// #include "calladd.h"
+// #include "callback.h"
 import "C"
 
 import (
