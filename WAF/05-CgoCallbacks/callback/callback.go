@@ -1,6 +1,6 @@
 package callback
 
-// #include "callgo.h"
+// #include "calladd.h"
 // #include "funcwrap.h"
 import "C"
 

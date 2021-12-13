@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"waftesting/callback"
 )
 
 func main() {
-	fmt.Println("blah")
+	fmt.Println("beg")
+	callback.Run()
+	fmt.Println("end")
 }
