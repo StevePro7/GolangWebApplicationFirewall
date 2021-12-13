@@ -1,14 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"waftesting/callback"
+	"waftesting/waf"
 )
 
 func main() {
-	fmt.Println("hello")
-	callback.Run()
-	sum := callback.GoAdd(4, 3)
-	fmt.Println(sum)
-	fmt.Println("-bye-")
+	waf.InitializeModSecurity()
 }
