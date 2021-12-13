@@ -52,8 +52,8 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
 void MyFuncPtr(void *foo, const void *bar)
 {
     fprintf(stderr, "MyFuncPtr start\n");
-    fprintf(stderr, "MyFuncPtr '%s'\n", foo);
-    fprintf(stderr, "MyFuncPtr '%s'\n", bar);
+    //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
+    fprintf(stderr, "MyFuncPtr '%s' [SPLAT!]\n", bar);
     fprintf(stderr, "MyFuncPtr -end-\n");
 }
 
