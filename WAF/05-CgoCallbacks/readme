@@ -1,0 +1,21 @@
+Callbacks wtih cgo
+13/12/2021
+
+http://cheesesun.blogspot.com/2010/04/callbacks-in-cgo.html
+
+
+works but incompatible types
+
+# waftesting/callback
+funcwrap.c: In function \u2018pass_GoAdd\u2019:
+funcwrap.c:6:14: warning: passing argument 1 of \u2018call_add\u2019 from incompatible pointer type [-Wincompatible-pointer-types]
+    6 |     call_add(&GoAdd);
+      |              ^~~~~~
+      |              |
+      |              GoInt (*)(GoInt,  GoInt) {aka long long int (*)(long long int,  long long int)}
+In file included from callback.go:3,
+                 from funcwrap.c:1:
+callback/calladd.h:3:22: note: expected \u2018adder\u2019 {aka \u2018int (*)(int,  int)\u2019} but argument is of type \u2018GoInt (*)(GoInt,  GoInt)\u2019 {aka \u2018long long int (*)(long long int,  long long int)\u2019}
+    3 | extern void call_add(adder);
+      |                      ^~~~~
+/tmp/GoLand/___2go_build_waftesting
