@@ -3,7 +3,7 @@ typedef void (*ModSecNumCb) (int);
 //typedef void (*ModSecLogCb) (void *, const void *);
 //typedef void (*ModSecLogCb) (char *);
 typedef void (*ModSecLogCb) (char *);
-typedef void (*ModSecConstCb) (void *, const void *);
+typedef void (*ModSecConstCb) (void *, void *);
 //typedef void (*ModSecLogCb) (void *);
 
 extern void call_add(adder);

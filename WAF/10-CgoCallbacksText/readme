@@ -16,3 +16,7 @@ func C.GoString(*C.char) string
 
 const char*
 https://stackoverflow.com/questions/32938558/cgo-cant-find-way-to-use-callbacks-with-const-char-argument
+
+
+void*
+https://jamesadam.me/2016/03/26/c-and-go-dealing-with-void-parameters-in-cgo
