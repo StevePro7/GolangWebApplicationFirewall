@@ -24,3 +24,11 @@ func GoAdd(a, b int) int {
 	fmt.Println()
 	return sum
 }
+
+//export GoText
+func GoText() {
+	fmt.Printf("Go GoText beg")
+	fmt.Println()
+	fmt.Printf("Go GoText end")
+	fmt.Println()
+}
