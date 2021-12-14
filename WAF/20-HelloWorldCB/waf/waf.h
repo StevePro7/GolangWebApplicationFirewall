@@ -53,7 +53,7 @@ void MyFuncPtr(void *foo, const void *bar)
 {
     fprintf(stderr, "MyFuncPtr! start\n");
     //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
-    fprintf(stderr, "MyFuncPtr '%s' [SPLAT!]\n", bar);
+    //fprintf(stderr, "MyFuncPtr '%s' [SPLAT!]\n", bar);
     fprintf(stderr, "MyFuncPtr -end-\n");
 }
 

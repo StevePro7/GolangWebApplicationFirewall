@@ -6,7 +6,7 @@ import (
 )
 
 func Check() {
-	log.Println("check")
+	//log.Println("check")
 
 	waf.InitializeModSecurity()
 	waf.DefineRulesSetDirectory("/etc/waf")

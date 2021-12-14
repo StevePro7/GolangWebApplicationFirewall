@@ -1,11 +1,10 @@
 package main
 
 import (
-	"log"
 	"waftesting/checker"
 )
 
 func main() {
-	log.Println("start")
+	//log.Println("start")
 	checker.Check()
 }
