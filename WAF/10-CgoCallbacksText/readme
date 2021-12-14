@@ -1,6 +1,5 @@
 Callbacks wtih cgo
-13/12/2021
+14/12/2021
 
-http://cheesesun.blogspot.com/2010/04/callbacks-in-cgo.html
-
-close 05 but tidy up
+New doco
+https://pkg.go.dev/cmd/cgo

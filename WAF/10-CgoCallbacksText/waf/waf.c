@@ -15,6 +15,21 @@ void pass_GoAdd(void)
     printf("C  pass_GoAdd end\n");
 }
 
+extern void call_num(ModSecNumCb callback)
+{
+    char *str = "number";
+    printf("C  call_text beg '%s'\n", str);
+    callback(17);
+    printf("C  call_text end '%s'\n", str);
+}
+extern void pass_GoNum(void)
+{
+    printf("C  pass_GoNum beg\n");
+    call_num(&GoNum);
+    printf("C  pass_GoNum end\n");
+}
+
+
 void call_text(ModSecLogCb callback)
 {
     char *str = "stevepro";

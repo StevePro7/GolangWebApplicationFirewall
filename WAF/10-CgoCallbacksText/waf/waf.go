@@ -12,7 +12,8 @@ import (
 func Run() {
 	fmt.Println("Go Run beg")
 	//C.pass_GoAdd()
-	C.pass_GoText()
+	C.pass_GoNum()
+	//C.pass_GoText()
 	fmt.Println("Go Run end")
 }
 
@@ -24,6 +25,15 @@ func GoAdd(a, b int) int {
 	fmt.Printf("Go GoAdd end [%d]", sum)
 	fmt.Println()
 	return sum
+}
+
+//export GoNum
+func GoNum(x C.int) {
+	fmt.Println("Go GoNum beg")
+	fmt.Printf("Go GoNum X '%d'", x)
+	fmt.Println()
+	fmt.Println()
+	fmt.Println("Go GoNum end")
 }
 
 //export GoText
