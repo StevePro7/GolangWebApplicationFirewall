@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
-	"time"
 	"unsafe"
 )
 
@@ -94,11 +93,11 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	defer C.free(unsafe.Pointer(CclientLink))
 	defer C.free(unsafe.Pointer(CserverLink))
 
-	start := time.Now()
+	//start := time.Now()
 	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
-	elapsed := time.Since(start)
+	//elapsed := time.Since(start)
 
-	log.Printf("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
+	log.Printf("WAF Process Http Request URL  Detection=%d", detection)
 	return detection
 }
 
