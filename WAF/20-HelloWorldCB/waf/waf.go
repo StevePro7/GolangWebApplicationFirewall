@@ -117,3 +117,34 @@ func GoAdd(a, b int) int {
 	fmt.Println()
 	return sum
 }
+
+//export GoText
+func GoText() {
+	fmt.Println("Go GoText beg")
+
+	//	var y string
+	//y = "hello"
+	//	y = C.GoString(x)
+	//fmt.Printf("Go GoText X '%s'", x)
+	//	fmt.Printf("Go GoText X '%s'", y)
+	fmt.Println()
+
+	//fmt.Printf("Go GoText bar '%s'", bar)
+	fmt.Println()
+	fmt.Println("Go GoText end")
+}
+
+//func GoText(x *C.char) {
+//	fmt.Println("Go GoText beg")
+//
+//	var y string
+//	//y = "hello"
+//	y = C.GoString(x)
+//	//fmt.Printf("Go GoText X '%s'", x)
+//	fmt.Printf("Go GoText X '%s'", y)
+//	fmt.Println()
+//
+//	//fmt.Printf("Go GoText bar '%s'", bar)
+//	fmt.Println()
+//	fmt.Println("Go GoText end")
+//}

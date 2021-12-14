@@ -1,5 +1,8 @@
 typedef long long int(*adder)(long long int, long long int);
-extern void call_add(adder);
+typedef void(*texts)(void);
+
+extern void call_add(adder, int, int);
+extern void call_sgb(texts, char*);
 
 void InitializeModSecurity();
 int LoadModSecurityCoreRuleSet(char **array, int size);
