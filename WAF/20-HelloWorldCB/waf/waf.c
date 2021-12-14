@@ -9,32 +9,25 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
-void call_const(ModSecLogCb callback)
-{
-    //char *str = "steven";
-    //const char *buf = "World";
-    //char *buf = "boland";
-    printf("C  call_const beg\n");
-    //callback(str, buf);
-    //callback(str);
-    printf("C  call_const end\n");
-}
- void pass_GoConst(void)
- {
-    printf("C  pass_GoConst beg\n");
-    //call_const(&GoConst);
-    printf("C  pass_GoConst end\n");
- }
-
 // Helper function to initialize ModSec.
 static void initializeModSecurityImpl();
 
+void call_add(adder func)
+{
+    printf("C  call_add beg\n");
+    int i = func(1, 2);
+    printf("C  call_add end [%d]\n", i);
+}
+
 void MyFuncPtr(void *foo, const void *bar)
 {
+    char *sgb = (char *)bar;
     fprintf(stderr, "MyFuncPtr start\n");
     //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
-    fprintf(stderr, "MyFuncPtr '%s' [SPLAT!]\n", bar);
-    fprintf(stderr, "MyFuncPtr -end-..!X?\n");
+    fprintf(stderr, "MyFuncPtr '%s' [SPLAT..!]\n", sgb);
+    //call_const(foo, bar);
+    call_add(&GoAdd);
+    fprintf(stderr, "MyFuncPtr -end-..ABc..!\n");
 }
 
 void InitializeModSecurity()
@@ -113,3 +106,21 @@ void setArrayString(char **array, char *filename, int index)
 {
     array[index] = filename;
 }
+
+
+//void call_const(ModSecLogCb callback)
+//{
+//    //char *str = "steven";
+//    //const char *buf = "World";
+//    //char *buf = "boland";
+//    printf("C  call_const beg\n");
+//    //callback(str, buf);
+//    //callback(str);
+//    printf("C  call_const end!!\n");
+//}
+// void pass_GoConst(void)
+// {
+//    printf("C  pass_GoConst beg\n");
+//    call_const(&GoConst);
+//    printf("C  pass_GoConst end\n");
+// }

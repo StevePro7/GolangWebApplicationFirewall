@@ -5,6 +5,7 @@ package waf
 // #include "waf.h"
 import "C"
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -105,4 +106,14 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 // GetRulesDirectory public helper function for testing.
 func GetRulesDirectory() string {
 	return rulesetDirectory
+}
+
+//export GoAdd
+func GoAdd(a, b int) int {
+	fmt.Printf("Go GoAdd beg (x,y)=(%d,%d)", a, b)
+	fmt.Println()
+	sum := a + b
+	fmt.Printf("Go GoAdd end [%d]", sum)
+	fmt.Println()
+	return sum
 }
