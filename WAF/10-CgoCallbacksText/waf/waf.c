@@ -48,9 +48,10 @@ void pass_GoText(void)
 
 void call_const(ModSecConstCb callback)
 {
-    char *str = "const";
+    char *str = "hello";
+    const char *buf = "world";
     printf("C  call_const beg '%s'\n", str);
-    callback(str);
+    callback(str, buf);
     printf("C  call_const end '%s'\n", str);
 }
  void pass_GoConst(void)

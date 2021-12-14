@@ -54,17 +54,20 @@ func GoText(x *C.char) {
 }
 
 //export GoConst
-func GoConst(x *C.char) {
+func GoConst(x *C.char, y *C.char) {
 	fmt.Println("Go GoConst beg")
 
-	var y string
+	//var y string
 	//y = "hello"
-	y = C.GoString(x)
+	a := C.GoString(x)
+	b := C.GoString(y)
 	//fmt.Printf("Go GoText X '%s'", x)
-	fmt.Printf("Go GoConst X '%s'", y)
+	fmt.Printf("Go GoConst A '%s'", a)
+	fmt.Println()
+	fmt.Printf("Go GoConst N '%s'", b)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
-	fmt.Println()
+	//fmt.Println()
 	fmt.Println("Go GoConst end")
 }
