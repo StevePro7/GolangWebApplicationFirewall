@@ -4,9 +4,9 @@
 
 void call_add(adder func)
 {
-    printf("C  Callback beg\n");
-    int i = func(7, 3);
-    printf("C  Callback end [%d]\n", i);
+    printf("C  call_add beg\n");
+    int i = func(1, 2);
+    printf("C  call_add end [%d]\n", i);
 }
 void pass_GoAdd(void)
 {
@@ -17,6 +17,9 @@ void pass_GoAdd(void)
 
 void call_text(ModSecLogCb callback)
 {
+    printf("C  call_text beg\n");
+    callback("foo", "bar");
+    printf("C  call_text end\n");
 }
 void pass_GoText(void)
 {

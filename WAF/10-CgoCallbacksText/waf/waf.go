@@ -11,7 +11,8 @@ import (
 
 func Run() {
 	fmt.Println("Go Run beg")
-	C.pass_GoAdd()
+	//C.pass_GoAdd()
+	C.pass_GoText()
 	fmt.Println("Go Run end")
 }
 
@@ -26,9 +27,12 @@ func GoAdd(a, b int) int {
 }
 
 //export GoText
-func GoText() {
-	fmt.Printf("Go GoText beg")
+func GoText(foo, bar string) {
+	fmt.Println("Go GoText beg")
+	//fmt.Printf("Go GoText foo '%s'", foo)
 	fmt.Println()
-	fmt.Printf("Go GoText end")
+
+	//fmt.Printf("Go GoText bar '%s'", bar)
 	fmt.Println()
+	fmt.Println("Go GoText end")
 }
