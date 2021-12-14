@@ -119,14 +119,14 @@ func GoAdd(a, b int) int {
 }
 
 //export GoText
-func GoText() {
+func GoText(x *C.char) {
 	fmt.Println("Go GoText beg")
 
-	//	var y string
+	var y string
 	//y = "hello"
-	//	y = C.GoString(x)
+	y = C.GoString(x)
 	//fmt.Printf("Go GoText X '%s'", x)
-	//	fmt.Printf("Go GoText X '%s'", y)
+	fmt.Printf("Go GoText X '%s'", y)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
@@ -134,14 +134,14 @@ func GoText() {
 	fmt.Println("Go GoText end")
 }
 
-//func GoText(x *C.char) {
+//func GoText() {
 //	fmt.Println("Go GoText beg")
 //
-//	var y string
+//	//	var y string
 //	//y = "hello"
-//	y = C.GoString(x)
+//	//	y = C.GoString(x)
 //	//fmt.Printf("Go GoText X '%s'", x)
-//	fmt.Printf("Go GoText X '%s'", y)
+//	//	fmt.Printf("Go GoText X '%s'", y)
 //	fmt.Println()
 //
 //	//fmt.Printf("Go GoText bar '%s'", bar)

@@ -24,7 +24,7 @@ void call_sgb(texts funcs, char *str)
     printf("C  call_sgb beg\n");
     printf("C  call_sgb '%s'\n", str);
     //int i = func(1, 2);
-    funcs();
+    funcs(str);
     printf("C  call_sgb end\n");
 }
 

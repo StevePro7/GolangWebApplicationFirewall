@@ -1,5 +1,5 @@
 typedef long long int(*adder)(long long int, long long int);
-typedef void(*texts)(void);
+typedef void(*texts)(char*);
 
 extern void call_add(adder, int, int);
 extern void call_sgb(texts, char*);
