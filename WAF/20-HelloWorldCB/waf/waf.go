@@ -88,7 +88,6 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	CserverLink := C.CString(serverLink)
 	CserverPort := C.int(serverPort)
 
-	// TODO - not sure why this stopped working?	because implementation in C file??
 	defer C.free(unsafe.Pointer(Curi))
 	defer C.free(unsafe.Pointer(ChttpMethod))
 	defer C.free(unsafe.Pointer(ChttpProtocol))

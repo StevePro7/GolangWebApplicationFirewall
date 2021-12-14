@@ -23,3 +23,7 @@ modsecurity.cc
  *
  */
 typedef void (*ModSecLogCb) (void *, const void *);
+
+adapt to waf.h
+typedef void(*texts)(char*);
+extern void call_sgb(texts, char*);
