@@ -4,7 +4,7 @@
 
 void call_add(adder func) {
     printf("C  Callback beg\n");
-    int i = func(5, 5);
+    int i = func(15, 5);
     printf("C  Callback end [%d]\n", i);
 }
 
