@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+	"unsafe"
 )
 
 // Directory where the Core Rules Set are stored.
@@ -88,12 +89,12 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	CserverPort := C.int(serverPort)
 
 	// TODO - not sure why this stopped working?	because implementation in C file??
-	/*	defer C.free(unsafe.Pointer(Curi))
-		defer C.free(unsafe.Pointer(ChttpMethod))
-		defer C.free(unsafe.Pointer(ChttpProtocol))
-		defer C.free(unsafe.Pointer(ChttpVersion))
-		defer C.free(unsafe.Pointer(CclientLink))
-		defer C.free(unsafe.Pointer(CserverLink))*/
+	defer C.free(unsafe.Pointer(Curi))
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	defer C.free(unsafe.Pointer(ChttpProtocol))
+	defer C.free(unsafe.Pointer(ChttpVersion))
+	defer C.free(unsafe.Pointer(CclientLink))
+	defer C.free(unsafe.Pointer(CserverLink))
 
 	//start := time.Now()
 	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))

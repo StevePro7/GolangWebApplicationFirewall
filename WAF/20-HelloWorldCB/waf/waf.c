@@ -4,7 +4,6 @@
 #include "modsecurity/rules_set.h"
 #include "modsecurity/transaction.h"
 #include "modsecurity/intervention.h"
-#include <stdio.h>
 
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;

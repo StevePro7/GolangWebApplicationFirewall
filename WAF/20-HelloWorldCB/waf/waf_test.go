@@ -22,7 +22,7 @@ func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) 
 	serverLink := "http://localhost"
 	serverPort := 80
 
-	expect := 1
+	expect := 0
 	actual := ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	if expect != actual {
@@ -123,7 +123,6 @@ func TestExtractRulesSetFilenames(t *testing.T) {
 		"/etc/waf/crs-setup.conf",
 		"/etc/waf/modsecdefault.conf",
 		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
-		"/etc/waf/stevepro-REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
 	}
 	actualFilenames := ExtractRulesSetFilenames()
 
