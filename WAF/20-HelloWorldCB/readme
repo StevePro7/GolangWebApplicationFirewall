@@ -4,6 +4,13 @@ readme
 IMPORTANT
 https://github.com/golang/go/issues/39871
 
+Instead inject my own ID but I will calculate this in the same manner
+e.g.
+1639505494
+1639505494
+
+time.Now().Unix()
+
 Rule Message format can be here
 https://github.com/SpiderLabs/ModSecurity/blob/v3/master/src/rule_message.cc
 

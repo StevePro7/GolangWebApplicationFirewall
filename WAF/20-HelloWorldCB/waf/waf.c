@@ -72,8 +72,10 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
 
 int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port)
 {
+    char *id = "stevepro";
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
+    //transaction = msc_new_transaction_with_id(modsec, rules, id, NULL);
     msc_process_connection(transaction, client_link, client_port, server_link, server_port);
     msc_process_uri(transaction, uri, http_protocol, http_version);
     msc_process_request_headers(transaction);
@@ -84,6 +86,8 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     intervention.url = NULL;
     intervention.log = NULL;
     intervention.disruptive = 0;
+
+    //fprintf(stderr, "Tran ID '%d' OK\n", transaction->m_serverPort);
     return msc_intervention(transaction, &intervention);
 }
 
