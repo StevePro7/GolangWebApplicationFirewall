@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
-	"unsafe"
 )
 
 // Directory where the Core Rules Set are stored.
@@ -61,6 +60,7 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	return index
 }
+
 func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 
 	// Transfer core rule set file names to WAF wrapper code.
@@ -86,12 +86,13 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	CserverLink := C.CString(serverLink)
 	CserverPort := C.int(serverPort)
 
-	defer C.free(unsafe.Pointer(Curi))
-	defer C.free(unsafe.Pointer(ChttpMethod))
-	defer C.free(unsafe.Pointer(ChttpProtocol))
-	defer C.free(unsafe.Pointer(ChttpVersion))
-	defer C.free(unsafe.Pointer(CclientLink))
-	defer C.free(unsafe.Pointer(CserverLink))
+	// TODO - not sure why this stopped working?	because implementation in C file??
+	/*	defer C.free(unsafe.Pointer(Curi))
+		defer C.free(unsafe.Pointer(ChttpMethod))
+		defer C.free(unsafe.Pointer(ChttpProtocol))
+		defer C.free(unsafe.Pointer(ChttpVersion))
+		defer C.free(unsafe.Pointer(CclientLink))
+		defer C.free(unsafe.Pointer(CserverLink))*/
 
 	//start := time.Now()
 	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))

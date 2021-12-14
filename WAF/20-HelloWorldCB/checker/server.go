@@ -10,6 +10,7 @@ func Check() {
 
 	waf.InitializeModSecurity()
 	waf.DefineRulesSetDirectory("/etc/waf")
+
 	filenames := waf.ExtractRulesSetFilenames()
 	waf.LoadModSecurityCoreRuleSet(filenames)
 
@@ -26,4 +27,5 @@ func Check() {
 	detection := waf.ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	log.Println("Detection = ", detection)
+	/**/
 }
