@@ -27,9 +27,9 @@ func GoAdd(a, b int) int {
 }
 
 //export GoText
-func GoText(foo, bar string) {
+func GoText(x C.int) {
 	fmt.Println("Go GoText beg")
-	//fmt.Printf("Go GoText foo '%s'", foo)
+	fmt.Printf("Go GoText X '%d'", x)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)

@@ -17,9 +17,12 @@ void pass_GoAdd(void)
 
 void call_text(ModSecLogCb callback)
 {
-    printf("C  call_text beg\n");
-    callback("foo", "bar");
-    printf("C  call_text end\n");
+    char *str = "stevepro";
+    printf("C  call_text beg '%s'\n", str);
+    //callback("foo", "bar");
+    //callback(str);
+    callback(7);
+    printf("C  call_text end '%s'\n", str);
 }
 void pass_GoText(void)
 {
