@@ -1,9 +1,9 @@
 #include <stdlib.h>
 
-typedef long long int(*adder)(long long int, long long int);
+//typedef long long int(*adder)(long long int, long long int);
 typedef void(*texts)(char*);
 
-extern void call_add(adder, int, int);
+//extern void call_add(adder, int, int);
 extern void call_sgb(texts, char*);
 
 void InitializeModSecurity();

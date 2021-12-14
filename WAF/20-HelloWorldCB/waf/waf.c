@@ -11,18 +11,17 @@ RulesSet *rules = NULL;
 // Helper function to initialize ModSec.
 static void initializeModSecurityImpl();
 
-void call_add(adder func, int x, int y)
-{
-    printf("C  call_add beg\n");
-    int i = func(x, y);
-    printf("C  call_add end [%d]\n", i);
-}
+//void call_add(adder func, int x, int y)
+//{
+//    printf("C  call_add beg\n");
+//    int i = func(x, y);
+//    printf("C  call_add end [%d]\n", i);
+//}
 
 void call_sgb(texts funcs, char *str)
 {
     printf("C  call_sgb beg\n");
     printf("C  call_sgb '%s'\n", str);
-    //int i = func(1, 2);
     funcs(str);
     printf("C  call_sgb end\n");
 }
@@ -33,10 +32,8 @@ void MyFuncPtr(void *foo, const void *bar)
     fprintf(stderr, "MyFuncPtr start\n");
     //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
     fprintf(stderr, "MyFuncPtr '%s' [SPLAT..!]\n", sgb);
-    //call_const(foo, bar);
-    //call_add(&GoAdd, 1, 4);
     call_sgb(&GoText, sgb);
-    fprintf(stderr, "MyFuncPtr -end-..www..!\n");
+    fprintf(stderr, "MyFuncPtr -end-..END..!\n");
 }
 
 void InitializeModSecurity()
