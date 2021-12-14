@@ -3,3 +3,12 @@ Callbacks wtih cgo
 
 New doco
 https://pkg.go.dev/cmd/cgo
+
+
+char* string conversion
+A few special functions convert between Go and C types by making copies of the data. In pseudo-Go definitions:
+
+// Go string to C string
+
+// C string to Go string
+func C.GoString(*C.char) string
