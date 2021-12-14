@@ -1,3 +1,5 @@
+extern void call_const(ModSecLogCb);
+extern void pass_GoConst(void);
 
 int LoadModSecurityCoreRuleSet(char **array, int size);
 int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port);

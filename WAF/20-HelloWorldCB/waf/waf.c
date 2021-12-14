@@ -1,4 +1,5 @@
 #include "waf.h"
+#include "_cgo_export.h"
 #include "modsecurity/modsecurity.h"
 #include "modsecurity/rules_set.h"
 #include "modsecurity/transaction.h"
@@ -8,6 +9,23 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
+void call_const(ModSecLogCb callback)
+{
+    //char *str = "steven";
+    //const char *buf = "World";
+    //char *buf = "boland";
+    printf("C  call_const beg\n");
+    //callback(str, buf);
+    //callback(str);
+    printf("C  call_const end\n");
+}
+ void pass_GoConst(void)
+ {
+    printf("C  pass_GoConst beg\n");
+    //call_const(&GoConst);
+    printf("C  pass_GoConst end\n");
+ }
+
 // Helper function to initialize ModSec.
 static void initializeModSecurityImpl();
 
@@ -16,7 +34,7 @@ void MyFuncPtr(void *foo, const void *bar)
     fprintf(stderr, "MyFuncPtr start\n");
     //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
     fprintf(stderr, "MyFuncPtr '%s' [SPLAT!]\n", bar);
-    fprintf(stderr, "MyFuncPtr -end-\n");
+    fprintf(stderr, "MyFuncPtr -end-..!X?\n");
 }
 
 void InitializeModSecurity()
