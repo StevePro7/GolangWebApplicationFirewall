@@ -108,16 +108,6 @@ func GetRulesDirectory() string {
 	return rulesetDirectory
 }
 
-//export GoAdd
-func GoAdd(a, b int) int {
-	fmt.Printf("Go GoAdd beg (x,y)=(%d,%d)", a, b)
-	fmt.Println()
-	sum := a + b
-	fmt.Printf("Go GoAdd end [%d]", sum)
-	fmt.Println()
-	return sum
-}
-
 //export GoText
 func GoText(x *C.char) {
 	fmt.Println("Go GoText beg")
@@ -126,25 +116,10 @@ func GoText(x *C.char) {
 	//y = "hello"
 	y = C.GoString(x)
 	//fmt.Printf("Go GoText X '%s'", x)
-	fmt.Printf("Go GoText X '%s'", y)
+	fmt.Printf("Go GoText X '%s' [oof]", y)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
 	fmt.Println()
 	fmt.Println("Go GoText end")
 }
-
-//func GoText() {
-//	fmt.Println("Go GoText beg")
-//
-//	//	var y string
-//	//y = "hello"
-//	//	y = C.GoString(x)
-//	//fmt.Printf("Go GoText X '%s'", x)
-//	//	fmt.Printf("Go GoText X '%s'", y)
-//	fmt.Println()
-//
-//	//fmt.Printf("Go GoText bar '%s'", bar)
-//	fmt.Println()
-//	fmt.Println("Go GoText end")
-//}

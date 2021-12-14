@@ -11,12 +11,6 @@ RulesSet *rules = NULL;
 // Helper function to initialize ModSec.
 static void initializeModSecurityImpl();
 
-//void call_add(adder func, int x, int y)
-//{
-//    printf("C  call_add beg\n");
-//    int i = func(x, y);
-//    printf("C  call_add end [%d]\n", i);
-//}
 
 void call_sgb(texts funcs, char *str)
 {
