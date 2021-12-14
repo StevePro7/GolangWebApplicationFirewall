@@ -64,7 +64,7 @@ func GoConst(x *C.char, y *C.char) {
 	//fmt.Printf("Go GoText X '%s'", x)
 	fmt.Printf("Go GoConst A '%s'", a)
 	fmt.Println()
-	fmt.Printf("Go GoConst N '%s'", b)
+	fmt.Printf("Go GoConst B '%s'", b)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
