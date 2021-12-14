@@ -3,6 +3,7 @@ typedef void (*ModSecNumCb) (int);
 //typedef void (*ModSecLogCb) (void *, const void *);
 //typedef void (*ModSecLogCb) (char *);
 typedef void (*ModSecLogCb) (char *);
+typedef void (*ModSecConstCb) (char *);
 //typedef void (*ModSecLogCb) (void *);
 
 extern void call_add(adder);
@@ -12,3 +13,5 @@ extern void pass_GoNum(void);
 
 extern void call_text(ModSecLogCb);
 extern void pass_GoText(void);
+extern void call_const(ModSecConstCb);
+extern void pass_GoConst(void);

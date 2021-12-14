@@ -12,3 +12,7 @@ A few special functions convert between Go and C types by making copies of the d
 
 // C string to Go string
 func C.GoString(*C.char) string
+
+
+const char*
+https://stackoverflow.com/questions/32938558/cgo-cant-find-way-to-use-callbacks-with-const-char-argument

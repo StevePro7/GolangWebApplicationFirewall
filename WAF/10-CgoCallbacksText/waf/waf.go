@@ -13,7 +13,8 @@ func Run() {
 	fmt.Println("Go Run beg")
 	//C.pass_GoAdd()
 	//C.pass_GoNum()
-	C.pass_GoText()
+	//C.pass_GoText()
+	C.pass_GoConst()
 	fmt.Println("Go Run end")
 }
 
@@ -50,4 +51,20 @@ func GoText(x *C.char) {
 	//fmt.Printf("Go GoText bar '%s'", bar)
 	fmt.Println()
 	fmt.Println("Go GoText end")
+}
+
+//export GoConst
+func GoConst(x *C.char) {
+	fmt.Println("Go GoConst beg")
+
+	var y string
+	//y = "hello"
+	y = C.GoString(x)
+	//fmt.Printf("Go GoText X '%s'", x)
+	fmt.Printf("Go GoConst X '%s'", y)
+	fmt.Println()
+
+	//fmt.Printf("Go GoText bar '%s'", bar)
+	fmt.Println()
+	fmt.Println("Go GoConst end")
 }

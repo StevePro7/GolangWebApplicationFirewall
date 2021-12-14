@@ -45,3 +45,17 @@ void pass_GoText(void)
     call_text(&GoText);
     printf("C  pass_GoText end\n");
 }
+
+void call_const(ModSecConstCb callback)
+{
+    char *str = "const";
+    printf("C  call_const beg '%s'\n", str);
+    callback(str);
+    printf("C  call_const end '%s'\n", str);
+}
+ void pass_GoConst(void)
+ {
+    printf("C  pass_GoConst beg\n");
+    call_const(&GoConst);
+    printf("C  pass_GoConst end\n");
+ }
