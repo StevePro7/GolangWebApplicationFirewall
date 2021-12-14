@@ -32,11 +32,11 @@ extern void pass_GoNum(void)
 
 void call_text(ModSecLogCb callback)
 {
-    char *str = "stevepro";
+    char *str = "adriana";
     printf("C  call_text beg '%s'\n", str);
     //callback("foo", "bar");
-    //callback(str);
-    callback(7);
+    callback(str);
+    //callback(7);
     printf("C  call_text end '%s'\n", str);
 }
 void pass_GoText(void)

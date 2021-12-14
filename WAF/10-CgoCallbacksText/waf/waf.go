@@ -12,8 +12,8 @@ import (
 func Run() {
 	fmt.Println("Go Run beg")
 	//C.pass_GoAdd()
-	C.pass_GoNum()
-	//C.pass_GoText()
+	//C.pass_GoNum()
+	C.pass_GoText()
 	fmt.Println("Go Run end")
 }
 
@@ -37,9 +37,14 @@ func GoNum(x C.int) {
 }
 
 //export GoText
-func GoText(x C.int) {
+func GoText(x *C.char) {
 	fmt.Println("Go GoText beg")
-	fmt.Printf("Go GoText X '%d'", x)
+
+	var y string
+	//y = "hello"
+	y = C.GoString(x)
+	//fmt.Printf("Go GoText X '%s'", x)
+	fmt.Printf("Go GoText X '%s'", y)
 	fmt.Println()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
