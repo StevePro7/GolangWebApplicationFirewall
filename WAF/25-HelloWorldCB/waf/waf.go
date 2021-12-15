@@ -109,7 +109,7 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	defer C.free(unsafe.Pointer(CserverLink))
 
 	start := time.Now()
-	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
+	detection := int(C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
 	elapsed := time.Since(start)
 
 	log.Infof("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
