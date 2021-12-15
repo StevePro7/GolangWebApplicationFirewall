@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"log"
 	"strings"
+	"time"
 	"unsafe"
 )
 
@@ -27,7 +28,7 @@ func DefineRulesSetDirectory(directory string) {
 		rulesetDirectory = rulesetDirectory + "/"
 	}
 
-	//log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
+	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 }
 
 func ExtractRulesSetFilenames() []string {
@@ -41,7 +42,7 @@ func ExtractRulesSetFilenames() []string {
 
 		file := rulesetDirectory + item.Name()
 		files = append(files, file)
-		//log.Printf("WAF Found Rule('%s')", file)
+		log.Printf("WAF Found Rule('%s')", file)
 	}
 
 	return files
@@ -50,15 +51,15 @@ func ExtractRulesSetFilenames() []string {
 func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	size := len(filenames)
-	//log.Printf("WAF Attempt load %d Core Rule Sets", size)
+	log.Printf("WAF Attempt load %d Core Rule Sets", size)
 
 	index := loadModSecurityCoreRuleSetImpl(filenames, size)
-	//if index == size {
-	////	log.Printf("WAF Process load %d Core Rule Sets  SUCCESS", size)
-	//} else {
-	//	badFile := filenames[index]
-	////	log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  Bad File: '%s'", size, badFile)
-	//}
+	if index == size {
+	//	log.Printf("WAF Process load %d Core Rule Sets  SUCCESS", size)
+	} else {
+		badFile := filenames[index]
+		log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  Bad File: '%s'", size, badFile)
+	}
 
 	return index
 }
@@ -95,9 +96,9 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	defer C.free(unsafe.Pointer(CclientLink))
 	defer C.free(unsafe.Pointer(CserverLink))
 
-	//start := time.Now()
+	start := time.Now()
 	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
-	//elapsed := time.Since(start)
+	elapsed := time.Since(start)
 
 	log.Printf("WAF Process Http Request URL  Detection=%d", detection)
 	return detection

@@ -23,11 +23,7 @@ void call_sgb(texts funcs, char *str)
 void MyFuncPtr(void *foo, const void *bar)
 {
     char *sgb = (char *)bar;
-    //fprintf(stderr, "MyFuncPtr start\n");
-    //fprintf(stderr, "MyFuncPtr '%s'\n", foo);
-    //fprintf(stderr, "MyFuncPtr '%s' [SPLAT..!]\n", sgb);
     call_sgb(&GoText, sgb);
-    //fprintf(stderr, "MyFuncPtr -end-..END..!\n");
 }
 
 void InitializeModSecurity()
@@ -41,9 +37,7 @@ void InitializeModSecurity()
 static void initializeModSecurityImpl()
 {
     modsec = msc_init();
-    //fprintf(stderr, "  C msc_set_log_cb start\n");
-    msc_set_log_cb(modsec, MyFuncPtr);
-    //fprintf(stderr, "  C msc_set_log_cb -end-\n");
+    msc_set_log_cb(modsec, MyFuncPtr);  // TODO
     rules = msc_create_rules_set();
 }
 
@@ -75,7 +69,7 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     char *id = "stevepro";
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
-    //transaction = msc_new_transaction_with_id(modsec, rules, id, NULL);
+    //transaction = msc_new_transaction_with_id(modsec, rules, id, NULL);   // TODO
     msc_process_connection(transaction, client_link, client_port, server_link, server_port);
     msc_process_uri(transaction, uri, http_protocol, http_version);
     msc_process_request_headers(transaction);
@@ -86,8 +80,6 @@ int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *
     intervention.url = NULL;
     intervention.log = NULL;
     intervention.disruptive = 0;
-
-    //fprintf(stderr, "Tran ID '%d' OK\n", transaction->m_serverPort);
     return msc_intervention(transaction, &intervention);
 }
 
