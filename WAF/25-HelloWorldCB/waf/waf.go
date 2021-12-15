@@ -40,15 +40,22 @@ func ExtractRulesSetFilenames() []string {
 	// Read all core rule set file names from rules directory.
 	var files []string
 	items, _ := ioutil.ReadDir(rulesetDirectory)
-
-	//log.Printf("WAF Found %d Core Rules Sets", len(items))
+	count := 1
 	for _, item := range items {
 
-		file := rulesetDirectory + item.Name()
+		// Ignore symbolically linked files!
+		filename := item.Name()
+		if strings.HasPrefix(filename, "..") {
+			continue
+		}
+
+		file := rulesetDirectory + filename
 		files = append(files, file)
-		log.Printf("WAF Found Rule('%s')", file)
+		log.Infof("WAF Found Rule[%d]('%s')", count, file)
+		count++
 	}
 
+	log.Infof("WAF Total Core Rules Sets: %d", len(files))
 	return files
 }
 
