@@ -1,5 +1,4 @@
-// IMPORTANT - required for defer in Go code
-// defer C.free(unsafe.Pointer(API))
+// Important: <stdlib.h> header file required for Golang statements e.g. defer C.free(unsafe.Pointer(API))
 #include <stdlib.h>
 
 typedef void(*texts)(char*);

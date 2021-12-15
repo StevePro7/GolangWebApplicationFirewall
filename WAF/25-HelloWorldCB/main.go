@@ -1,22 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"strconv"
-	"time"
-	"waftesting/checker"
+	"waftesting/waf"
 )
 
-func main() {
-	log.Println("start")
-	checker.Check()
-	mytime := time.Now().Unix()
-	mytext := strconv.FormatInt(mytime, 10)
-	log.Println(mytime)
-	log.Println(mytext)
+func runServer() {
+	rulesetDirectory := "/etc/waf"
 
-	fmt.Printf("t1: %T\n", mytime)
-	fmt.Printf("t2: %T\n", mytext)
-	log.Println("-end-")
+	// Initialize WAF and load OWASP Core Rule Sets.
+	waf.InitializeModSecurity()
+	waf.DefineRulesSetDirectory(rulesetDirectory)
+	filenames := waf.ExtractRulesSetFilenames()
+	waf.LoadModSecurityCoreRuleSet(filenames)
+}
+
+func main() {
+	runServer()
+	//checker.Check()
+
 }

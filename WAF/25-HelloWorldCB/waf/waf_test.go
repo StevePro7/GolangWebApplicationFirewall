@@ -6,17 +6,6 @@ import (
 
 const directory = "/etc/waf"
 
-func TestGenerateModSecurtityID(t *testing.T) {
-
-	id := GenerateModSecurtityID()
-	expectLength := 36
-	actualLength := len(id)
-
-	if expectLength != actualLength {
-		t.Errorf("ID '%s' expect length: %d actual length: %d", id, expectLength, actualLength)
-	}
-}
-
 func TestInitializeModSecurity(t *testing.T) {
 
 	InitializeModSecurity()
@@ -65,6 +54,17 @@ func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
+	}
+}
+
+func TestGenerateModSecurtityID(t *testing.T) {
+
+	id := GenerateModSecurtityID()
+	expectLength := 36
+	actualLength := len(id)
+
+	if expectLength != actualLength {
+		t.Errorf("ID '%s' expect length: %d actual length: %d", id, expectLength, actualLength)
 	}
 }
 

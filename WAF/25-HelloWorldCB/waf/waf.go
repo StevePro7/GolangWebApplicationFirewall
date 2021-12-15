@@ -17,10 +17,6 @@ import (
 // Directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
-func GenerateModSecurtityID() string {
-	return uuid.New().String()
-}
-
 func InitializeModSecurity() {
 	C.InitializeModSecurity()
 }
@@ -86,6 +82,10 @@ func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 
 	// Finally, load ModSecurity core rule set from WAF wrapper code.
 	return int(C.LoadModSecurityCoreRuleSet(carray, csize))
+}
+
+func GenerateModSecurtityID() string {
+	return uuid.New().String()
 }
 
 func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
