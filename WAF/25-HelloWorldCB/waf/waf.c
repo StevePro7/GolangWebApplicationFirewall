@@ -51,7 +51,7 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
         initializeModSecurityImpl();
     }
 
-    for( index = 0; index < size; index++ )
+    for(index = 0; index < size; index++)
     {
         file = array[index];
         msc_rules_add_file(rules, file, &error);

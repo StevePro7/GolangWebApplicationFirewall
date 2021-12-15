@@ -62,11 +62,11 @@ func ExtractRulesSetFilenames() []string {
 func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	size := len(filenames)
-	log.Printf("WAF Attempt load %d Core Rule Sets", size)
+	log.Infof("WAF Attempt load %d Core Rule Sets", size)
 
 	index := loadModSecurityCoreRuleSetImpl(filenames, size)
 	if index == size {
-		//	log.Printf("WAF Process load %d Core Rule Sets  SUCCESS", size)
+		log.Infof("WAF Process load %d Core Rule Sets  SUCCESS", size)
 	} else {
 		badFile := filenames[index]
 		log.Fatalf("WAF Process load %d Core Rule Sets  FAILED!  Bad File: '%s'", size, badFile)
@@ -74,7 +74,6 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	return index
 }
-
 func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 
 	// Transfer core rule set file names to WAF wrapper code.
