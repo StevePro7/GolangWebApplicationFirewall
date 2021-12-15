@@ -6,11 +6,11 @@ package waf
 import "C"
 import (
 	"io/ioutil"
+	"strconv"
 	"strings"
 	"time"
 	"unsafe"
 
-	uuid "github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -18,8 +18,12 @@ import (
 var rulesetDirectory string
 
 func GenerateModSecurtityID() string {
-	return uuid.New().String()
+	return strconv.FormatInt(time.Now().Unix(), 10)
 }
+
+//func GenerateModSecurtityID() string {
+//	return uuid.New().String()
+//}
 
 func InitializeModSecurity() {
 	C.InitializeModSecurity()

@@ -2,6 +2,18 @@ readme
 14/12/2021
 
 IMPORTANT
+Generate ID
+
+func GenerateModSecurtityID() string {
+	return strconv.FormatInt(time.Now().Unix(), 10)
+}
+
+//func GenerateModSecurtityID() string {
+//	return uuid.New().String()
+//}
+
+
+
 https://github.com/golang/go/issues/39871
 
 Instead inject my own ID but I will calculate this in the same manner
