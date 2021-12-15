@@ -1,8 +1,8 @@
 // Important: <stdlib.h> header file required for Golang statements e.g. defer C.free(unsafe.Pointer(API))
 #include <stdlib.h>
 
-typedef void(*texts)(char*);
-extern void call_sgb(texts, char*);
+typedef void( *ModSecurityLoggingCallbackFunctionPointer )( char *);
+extern void InvokeModSecurityLoggingCallback( ModSecurityLoggingCallbackFunctionPointer, char *);
 
 void InitializeModSecurity();
 int LoadModSecurityCoreRuleSet(char **array, int size);

@@ -12,18 +12,18 @@ RulesSet *rules = NULL;
 static void initializeModSecurityImpl();
 
 
-void call_sgb(texts funcs, char *str)
+void InvokeModSecurityLoggingCallback( ModSecurityLoggingCallbackFunctionPointer func, char *payload )
 {
-    //printf("C  call_sgb beg\n");
-    //printf("C  call_sgb '%s'\n", str);
-    funcs(str);
-    //printf("C  call_sgb end\n");
+    // Invoke Golang callback with ModSecurity logging payload i.e. C => Go code invocation.
+    func( payload );
 }
 
-void MyFuncPtr(void *foo, const void *bar)
+// Function prototype must match modsecurity.cc ModSecLogCb callback signature.
+void CModSecurityLoggingCallback( void *referenceAPI, const void *ruleMessage )
 {
-    char *sgb = (char *)bar;
-    call_sgb(&GoText, sgb);
+    // Remove constness and coerce to char* to be compatible with Golang API.
+    char *payload = (char *)ruleMessage;
+    InvokeModSecurityLoggingCallback( &GoModSecurityLoggingCallback, payload );
 }
 
 void InitializeModSecurity()
@@ -37,7 +37,7 @@ void InitializeModSecurity()
 static void initializeModSecurityImpl()
 {
     modsec = msc_init();
-    msc_set_log_cb(modsec, MyFuncPtr);  // TODO
+    msc_set_log_cb(modsec, CModSecurityLoggingCallback);
     rules = msc_create_rules_set();
 }
 

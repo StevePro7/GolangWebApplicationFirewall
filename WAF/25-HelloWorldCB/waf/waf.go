@@ -119,8 +119,8 @@ func GetRulesDirectory() string {
 	return rulesetDirectory
 }
 
-//export GoText
-func GoText(x *C.char) {
+//export GoModSecurityLoggingCallback
+func GoModSecurityLoggingCallback(x *C.char) {
 	log.Info("WAF Go GoText beg")
 
 	var y string
@@ -132,3 +132,17 @@ func GoText(x *C.char) {
 	//fmt.Printf("Go GoText bar '%s'", bar)
 	log.Info("WAF Go GoText end")
 }
+
+////export GoText
+//func GoText(x *C.char) {
+//	log.Info("WAF Go GoText beg")
+//
+//	var y string
+//	y = C.GoString(x)
+//	//fmt.Printf("Go GoText X '%s'", x)
+//	log.Infof("WAF Go GoText X '%s' [oof]", y)
+//	log.Info()
+//
+//	//fmt.Printf("Go GoText bar '%s'", bar)
+//	log.Info("WAF Go GoText end")
+//}
