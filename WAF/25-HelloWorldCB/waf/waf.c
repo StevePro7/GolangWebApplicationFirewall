@@ -66,7 +66,7 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
 
 int ProcessHttpRequest(char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port)
 {
-    char *id = "stevepro";
+    //char *id = "GUID";
     Transaction *transaction = NULL;
     transaction = msc_new_transaction(modsec, rules, NULL);
     //transaction = msc_new_transaction_with_id(modsec, rules, id, NULL);   // TODO
