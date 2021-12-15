@@ -5,6 +5,7 @@ package waf
 // #include "waf.h"
 import "C"
 import (
+	"fmt"
 	"github.com/google/uuid"
 	"io/ioutil"
 	"strings"
@@ -89,7 +90,9 @@ func GenerateModSecurtityID() string {
 }
 
 func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
-	log.Printf("WAF Process Http Request URL '%s'", url)
+	prefix := getProcessHttpRequestPrefix(id)
+	log.Printf("%s URL '%s'", prefix, url)
+
 	Cid := C.CString(id)
 	Curi := C.CString(url)
 	ChttpMethod := C.CString(httpMethod)
@@ -112,7 +115,7 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	detection := int(C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
 	elapsed := time.Since(start)
 
-	log.Infof("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
+	log.Infof("%s URL '%s' Detection=%d Time elapsed: %s", prefix, url, detection, elapsed)
 	return detection
 }
 
@@ -121,16 +124,16 @@ func GetRulesDirectory() string {
 	return rulesetDirectory
 }
 
+func getProcessHttpRequestPrefix(id string) string {
+	return fmt.Sprintf("WAF [%s] Process Http Request", id)
+}
+
 //export GoModSecurityLoggingCallback
-func GoModSecurityLoggingCallback(x *C.char) {
-	log.Info("WAF Go GoText beg")
+func GoModSecurityLoggingCallback(Cpayload *C.char) {
+	// TODO extract unuque_id as ID
+	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
+	prefix := getProcessHttpRequestPrefix(id)
 
-	var y string
-	y = C.GoString(x)
-	//fmt.Printf("Go GoText X '%s'", x)
-	log.Infof("WAF Go GoText X '%s' [oof]", y)
-	log.Info()
-
-	//fmt.Printf("Go GoText bar '%s'", bar)
-	log.Info("WAF Go GoText end")
+	payload := C.GoString(Cpayload)
+	log.Infof("%s '%s' ", prefix, payload)
 }
