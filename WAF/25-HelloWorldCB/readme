@@ -5,13 +5,13 @@ IMPORTANT
 Generate ID
 
 func GenerateModSecurtityID() string {
-	return strconv.FormatInt(time.Now().Unix(), 10)
+	return uuid.New().String()
 }
 
-//func GenerateModSecurtityID() string {
-//	return uuid.New().String()
-//}
 
+func GenerateModSecurtityID() string {
+	return strconv.FormatInt(time.Now().Unix(), 10)
+}
 
 
 https://github.com/golang/go/issues/39871

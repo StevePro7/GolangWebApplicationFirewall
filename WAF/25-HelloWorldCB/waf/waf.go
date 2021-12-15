@@ -5,8 +5,8 @@ package waf
 // #include "waf.h"
 import "C"
 import (
+	"github.com/google/uuid"
 	"io/ioutil"
-	"strconv"
 	"strings"
 	"time"
 	"unsafe"
@@ -18,12 +18,8 @@ import (
 var rulesetDirectory string
 
 func GenerateModSecurtityID() string {
-	return strconv.FormatInt(time.Now().Unix(), 10)
+	return uuid.New().String()
 }
-
-//func GenerateModSecurtityID() string {
-//	return uuid.New().String()
-//}
 
 func InitializeModSecurity() {
 	C.InitializeModSecurity()
