@@ -10,11 +10,16 @@ import (
 	"time"
 	"unsafe"
 
+	uuid "github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
 )
 
 // Directory where the Core Rules Set are stored.
 var rulesetDirectory string
+
+func GenerateModSecurtityID() string {
+	return uuid.New().String()
+}
 
 func InitializeModSecurity() {
 	C.InitializeModSecurity()
@@ -22,13 +27,12 @@ func InitializeModSecurity() {
 
 func DefineRulesSetDirectory(directory string) {
 	rulesetDirectory = directory
+	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 
 	// Ensure rules directory ends with trailing slash.
 	if !strings.HasSuffix(rulesetDirectory, "/") {
 		rulesetDirectory = rulesetDirectory + "/"
 	}
-
-	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 }
 
 func ExtractRulesSetFilenames() []string {

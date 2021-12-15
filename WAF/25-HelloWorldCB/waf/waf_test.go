@@ -6,6 +6,17 @@ import (
 
 const directory = "/etc/waf"
 
+func TestGenerateModSecurtityID(t *testing.T) {
+
+	id := GenerateModSecurtityID()
+	expectLength := 36
+	actualLength := len(id)
+
+	if expectLength != actualLength {
+		t.Errorf("ID '%s' expect length: %d actual length: %d", id, expectLength, actualLength)
+	}
+}
+
 // 04.
 func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) {
 
