@@ -5,12 +5,12 @@ package waf
 // #include "waf.h"
 import "C"
 import (
-	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
 	"time"
 	"unsafe"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // Directory where the Core Rules Set are stored.
@@ -100,7 +100,7 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	detection := int(C.ProcessHttpRequest(Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
 	elapsed := time.Since(start)
 
-	log.Printf("WAF Process Http Request URL  Detection=%d", detection)
+	log.Infof("WAF Process Http Request URL '%s' Detection=%d Time elapsed: %s", url, detection, elapsed)
 	return detection
 }
 
@@ -111,16 +111,14 @@ func GetRulesDirectory() string {
 
 //export GoText
 func GoText(x *C.char) {
-	fmt.Println("Go GoText beg")
+	log.Info("WAF Go GoText beg")
 
 	var y string
-	//y = "hello"
 	y = C.GoString(x)
 	//fmt.Printf("Go GoText X '%s'", x)
-	fmt.Printf("Go GoText X '%s' [oof]", y)
-	fmt.Println()
+	log.Infof("WAF Go GoText X '%s' [oof]", y)
+	log.Info()
 
 	//fmt.Printf("Go GoText bar '%s'", bar)
-	fmt.Println()
-	fmt.Println("Go GoText end")
+	log.Info("WAF Go GoText end")
 }
