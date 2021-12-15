@@ -78,6 +78,7 @@ func TestProcessHttpRequest_ValidURL_OK(t *testing.T) {
 	}
 	LoadModSecurityCoreRuleSet(filenames)
 
+	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
 	url := "/foo.com"
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
@@ -88,7 +89,7 @@ func TestProcessHttpRequest_ValidURL_OK(t *testing.T) {
 	serverPort := 80
 
 	expect := 0
-	actual := ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -105,6 +106,7 @@ func TestProcessHttpRequest_InvalidURL_BlockDueToWarning(t *testing.T) {
 	}
 	LoadModSecurityCoreRuleSet(filenames)
 
+	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
 	url := "/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
@@ -115,7 +117,7 @@ func TestProcessHttpRequest_InvalidURL_BlockDueToWarning(t *testing.T) {
 	serverPort := 80
 
 	expect := 0
-	actual := ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -128,6 +130,7 @@ func TestProcessHttpRequest_InvalidURL_NoRulesLoad_OK(t *testing.T) {
 	var filenames []string
 	LoadModSecurityCoreRuleSet(filenames)
 
+	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
 	url := "/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
@@ -138,7 +141,7 @@ func TestProcessHttpRequest_InvalidURL_NoRulesLoad_OK(t *testing.T) {
 	serverPort := 80
 
 	expect := 0
-	actual := ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -152,6 +155,7 @@ func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) 
 	filenames := ExtractRulesSetFilenames()
 	LoadModSecurityCoreRuleSet(filenames)
 
+	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
 	url := "/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
@@ -162,7 +166,7 @@ func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) 
 	serverPort := 80
 
 	expect := 1
-	actual := ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)

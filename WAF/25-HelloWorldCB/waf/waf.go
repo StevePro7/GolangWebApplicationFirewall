@@ -88,8 +88,9 @@ func GenerateModSecurtityID() string {
 	return uuid.New().String()
 }
 
-func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
+func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
 	log.Printf("WAF Process Http Request URL '%s'", url)
+	Cid := C.CString(id)
 	Curi := C.CString(url)
 	ChttpMethod := C.CString(httpMethod)
 	ChttpProtocol := C.CString(httpProtocol)
@@ -99,6 +100,7 @@ func ProcessHttpRequest(url, httpMethod, httpProtocol, httpVersion string, clien
 	CserverLink := C.CString(serverLink)
 	CserverPort := C.int(serverPort)
 
+	defer C.free(unsafe.Pointer(Cid))
 	defer C.free(unsafe.Pointer(Curi))
 	defer C.free(unsafe.Pointer(ChttpMethod))
 	defer C.free(unsafe.Pointer(ChttpProtocol))
@@ -132,17 +134,3 @@ func GoModSecurityLoggingCallback(x *C.char) {
 	//fmt.Printf("Go GoText bar '%s'", bar)
 	log.Info("WAF Go GoText end")
 }
-
-////export GoText
-//func GoText(x *C.char) {
-//	log.Info("WAF Go GoText beg")
-//
-//	var y string
-//	y = C.GoString(x)
-//	//fmt.Printf("Go GoText X '%s'", x)
-//	log.Infof("WAF Go GoText X '%s' [oof]", y)
-//	log.Info()
-//
-//	//fmt.Printf("Go GoText bar '%s'", bar)
-//	log.Info("WAF Go GoText end")
-//}
