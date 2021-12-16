@@ -1,0 +1,167 @@
+Logging
+15/12/2021
+
+[ref \"v30,53\"]
+[ref \"o12,12o30,6v30,53t:urlDecodeUni\"]
+[ref \"o13,5o13,5o19,13o19,13v30,53t:urlDecodeUni\"]
+
+rule_message.cc
+msg.append("ModSecurity: Warning. ");
+
+url() >>  /test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
+
+ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf_custom/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"\"] [data \"\"] [severity \"0\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"http://localhost\"] [uri \"/test/artists.php\"] [unique_id \"7ce62288-d6dd-4be0-8b31-ae27876aeeea\"] [ref \"v30,53\"]
+
+ModSecurity: Warning. detected SQLi using libinjection. 
+[file \"/etc/waf_custom/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] 
+[line \"45\"] 
+[id \"942100\"] 
+[rev \"\"] 
+[msg \"\"] 
+[data \"\"] 
+[severity \"0\"]
+[ver \"OWASP_CRS/3.3.2\"]
+[maturity \"0\"]
+[accuracy \"0\"]
+[tags]
+[hostname \"http://localhost\"] 
+[uri \"/test/artists.php\"]
+[unique_id \"7ce62288-d6dd-4be0-8b31-ae27876aeeea\"]
+[ref \"v30,53\"]
+
+
+ModSecurity: Warning. detected SQLi using libinjection. 
+[file \"/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] 
+[line \"45\"] 
+[id \"942100\"] 
+[rev \"\"] 
+[msg \"SQL Injection Attack Detected via libinjection\"] 
+[data \"Matched Data: 1UE1 found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] 
+[severity \"2\"] 
+[ver \"OWASP_CRS/3.3.2\"] 
+[maturity \"0\"] 
+[accuracy \"0\"] 
+[hostname \"echo-a\"] 
+[uri \"/test/artists.php\"] 
+[unique_id \"163956574873.676390\"] 
+[ref \"v30,53\"]
+
+
+ModSecurity: Warning. Matched \"Operator `Rx' with parameter `(?:/\\*!?|\\*/|[';]--|--[\\s\\r\\n\\v\\f]|--[^-]*?-|[^&-]#.*?[\\s\\r\\n\\v\\f]|;?\\\\x00)' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) 
+
+[file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] 
+[line \"1188\"] 
+[id \"942440\"] 
+[rev \"\"] 
+[msg \"SQL Comment Sequence Detected\"] 
+[data \"Matched Data: n#foo*/*bar\\x0d found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] 
+[severity \"2\"] 
+[ver \"OWASP_CRS/3.3.2\"] 
+[maturity \"0\"] 
+[accuracy \"0\"] 
+[tag \"application-multi\"] 
+[tag \"language-multi\"] 
+[tag \"platform-multi\"] 
+[tag \"attack-sqli\"] 
+[tag \"OWASP_CRS\"] 
+[tag \"capec/1000/152/248/66\"] 
+[tag \"PCI/6.5.2\"] [tag \"paranoia-level/2\"] 
+[hostname \"echo-a\"] 
+[uri \"/test/artists.php\"] 
+[unique_id \"16395648888.540748\"] 
+[ref \"o12,12o30,6v30,53t:urlDecodeUni\"]
+
+ModSecurity: Warning. Matched \"Operator `Rx' with parameter `((?:[~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>][^~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>]*?){2})' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) 
+[file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] 
+[line \"1570\"] 
+[id \"942432\"] [rev \"\"] 
+[msg \"Restricted SQL Character Anomaly Detection (args): # of special characters exceeded (2)\"] 
+[data \"Matched Data: #foo* found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] 
+[severity \"4\"] 
+[ver \"OWASP_CRS/3.3.2\"] 
+[maturity \"0\"] 
+[accuracy \"0\"] 
+[tag \"application-multi\"] 
+[tag \"language-multi\"] 
+[tag \"platform-multi\"] 
+[tag \"attack-sqli\"] 
+[tag \"OWASP_CRS\"] 
+[tag \"capec/1000/152/248/66\"] 
+[tag \"PCI/6.5.2\"] 
+[tag \"paranoia-level/4\"] 
+[hostname \"echo-a\"] 
+[uri \"/test/artists.php\"] 
+[unique_id \"16395648888.540748\"] 
+[ref \"o13,5o13,5o19,13o19,13v30,53t:urlDecodeUni\"]
+
+
+'ModSecurity: Warning. Matched \"Operator `Rx' with parameter `((?:[~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>][^~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>]*?){2})' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) 
+[file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] 
+[line \"1570\"] 
+[id \"942432\"] 
+[rev \"\"] 
+[msg \"Restricted SQL Character Anomaly Detection (args): # of special characters exceeded (2)\"] 
+[data \"Matched Data: #foo* found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] 
+[severity \"4\"] 
+[ver \"OWASP_CRS/3.3.2\"] 
+[maturity \"0\"] 
+[accuracy \"0\"] 
+[tag \"application-multi\"] 
+[tag \"language-multi\"] 
+[tag \"platform-multi\"] 
+[tag \"attack-sqli\"] 
+[tag \"OWASP_CRS\"] 
+[tag \"capec/1000/152/248/66\"] 
+[tag \"PCI/6.5.2\"] 
+[tag \"paranoia-level/4\"] 
+[hostname \"echo-a\"] 
+[uri \"/test/artists.php\"] 
+[unique_id \"16395648888.540748\"] 
+[ref \"o13,5o13,5o19,13o19,13v30,53t:urlDecodeUni\"]'
+
+
+
+ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf_custom/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"\"] [data \"\"] [severity \"0\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"http://localhost\"] [uri \"/test/artists.php\"] [unique_id \"7ce62288-d6dd-4be0-8b31-ae27876aeeea\"] [ref \"v30,53\"]
+
+[ref \"v30,53\"]
+ModSecurity: Warning. detected SQLi using libinjection. 
+[file \"/etc/waf_custom/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"]
+
+Detection=0
+time="2021-12-15T10:40:20Z" level=info msg="WAF Process Http Request URL '/' Detection=0 Time elapsed: 17.784508ms"
+time="2021-12-15T10:41:09Z" level=info msg="WAF url() >>  /foo.com"
+time="2021-12-15T10:41:09Z" level=info msg="WAF GetMethod() >>  GET"
+time="2021-12-15T10:41:09Z" level=info msg="WAF Process Http Request URL '/foo.com'"
+time="2021-12-15T10:41:09Z" level=info msg="WAF Process Http Request URL '/foo.com' Detection=0 Time elapsed: 5.670134ms"
+time="2021-12-15T10:41:28Z" level=info msg="WAF url() >>  /test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user"
+time="2021-12-15T10:41:28Z" level=info msg="WAF GetMethod() >>  GET"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Process Http Request URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user'"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText beg"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText X 'ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"SQL Injection Attack Detected via libinjection\"] [data \"Matched Data: 1UE1 found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"2\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"16395648888.540748\"] [ref \"v30,53\"]' [oof]"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText end"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText beg"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText X 'ModSecurity: Warning. Matched \"Operator `Rx' with parameter `(?i:(?:\\b(?:(?:s(?:elect\\b.{1,100}?\\b(?:(?:(?:length|count)\\b.{1,100}?|.*?\\bdump\\b.*)\\bfrom|to(?:p\\b.{1,100}?\\bfrom|_(?:numbe|cha)r)|(?:from\\b.{1,100}?\\bwher|data_typ)e|instr)|ys_context)|in(?:to\\b\\W* (304 characters omitted)' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) [file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"1102\"] [id \"942480\"] [rev \"\"] [msg \"SQL Injection Attack\"] [data \"Matched Data: union#foo*/*bar\\x0d\\x0aselect found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"2\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [tag \"application-multi\"] [tag \"language-multi\"] [tag \"platform-multi\"] [tag \"attack-sqli\"] [tag \"OWASP_CRS\"] [tag \"capec/1000/152/248/66\"] [tag \"PCI/6.5.2\"] [tag \"paranoia-level/2\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"16395648888.540748\"] [ref \"o8,23v30,53t:urlDecodeUni\"]' [oof]"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText end"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText beg"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText X 'ModSecurity: Warning. Matched \"Operator `Rx' with parameter `(?:/\\*!?|\\*/|[';]--|--[\\s\\r\\n\\v\\f]|--[^-]*?-|[^&-]#.*?[\\s\\r\\n\\v\\f]|;?\\\\x00)' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) [file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"1188\"] [id \"942440\"] [rev \"\"] [msg \"SQL Comment Sequence Detected\"] [data \"Matched Data: n#foo*/*bar\\x0d found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"2\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [tag \"application-multi\"] [tag \"language-multi\"] [tag \"platform-multi\"] [tag \"attack-sqli\"] [tag \"OWASP_CRS\"] [tag \"capec/1000/152/248/66\"] [tag \"PCI/6.5.2\"] [tag \"paranoia-level/2\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"16395648888.540748\"] [ref \"o12,12o30,6v30,53t:urlDecodeUni\"]' [oof]"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText end"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText beg"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText X 'ModSecurity: Warning. Matched \"Operator `Rx' with parameter `((?:[~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>][^~!@#\\$%\\^&\\*\\(\\)\\-\\+=\\{\\}\\[\\]\\|:;\\\"'\\xc2\\xb4\\xe2\\x80\\x99\\xe2\\x80\\x98`<>]*?){2})' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user' ) [file \"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"1570\"] [id \"942432\"] [rev \"\"] [msg \"Restricted SQL Character Anomaly Detection (args): # of special characters exceeded (2)\"] [data \"Matched Data: #foo* found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"4\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [tag \"application-multi\"] [tag \"language-multi\"] [tag \"platform-multi\"] [tag \"attack-sqli\"] [tag \"OWASP_CRS\"] [tag \"capec/1000/152/248/66\"] [tag \"PCI/6.5.2\"] [tag \"paranoia-level/4\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"16395648888.540748\"] [ref \"o13,5o13,5o19,13o19,13v30,53t:urlDecodeUni\"]' [oof]"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Go GoText end"
+time="2021-12-15T10:41:28Z" level=info msg="WAF Process Http Request URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user' Detection=0 Time elapsed: 17.955144ms"
+
+
+
+
+
+Detection=1
+time="2021-12-15T10:55:48Z" level=info msg="WAF Process Http Request URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user'"
+time="2021-12-15T10:55:48Z" level=info msg="WAF Go GoText beg"
+time="2021-12-15T10:55:48Z" level=info msg="WAF Go GoText X 'ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"SQL Injection Attack Detected via libinjection\"] [data \"Matched Data: 1UE1 found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"2\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"163956574873.676390\"] [ref \"v30,53\"]' [oof]"
+time="2021-12-15T10:55:48Z" level=info msg="WAF Go GoText end"
+time="2021-12-15T10:55:48Z" level=info msg="WAF Process Http Request URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user' Detection=1 Time elapsed: 4.853798ms"
+time="2021-12-15T10:55:49Z" level=warning msg="WAF Process Http Request URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user' check FAILED!
+
+
+
+msg: detected SQL.1 using libinjection  owaspFile: /etc/waf/REQUEST-942...conf etc.
