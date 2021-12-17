@@ -10,6 +10,9 @@ namespace LoggingParserTest01
     {
         static void Main()
         {
+            var fm = new FileManager();
+            fm.Process("Files/01.txt");
+            Console.WriteLine(fm.LogText);
         }
     }
 }
