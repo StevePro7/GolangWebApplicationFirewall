@@ -1,0 +1,1 @@
+﻿[file "/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "45"] [id "942100"] [rev ""]
