@@ -10,9 +10,13 @@ namespace LoggingParserTest01
     {
         static void Main()
         {
-            var fm = new FileManager();
-            fm.Process("Files/01.txt");
-            Console.WriteLine(fm.LogText);
+            //var fm = new FileManager();
+            //fm.Process("Files/01.txt");
+            //Console.WriteLine(fm.LogText);
+
+            var pm = new ParserManager();
+            string fullString = "group = '2843360' and (team in ('TEAM1', 'TEAM2','TEAM3'))";
+            pm.Process(fullString);
         }
     }
 }
