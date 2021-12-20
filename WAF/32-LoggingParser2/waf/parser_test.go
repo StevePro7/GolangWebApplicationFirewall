@@ -19,16 +19,16 @@ func TestParser_DetectedSQLiUsingLibinjection(t *testing.T) {
 }
 
 func TestParser_MatchedData1UE1WithinArgs(t *testing.T) {
-	payload := "ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"\"] [data \"\"] [severity \"0\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"http://localhost\"] [uri \"/test/artists.php\"] [unique_id \"7ce62288-d6dd-4be0-8b31-ae27876aeeea\"] [ref \"v30,53\"]"
+	payload := "ModSecurity: Warning. detected SQLi using libinjection. [file \"/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf\"] [line \"45\"] [id \"942100\"] [rev \"\"] [msg \"SQL Injection Attack Detected via libinjection\"] [data \"Matched Data: 1UE1 found within ARGS:artist: 0 div 1 union#foo*/*bar\\x0d\\x0aselect#foo\\x0d\\x0a1,2,current_user\"] [severity \"2\"] [ver \"OWASP_CRS/3.3.2\"] [maturity \"0\"] [accuracy \"0\"] [hostname \"echo-a\"] [uri \"/test/artists.php\"] [unique_id \"7ce62288-d6dd-4be0-8b31-ae27876aeeea\"] [ref \"v30,53\"]"
 	dictionary := Parser(payload)
 
 	assert(t, ParserUniqueId, "7ce62288-d6dd-4be0-8b31-ae27876aeeea", dictionary)
 	assert(t, ParserFile, "/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf", dictionary)
 	assert(t, ParserLine, "45", dictionary)
 	assert(t, ParserId, "942100", dictionary)
-	assert(t, ParserMsg, "", dictionary)
+	assert(t, ParserMsg, "SQL Injection Attack Detected via libinjection", dictionary)
 	assert(t, ParserUri, "/test/artists.php", dictionary)
-	assert(t, ParserData, "", dictionary)
+	assert(t, ParserData, `Matched Data: 1UE1 found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user`, dictionary)
 }
 
 func TestParser_MatchedOperatorRxWithParameter(t *testing.T) {
