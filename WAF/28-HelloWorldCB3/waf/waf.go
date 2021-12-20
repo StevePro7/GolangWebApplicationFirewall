@@ -130,10 +130,18 @@ func getProcessHttpRequestPrefix(id string) string {
 
 //export GoModSecurityLoggingCallback
 func GoModSecurityLoggingCallback(Cpayload *C.char) {
-	// TODO extract unuque_id as ID
-	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
-	prefix := getProcessHttpRequestPrefix(id)
 
 	payload := C.GoString(Cpayload)
-	log.Infof("stevepro %s '%s' ", prefix, payload)
+	dictionary := Parser(payload)
+
+	uniqueId := dictionary[ParserUniqueId]
+	prefix := getProcessHttpRequestPrefix(uniqueId)
+
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
 }
