@@ -8,22 +8,23 @@ import (
 )
 
 const DELIM = " "
-const NUM_ELEMENTS = 2
+const NumElements = 2
 
-const PARSER_MSG = "msg"
+const ParserMsg = "msg"
 
 func Parser(payload string) map[string]string {
 
 	dictionary := make(map[string]string)
-	regex := regexp.MustCompile(`\[([^\[\]]*)\]`)
+	//regex := regexp.MustCompile(`\[([^\[\]]*)\]`)
+	regex := regexp.MustCompile(`\[([^\[\]]*)]`)
 
 	submatchall := regex.FindAllString(payload, -1)
 	for _, element := range submatchall {
 		element = strings.Trim(element, "[")
 		element = strings.Trim(element, "]")
 
-		splitN := strings.SplitAfterN(element, DELIM, NUM_ELEMENTS)
-		if len(splitN) != NUM_ELEMENTS {
+		splitN := strings.SplitAfterN(element, DELIM, NumElements)
+		if len(splitN) != NumElements {
 			log.Errorf("WAF Parsing payload '%s' for element '%s' cannot be split into key / value", payload, element)
 		}
 

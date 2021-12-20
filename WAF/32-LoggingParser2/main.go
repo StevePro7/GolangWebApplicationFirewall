@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(dictionary["line"])
 	fmt.Println(dictionary["id"])
 	fmt.Println(dictionary["msg"])
-	fmt.Println(dictionary[waf.PARSER_MSG])
+	fmt.Println(dictionary[waf.ParserMsg])
 	fmt.Println(dictionary["uri"])
 	fmt.Println(dictionary["data"])
 
