@@ -6,6 +6,7 @@ import (
 )
 
 const ParserDelim = " "
+const ParserEmpty = ""
 const ParserEscape = "\""
 const ParserMatchAll = -1
 const NumElements = 2
@@ -21,7 +22,6 @@ const ParserData = "data"
 func Parser(payload string) map[string]string {
 
 	dictionary := make(map[string]string)
-	//regex := regexp.MustCompile(`\[([^\[\]]*)\]`)
 	regex := regexp.MustCompile(`\[([^\[\]]*)]`)
 
 	submatchall := regex.FindAllString(payload, ParserMatchAll)
@@ -36,7 +36,7 @@ func Parser(payload string) map[string]string {
 		}
 
 		key := strings.Trim(splitN[0], ParserDelim)
-		value := strings.Replace(splitN[1], ParserEscape, "", ParserMatchAll)
+		value := strings.Replace(splitN[1], ParserEscape, ParserEmpty, ParserMatchAll)
 
 		dictionary[key] = value
 	}
