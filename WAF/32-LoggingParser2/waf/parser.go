@@ -3,8 +3,6 @@ package waf
 import (
 	"regexp"
 	"strings"
-
-	log "github.com/sirupsen/logrus"
 )
 
 const ParserDelim = " "
@@ -31,9 +29,10 @@ func Parser(payload string) map[string]string {
 		element = strings.Trim(element, "[")
 		element = strings.Trim(element, "]")
 
+		// Record only entries in payload that conform to key / value.
 		splitN := strings.SplitAfterN(element, ParserDelim, NumElements)
 		if len(splitN) != NumElements {
-			log.Errorf("WAF Parsing payload '%s' for element '%s' cannot be split into key/value pair", payload, element)
+			continue
 		}
 
 		key := strings.Trim(splitN[0], ParserDelim)
