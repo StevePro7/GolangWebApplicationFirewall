@@ -12,7 +12,13 @@ const ParserEscape = "\""
 const ParserMatchAll = -1
 const NumElements = 2
 
+const ParserUniqueId = "unique_id"
+const ParserFile = "file"
+const ParserLine = "line"
+const ParserId = "id"
 const ParserMsg = "msg"
+const ParserUri = "uri"
+const ParserData = "data"
 
 func Parser(payload string) map[string]string {
 

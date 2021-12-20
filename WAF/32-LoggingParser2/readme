@@ -3,3 +3,12 @@
 // 20-Dec-2021
 
 Unit tests
+
+
+IMPORTANT
+raw strings
+`hello`
+
+
+literal string
+https://www.golangprograms.com/golang-raw-string-literals-and-interpreted-string-literals.html
