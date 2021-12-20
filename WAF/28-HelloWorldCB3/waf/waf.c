@@ -46,7 +46,7 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
     int index = 0;
     const char *file;
     const char *error = NULL;
-    if (modsec == NULL)
+    if ( modsec == NULL )
     {
         initializeModSecurityImpl();
     }
@@ -79,6 +79,21 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
     intervention.log = NULL;
     intervention.disruptive = 0;
     return msc_intervention( transaction, &intervention );
+}
+
+void CleanupModSecurity()
+{
+    if ( rules != NULL )
+    {
+        msc_rules_cleanup( rules );
+    }
+    if ( modsec != NULL )
+    {
+        msc_cleanup( modsec );
+    }
+
+    rules = NULL;
+    modsec = NULL;
 }
 
 // Helper functions to store all core rule set file names in memory.

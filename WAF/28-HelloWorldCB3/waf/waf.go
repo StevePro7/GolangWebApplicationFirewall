@@ -148,3 +148,7 @@ func GoModSecurityLoggingCallback(Cpayload *C.char) {
 	log.Infof("%s ModSec Callback Hostname: '%s'", prefix, dictionary[ParserHostname])
 	log.Infof("%s ModSec Callback URI: '%s'", prefix, dictionary[ParserUri])
 }
+
+func CleanupModSecurity() {
+	C.CleanupModSecurity()
+}

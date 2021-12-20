@@ -167,3 +167,8 @@ func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) 
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
 	}
 }
+
+func TestCleanupModSecurity(t *testing.T) {
+
+	CleanupModSecurity()
+}
