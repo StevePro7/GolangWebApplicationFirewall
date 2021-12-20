@@ -1,0 +1,63 @@
+readme
+14/12/2021
+
+IMPORTANT
+Generate ID
+
+func GenerateModSecurtityID() string {
+	return uuid.New().String()
+}
+
+
+func GenerateModSecurtityID() string {
+	return strconv.FormatInt(time.Now().Unix(), 10)
+}
+
+
+https://github.com/golang/go/issues/39871
+
+Instead inject my own ID but I will calculate this in the same manner
+e.g.
+1639505494
+1639505494
+
+time.Now().Unix()
+
+Rule Message format can be here
+https://github.com/SpiderLabs/ModSecurity/blob/v3/master/src/rule_message.cc
+
+Messages
+#1
+ModSecurity: Warning. detected SQLi using libinjection. [file "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "45"] [id "942100"] [rev ""] [msg ""] [data ""] [severity "0"] [ver "OWASP_CRS/3.3.2"] [maturity "0"] [accuracy "0"] [hostname "echo-a"] [uri "/http://localhost:3080/test/artists.php"] [unique_id "1639502470"] [ref "v52,53"]
+
+#2
+ModSecurity: Warning. Matched "Operator `Rx' with parameter `(?i:(?:\b(?:(?:s(?:elect\b.{1,100}?\b(?:(?:(?:length|count)\b.{1,100}?|.*?\bdump\b.*)\bfrom|to(?:p\b.{1,100}?\bfrom|_(?:numbe|cha)r)|(?:from\b.{1,100}?\bwher|data_typ)e|instr)|ys_context)|in(?:to\b\W* (304 characters omitted)' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user' ) [file "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "1102"] [id "942480"] [rev ""] [msg "SQL Injection Attack"] [data "Matched Data: union#foo*/*bar\x0d\x0aselect found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user"] [severity "2"] [ver "OWASP_CRS/3.3.2"] [maturity "0"] [accuracy "0"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-sqli"] [tag "OWASP_CRS"] [tag "capec/1000/152/248/66"] [tag "PCI/6.5.2"] [tag "paranoia-level/2"] [hostname "echo-a"] [uri "/http://localhost:3080/test/artists.php"] [unique_id "1639502470"] [ref "o8,23v52,53t:urlDecodeUni"]
+
+#3
+ModSecurity: Warning. Matched "Operator `Rx' with parameter `(?:/\*!?|\*/|[';]--|--[\s\r\n\v\f]|--[^-]*?-|[^&-]#.*?[\s\r\n\v\f]|;?\\x00)' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user' ) [file "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "1188"] [id "942440"] [rev ""] [msg "SQL Comment Sequence Detected"] [data "Matched Data: n#foo*/*bar\x0d found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user"] [severity "2"] [ver "OWASP_CRS/3.3.2"] [maturity "0"] [accuracy "0"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-sqli"] [tag "OWASP_CRS"] [tag "capec/1000/152/248/66"] [tag "PCI/6.5.2"] [tag "paranoia-level/2"] [hostname "echo-a"] [uri "/http://localhost:3080/test/artists.php"] [unique_id "1639502470"] [ref "o12,12v52,53t:urlDecodeUni"]
+
+#4
+ModSecurity: Warning. Matched "Operator `Rx' with parameter `((?:[~!@#\$%\^&\*\(\)\-\+=\{\}\[\]\|:;\"'\xc2\xb4\xe2\x80\x99\xe2\x80\x98`<>][^~!@#\$%\^&\*\(\)\-\+=\{\}\[\]\|:;\"'\xc2\xb4\xe2\x80\x99\xe2\x80\x98`<>]*?){2})' against variable `ARGS:artist' (Value: `0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user' ) [file "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "1570"] [id "942432"] [rev ""] [msg "Restricted SQL Character Anomaly Detection (args): # of special characters exceeded (2)"] [data "Matched Data: #foo* found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user"] [severity "4"] [ver "OWASP_CRS/3.3.2"] [maturity "0"] [accuracy "0"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-sqli"] [tag "OWASP_CRS"] [tag "capec/1000/152/248/66"] [tag "PCI/6.5.2"] [tag "paranoia-level/4"] [hostname "echo-a"] [uri "/http://localhost:3080/test/artists.php"] [unique_id "1639502470"] [ref "o13,5o13,5v52,53t:urlDecodeUni"]
+
+modsecurity.cc
+/*
+ * @name    ModSecLogCb
+ * @brief   Callback to be function on every log generation
+ *
+ *
+ * The callback is going to be called on every log request.
+ *
+ *
+ * void *   Internal reference to be used by the API consumer. Whatever
+ *          is set here will be passed on every call.
+ * void *   Pointer to a const char * or RuleMessage class. The returned
+ *          data is selected on the log register property.
+ *
+ * @note    Vide LogProperty enum to learn more about Log Properties.
+ *
+ */
+typedef void (*ModSecLogCb) (void *, const void *);
+
+adapt to waf.h
+typedef void(*texts)(char*);
+extern void call_sgb(texts, char*);
