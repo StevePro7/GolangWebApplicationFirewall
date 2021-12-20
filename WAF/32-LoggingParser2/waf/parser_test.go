@@ -42,7 +42,7 @@ func TestParser_MatchedOperatorRxWithParameterAgainstArgs(t *testing.T) {
 	assert(t, dictionary, ParserId, "942440")
 	assert(t, dictionary, ParserMsg, "SQL Comment Sequence Detected")
 	assert(t, dictionary, ParserUri, "/test/artists.php")
-	assert(t, dictionary, ParserData, `Matched Data: union#foo*/*bar\x0d\x0aselect found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user`)
+	assert(t, dictionary, ParserData, `Matched Data: n#foo*/*bar\x0d found within ARGS:artist: 0 div 1 union#foo*/*bar\x0d\x0aselect#foo\x0d\x0a1,2,current_user`)
 }
 
 func TestParser_MatchedOperatorRxWithParameterAgainstVariable(t *testing.T) {
