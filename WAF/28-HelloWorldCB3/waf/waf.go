@@ -6,11 +6,12 @@ package waf
 import "C"
 import (
 	"fmt"
-	"github.com/google/uuid"
 	"io/ioutil"
 	"strings"
 	"time"
 	"unsafe"
+
+	"github.com/google/uuid"
 
 	log "github.com/sirupsen/logrus"
 )
