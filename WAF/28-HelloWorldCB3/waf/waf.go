@@ -137,11 +137,13 @@ func GoModSecurityLoggingCallback(Cpayload *C.char) {
 	uniqueId := dictionary[ParserUniqueId]
 	prefix := getProcessHttpRequestPrefix(uniqueId)
 
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
-	log.Infof("%s ModSec Callback '%s' ", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback File: '%s'", prefix, dictionary[ParserFile])
+	log.Infof("%s ModSec Callback Line: '%s'", prefix, dictionary[ParserLine])
+	log.Infof("%s ModSec Callback Id: '%s'", prefix, dictionary[ParserId])
+	log.Infof("%s ModSec Callback Msg: '%s'", prefix, dictionary[ParserMsg])
+	log.Infof("%s ModSec Callback Data: '%s'", prefix, dictionary[ParserData])
+	log.Infof("%s ModSec Callback Severity: '%s'", prefix, dictionary[ParserSeverity])
+	log.Infof("%s ModSec Callback Version: '%s'", prefix, dictionary[ParserVersion])
+	log.Infof("%s ModSec Callback Hostname: '%s'", prefix, dictionary[ParserHostname])
+	log.Infof("%s ModSec Callback URI: '%s'", prefix, dictionary[ParserUri])
 }
