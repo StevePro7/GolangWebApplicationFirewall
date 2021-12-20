@@ -58,9 +58,9 @@ func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 	}
 }
 
-func TestGenerateModSecurtityID(t *testing.T) {
+func TestGenerateModSecurityID(t *testing.T) {
 
-	id := GenerateModSecurtityID()
+	id := GenerateModSecurityID()
 	expectLength := 36
 	actualLength := len(id)
 

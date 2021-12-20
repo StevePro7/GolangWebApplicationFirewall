@@ -85,7 +85,7 @@ func loadModSecurityCoreRuleSetImpl(filenames []string, size int) int {
 	return int(C.LoadModSecurityCoreRuleSet(carray, csize))
 }
 
-func GenerateModSecurtityID() string {
+func GenerateModSecurityID() string {
 	return uuid.New().String()
 }
 
