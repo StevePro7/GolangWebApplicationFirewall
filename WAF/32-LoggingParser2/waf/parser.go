@@ -7,7 +7,9 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-const DELIM = " "
+const ParserDelim = " "
+const ParserEscape = "\""
+const ParserMatchAll = -1
 const NumElements = 2
 
 const ParserMsg = "msg"
@@ -18,18 +20,18 @@ func Parser(payload string) map[string]string {
 	//regex := regexp.MustCompile(`\[([^\[\]]*)\]`)
 	regex := regexp.MustCompile(`\[([^\[\]]*)]`)
 
-	submatchall := regex.FindAllString(payload, -1)
+	submatchall := regex.FindAllString(payload, ParserMatchAll)
 	for _, element := range submatchall {
 		element = strings.Trim(element, "[")
 		element = strings.Trim(element, "]")
 
-		splitN := strings.SplitAfterN(element, DELIM, NumElements)
+		splitN := strings.SplitAfterN(element, ParserDelim, NumElements)
 		if len(splitN) != NumElements {
-			log.Errorf("WAF Parsing payload '%s' for element '%s' cannot be split into key / value", payload, element)
+			log.Errorf("WAF Parsing payload '%s' for element '%s' cannot be split into key/value pair", payload, element)
 		}
 
-		key := strings.Trim(splitN[0], DELIM)
-		value := splitN[1]
+		key := strings.Trim(splitN[0], ParserDelim)
+		value := strings.Replace(splitN[1], ParserEscape, "", ParserMatchAll)
 
 		dictionary[key] = value
 	}
