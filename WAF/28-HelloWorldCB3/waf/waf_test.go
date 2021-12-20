@@ -4,7 +4,8 @@ import (
 	"testing"
 )
 
-const directory = "/etc/waf"
+const testCoreRulesetDirectory = "rules/core-rules"
+const testCustomRulesetDirectory = "rules/custom-rules"
 
 func TestInitializeModSecurity(t *testing.T) {
 
@@ -14,8 +15,8 @@ func TestInitializeModSecurity(t *testing.T) {
 func TestDefineRulesSetDirectory(t *testing.T) {
 
 	InitializeModSecurity()
-	DefineRulesSetDirectory(directory)
-	expect := "/etc/waf/"
+	DefineRulesSetDirectory(testCoreRulesetDirectory)
+	expect := "rules/core-rules/"
 	actual := GetRulesDirectory()
 	if expect != actual {
 		t.Errorf("Expect: '%s' Actual: '%s'", expect, actual)
@@ -25,12 +26,12 @@ func TestDefineRulesSetDirectory(t *testing.T) {
 func TestExtractRulesSetFilenames(t *testing.T) {
 
 	InitializeModSecurity()
-	DefineRulesSetDirectory(directory)
+	DefineRulesSetDirectory(testCoreRulesetDirectory)
 
 	expectFilenames := []string{
-		"/etc/waf/crs-setup.conf",
-		"/etc/waf/modsecdefault.conf",
-		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
+		"rules/core-rules/crs-setup.conf",
+		"rules/core-rules/modsecdefault.conf",
+		"rules/core-rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
 	}
 	actualFilenames := ExtractRulesSetFilenames()
 
@@ -44,9 +45,9 @@ func TestLoadModSecurityCoreRuleSet(t *testing.T) {
 
 	InitializeModSecurity()
 	filenames := []string{
-		"/etc/waf/crs-setup.conf",
-		"/etc/waf/modsecdefault.conf",
-		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
+		"rules/core-rules/crs-setup.conf",
+		"rules/core-rules/modsecdefault.conf",
+		"rules/core-rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
 	}
 
 	expect := len(filenames)
@@ -71,11 +72,8 @@ func TestGenerateModSecurtityID(t *testing.T) {
 func TestProcessHttpRequest_ValidURL_OK(t *testing.T) {
 
 	InitializeModSecurity()
-	filenames := []string{
-		"/etc/waf/crs-setup.conf",
-		"/etc/waf/modsecdefault.conf",
-		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
-	}
+	DefineRulesSetDirectory(testCoreRulesetDirectory)
+	filenames := ExtractRulesSetFilenames()
 	LoadModSecurityCoreRuleSet(filenames)
 
 	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
@@ -99,11 +97,8 @@ func TestProcessHttpRequest_ValidURL_OK(t *testing.T) {
 func TestProcessHttpRequest_InvalidURL_BlockDueToWarning(t *testing.T) {
 
 	InitializeModSecurity()
-	filenames := []string{
-		"/etc/waf/crs-setup.conf",
-		"/etc/waf/modsecdefault.conf",
-		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
-	}
+	DefineRulesSetDirectory(testCoreRulesetDirectory)
+	filenames := ExtractRulesSetFilenames()
 	LoadModSecurityCoreRuleSet(filenames)
 
 	id := "7ce62288-d6dd-4be0-8b31-ae27876aeeea"
@@ -151,7 +146,7 @@ func TestProcessHttpRequest_InvalidURL_NoRulesLoad_OK(t *testing.T) {
 func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) {
 
 	InitializeModSecurity()
-	DefineRulesSetDirectory("/etc/waf_custom")
+	DefineRulesSetDirectory(testCustomRulesetDirectory)
 	filenames := ExtractRulesSetFilenames()
 	LoadModSecurityCoreRuleSet(filenames)
 
