@@ -1,11 +1,12 @@
 package main
 
 import (
+	"waftesting/checker"
 	"waftesting/waf"
 )
 
 func runServer() {
-	rulesetDirectory := "/etc/waf"
+	rulesetDirectory := "/etc/waf2"
 
 	// Initialize WAF and load OWASP Core Rule Sets.
 	waf.InitializeModSecurity()
