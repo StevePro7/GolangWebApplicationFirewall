@@ -135,5 +135,5 @@ func GoModSecurityLoggingCallback(Cpayload *C.char) {
 	prefix := getProcessHttpRequestPrefix(id)
 
 	payload := C.GoString(Cpayload)
-	log.Infof("%s '%s' ", prefix, payload)
+	log.Infof("stevepro %s '%s' ", prefix, payload)
 }
