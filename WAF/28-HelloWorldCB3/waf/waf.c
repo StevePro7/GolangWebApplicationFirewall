@@ -64,11 +64,16 @@ int LoadModSecurityCoreRuleSet(char **array, int size)
     return index;
 }
 
-int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port )
+int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
+    if ( modsec == NULL )
+    {
+        initializeModSecurityImpl();
+    }
+    
     Transaction *transaction = NULL;
     transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
-    msc_process_connection( transaction, client_link, client_port, server_link, server_port );
+    msc_process_connection( transaction, client_host, client_port, server_host, server_port );
     msc_process_uri( transaction, uri, http_protocol, http_version );
     msc_process_request_headers( transaction );
     msc_process_request_body( transaction );

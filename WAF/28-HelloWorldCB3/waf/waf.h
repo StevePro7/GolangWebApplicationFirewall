@@ -7,7 +7,7 @@ extern void InvokeModSecurityLoggingCallback( ModSecurityLoggingCallbackFunction
 
 void InitializeModSecurity();
 int LoadModSecurityCoreRuleSet( char **array, int size );
-int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_link, int client_port, char *server_link, int server_port );
+int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port );
 void CleanupModSecurity();
 
 // Helper functions to store all core rule set file names in memory.

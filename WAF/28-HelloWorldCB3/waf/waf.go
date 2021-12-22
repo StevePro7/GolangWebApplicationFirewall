@@ -19,6 +19,8 @@ import (
 // Directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
+const defaultRulesetDirectory = "/etc/waf/"
+
 func InitializeModSecurity() {
 	log.Printf("WAF Initialize Mod Security.")
 	C.InitializeModSecurity()
@@ -26,6 +28,11 @@ func InitializeModSecurity() {
 
 func DefineRulesSetDirectory(directory string) {
 	rulesetDirectory = directory
+
+	// Defend against root access "/".
+	if len(rulesetDirectory) < 2 {
+		rulesetDirectory = defaultRulesetDirectory
+	}
 	log.Printf("WAF Core Rules Set directory: '%s'", rulesetDirectory)
 
 	// Ensure rules directory ends with trailing slash.
@@ -91,7 +98,7 @@ func GenerateModSecurityID() string {
 	return uuid.New().String()
 }
 
-func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientLink string, clientPort int, serverLink string, serverPort int) int {
+func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientHost string, clientPort uint32, serverHost string, serverPort uint32) int {
 	prefix := getProcessHttpRequestPrefix(id)
 	log.Printf("%s URL '%s'", prefix, url)
 
@@ -100,9 +107,9 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	ChttpMethod := C.CString(httpMethod)
 	ChttpProtocol := C.CString(httpProtocol)
 	ChttpVersion := C.CString(httpVersion)
-	CclientLink := C.CString(clientLink)
+	CclientHost := C.CString(clientHost)
 	CclientPort := C.int(clientPort)
-	CserverLink := C.CString(serverLink)
+	CserverHost := C.CString(serverHost)
 	CserverPort := C.int(serverPort)
 
 	defer C.free(unsafe.Pointer(Cid))
@@ -110,11 +117,11 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	defer C.free(unsafe.Pointer(ChttpMethod))
 	defer C.free(unsafe.Pointer(ChttpProtocol))
 	defer C.free(unsafe.Pointer(ChttpVersion))
-	defer C.free(unsafe.Pointer(CclientLink))
-	defer C.free(unsafe.Pointer(CserverLink))
+	defer C.free(unsafe.Pointer(CclientHost))
+	defer C.free(unsafe.Pointer(CserverHost))
 
 	start := time.Now()
-	detection := int(C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientLink, CclientPort, CserverLink, CserverPort))
+	detection := int(C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort))
 	elapsed := time.Since(start)
 
 	log.Infof("%s URL '%s' Detection=%d Time elapsed: %s", prefix, url, detection, elapsed)
@@ -127,7 +134,7 @@ func GetRulesDirectory() string {
 }
 
 func getProcessHttpRequestPrefix(id string) string {
-	return fmt.Sprintf("WAF [%s] Process Http Request", id)
+	return fmt.Sprintf("WAF Process Http Request [%s]", id)
 }
 
 //export GoModSecurityLoggingCallback

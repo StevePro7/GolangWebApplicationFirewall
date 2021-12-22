@@ -81,13 +81,13 @@ func TestProcessHttpRequest_ValidURL_OK(t *testing.T) {
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
 	httpVersion := "1.1"
-	clientLink := "http://localhost"
-	clientPort := 80
-	serverLink := "http://localhost"
-	serverPort := 80
+	clientHost := "http://localhost"
+	clientPort := uint32(80)
+	serverHost := "http://localhost"
+	serverPort := uint32(80)
 
 	expect := 0
-	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientHost, clientPort, serverHost, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -106,13 +106,13 @@ func TestProcessHttpRequest_InvalidURL_BlockDueToWarning(t *testing.T) {
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
 	httpVersion := "1.1"
-	clientLink := "http://localhost"
-	clientPort := 80
-	serverLink := "http://localhost"
-	serverPort := 80
+	clientHost := "http://localhost"
+	clientPort := uint32(80)
+	serverHost := "http://localhost"
+	serverPort := uint32(80)
 
 	expect := 0
-	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientHost, clientPort, serverHost, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -130,13 +130,13 @@ func TestProcessHttpRequest_InvalidURL_NoRulesLoad_OK(t *testing.T) {
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
 	httpVersion := "1.1"
-	clientLink := "http://localhost"
-	clientPort := 80
-	serverLink := "http://localhost"
-	serverPort := 80
+	clientHost := "http://localhost"
+	clientPort := uint32(80)
+	serverHost := "http://localhost"
+	serverPort := uint32(80)
 
 	expect := 0
-	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientHost, clientPort, serverHost, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
@@ -155,13 +155,13 @@ func TestProcessHttpRequest_InvalidURL_CustomRulesLoad_BadRequest(t *testing.T) 
 	httpMethod := "GET"
 	httpProtocol := "HTTP"
 	httpVersion := "1.1"
-	clientLink := "http://localhost"
-	clientPort := 80
-	serverLink := "http://localhost"
-	serverPort := 80
+	clientHost := "http://localhost"
+	clientPort := uint32(80)
+	serverHost := "http://localhost"
+	serverPort := uint32(80)
 
 	expect := 1
-	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientLink, clientPort, serverLink, serverPort)
+	actual := ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion, clientHost, clientPort, serverHost, serverPort)
 
 	if expect != actual {
 		t.Errorf("Expect: %d Actual: %d", expect, actual)
