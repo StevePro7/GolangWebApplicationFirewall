@@ -20,6 +20,7 @@ import (
 var rulesetDirectory string
 
 func InitializeModSecurity() {
+	log.Printf("WAF Initialize Mod Security.")
 	C.InitializeModSecurity()
 }
 
@@ -151,4 +152,5 @@ func GoModSecurityLoggingCallback(Cpayload *C.char) {
 
 func CleanupModSecurity() {
 	C.CleanupModSecurity()
+	log.Printf("WAF Cleanup Mod Security.")
 }
