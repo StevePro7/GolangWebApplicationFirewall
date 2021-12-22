@@ -12,7 +12,7 @@ func TestParser_DetectedSQLiUsingLibinjection(t *testing.T) {
 	assert(t, dictionary, ParserFile, "/etc/waf/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf")
 	assert(t, dictionary, ParserLine, "45")
 	assert(t, dictionary, ParserId, "942100")
-	assert(t, dictionary, ParserMsg, "")
+	assert(t, dictionary, ParserMsg, "Warning. detected SQLi using libinjection.")
 	assert(t, dictionary, ParserData, "")
 	assert(t, dictionary, ParserSeverity, "0")
 	assert(t, dictionary, ParserVersion, "OWASP_CRS/3.3.2")
