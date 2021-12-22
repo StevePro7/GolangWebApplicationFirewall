@@ -8,6 +8,7 @@ import (
 const ParserDelim = " "
 const ParserEmpty = ""
 const ParserEscape = "\""
+const ParserPrefix = "ModSecurity: "
 const ParserMatchAll = -1
 const NumElements = 2
 
@@ -42,6 +43,14 @@ func Parser(payload string) map[string]string {
 		value := strings.Replace(splitN[1], ParserEscape, ParserEmpty, ParserMatchAll)
 
 		dictionary[key] = value
+	}
+
+	// Default MSG with ModSecurity preliminary text if payload MSG is empty.
+	if len(dictionary[ParserMsg]) == 0 {
+		index := strings.Index(payload, "[")
+		msg := strings.TrimSpace(payload[:index])
+		msg = strings.Replace(msg, ParserPrefix, ParserEmpty, ParserMatchAll)
+		dictionary[ParserMsg] = msg
 	}
 
 	return dictionary
