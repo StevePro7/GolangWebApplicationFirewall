@@ -11,10 +11,15 @@ struct bob
     int idx;
 };
 
+struct fush
+{
+    char *str;
+};
+
 void test(struct bob *b)
 {
     fprintf(stderr, "bob1 idx = %d\n", b->idx);
-    b->idx = 7;
+    b->idx = 14;
     fprintf(stderr, "bob2 idx = %d\n", b->idx);
 }
 
