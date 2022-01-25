@@ -21,5 +21,13 @@ static void initializeModSecurityImpl()
 
 void LoadModSecurityCoreRuleSet(char *file_name)
 {
-    fprintf(stderr, "C.LoadModSecurityCoreRuleSet()!!\n");
+    const char *error = NULL;
+    fprintf(stderr, "C.LoadModSecurityCoreRuleSet() beg!!\n");
+    msc_rules_add_file( rules, file_name, &error );
+
+    if ( error != NULL )
+    {
+        fprintf(stderr, "bob '%s'\n", error);
+    }
+    fprintf(stderr, "C.LoadModSecurityCoreRuleSet() end??\n");
 }
