@@ -34,17 +34,20 @@ void LoadModSecurityCoreRuleSet(char *file_name)
 
 void printStruct(struct ImgInfo *imgInfo)
 {
-    char *file = "/etc/waf/REQUEST-941-APPLICATION-ATTACK-SQLI.conf";
+    char *file = "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf";
     const char *error = NULL;
 
     msc_rules_add_file( rules, file, &error );
-    fprintf(stdout, "imgPath1 = %s\n", imgInfo->imgPath);
+    //fprintf(stdout, "imgPath1 = %s\n", imgInfo->imgPath);
 
     if ( error != NULL )
     {
-        fprintf(stderr, "bob '%s'\n", error);
+        //fprintf(stderr, "bob '%s'\n", error);
         imgInfo->imgPath = (char *)error;
     }
 
-    fprintf(stdout, "imgPath2 = %s\n", imgInfo->imgPath);
+   // fprintf(stdout, "imgPath2 = %s\n", imgInfo->imgPath);
+    //free(error);
+    //error = NULL;
+    //free(error);
 }

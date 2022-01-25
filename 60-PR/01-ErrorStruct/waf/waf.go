@@ -37,7 +37,7 @@ func LoadModSecurityCoreRuleSet(filename string) int {
 	//Cpayload *C.char :=
 	msg := C.GoString(imgInfo.imgPath)
 	if len(msg) > 0 {
-		log.Errorf("Msg : '%s'", msg)
+		log.Errorf("WAF issue loading file '%s'", msg)
 	}
 
 	//C.LoadModSecurityCoreRuleSet(Cfilename)
