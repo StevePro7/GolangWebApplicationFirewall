@@ -16,5 +16,5 @@ func main() {
 	//filenames := "/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf"
 
 	waf.LoadModSecurityCoreRuleSet(filenames)
-	fmt.Println("-end-")
+	fmt.Println("-end!!")
 }
