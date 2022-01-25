@@ -5,19 +5,21 @@ import "C"
 
 import (
 	"fmt"
+	"unsafe"
 )
 
-type X struct {
-	Y, Z int32
-}
+//type X struct {
+//	Y, Z int32
+//}
+//
+//type Bob struct {
+//	Sgb int32
+//}
 
-type Bob struct {
-	Sgb int32
-}
-
-type Fish struct {
+/*type Fish struct {
 	Temp string
 }
+*/
 
 func main() {
 	//fmt.Println("beg")
@@ -36,10 +38,15 @@ func main() {
 	//fmt.Println("end III")
 
 	fmt.Println("beg IV")
-	ff := Fish{Temp: "blah"}
-	//C.test((*C.struct_bob)(unsafe.Pointer(&b)))
-	//sgb := b.Sgb
-	fmt.Println(ff.Temp)
+
+	imgInfo := C.struct_ImgInfo{imgPath: C.CString("stevepro")}
+	defer C.free(unsafe.Pointer(imgInfo.imgPath))
+	C.printStruct(&imgInfo)
+
+	//ff := Fish{Temp: "blah"}
+	//C.fishing((*C.struct_fush)(unsafe.Pointer(&ff)))
+	////sgb := b.Sgb
+	//fmt.Println(ff.Temp)
 	fmt.Println("end IV")
 
 	//cx := C.int(1)
