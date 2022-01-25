@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"waftesting/waf"
+)
 
 func main() {
-	fmt.Println("hello")
+	fmt.Println("begin")
+	waf.InitializeModSecurity()
+	fmt.Println("-end-")
 }
