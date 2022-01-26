@@ -23,16 +23,33 @@ func DefineRulesSetDirectory(directory string) {
 	rulesetDirectory = directory
 }
 
-func LoadModSecurityCoreRuleSet(filenames []string) int {
+func LoadModSecurityCoreRuleSet(filenames []string) {
+
+	size := len(filenames)
+	load := 0
+
+	log.Infof("WAF Attempt load %d Core Rule Set files", size)
 
 	filename := filenames[0]
+	success := loadModSecurityCoreRuleSetImpl(filename)
+	if success {
+		load++
+	}
+}
+
+func loadModSecurityCoreRuleSetImpl(filename string) bool {
+
+	// Assume core rule set file will load OK.
+	success := true
+
 	Cfilename := C.CString(filename)
 	defer C.free(unsafe.Pointer(Cfilename))
 
-	//imgInfo := C.struct_ImgInfo{imgPath: C.CString()}
 	imgInfo := C.struct_ImgInfo{}
 	defer C.free(unsafe.Pointer(imgInfo.imgPath))
-	C.printStruct(&imgInfo)
+
+	C.LoadModSecurityCoreRuleSet2(&imgInfo, Cfilename)
+	//C.printStruct(&imgInfo)
 
 	//msg := "test"	//C.GoString()
 	//Cpayload *C.char :=
@@ -44,5 +61,6 @@ func LoadModSecurityCoreRuleSet(filenames []string) int {
 	//C.LoadModSecurityCoreRuleSet(Cfilename)
 
 	log.Info(filename)
-	return 7
+
+	return success
 }

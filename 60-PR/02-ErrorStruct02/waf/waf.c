@@ -32,6 +32,27 @@ void LoadModSecurityCoreRuleSet(char *file_name)
     fprintf(stderr, "C.LoadModSecurityCoreRuleSet() end??\n");
 }
 
+void LoadModSecurityCoreRuleSet2(struct ImgInfo *imgInfo, char *file )
+{
+    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
+
+    const char *error = NULL;
+    if ( modsec == NULL )
+    {
+        initializeModSecurityImpl();
+    }
+
+    msc_rules_add_file( rules, file, &error );
+    if ( error != NULL )
+    {
+        imgInfo->imgPath = (char *)error;
+    }
+
+    error = NULL;
+
+    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
+}
+
 void printStruct(struct ImgInfo *imgInfo)
 {
     char *file = "/etc/waf/xREQUEST-942-APPLICATION-ATTACK-SQLI.conf";
