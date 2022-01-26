@@ -9,8 +9,4 @@ struct ImgInfo
 
 void InitializeModSecurity();
 
-void LoadModSecurityCoreRuleSet(char *file_name);
-
-void LoadModSecurityCoreRuleSet2(struct ImgInfo *imgInfo, char *file );
-
-void printStruct(struct ImgInfo *imgInfo);
+void LoadModSecurityCoreRuleSet( struct ImgInfo *imgInfo, char *file );

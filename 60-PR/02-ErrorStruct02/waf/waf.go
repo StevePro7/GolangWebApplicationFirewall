@@ -58,7 +58,7 @@ func loadModSecurityCoreRuleSetImpl(filename string) bool {
 	imgInfo := C.struct_ImgInfo{}
 	defer C.free(unsafe.Pointer(imgInfo.imgPath))
 
-	C.LoadModSecurityCoreRuleSet2(&imgInfo, Cfilename)
+	C.LoadModSecurityCoreRuleSet(&imgInfo, Cfilename)
 
 	msg := C.GoString(imgInfo.imgPath)
 	if len(msg) > 0 {
