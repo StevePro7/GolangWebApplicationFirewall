@@ -30,6 +30,10 @@ func LoadModSecurityCoreRuleSet(filenames []string) {
 
 	log.Infof("WAF Attempt load %d Core Rule Set files", size)
 
+	for _, filenameX := range filenames {
+		log.Infof("filname '%v'", filenameX)
+	}
+
 	filename := filenames[0]
 	success := loadModSecurityCoreRuleSetImpl(filename)
 	if success {
