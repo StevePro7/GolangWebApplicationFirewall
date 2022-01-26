@@ -13,8 +13,8 @@ func main() {
 	waf.InitializeModSecurity()
 	waf.DefineRulesSetDirectory(rulesetDirectory)
 	filenames := []string{
-		"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
-		//"/etc/waf/myinvalidfile.conf",
+		//"/etc/waf/REQUEST-942-APPLICATION-ATTACK-SQLI.conf",
+		"/etc/waf/myinvalidfile.conf",
 	}
 	waf.LoadModSecurityCoreRuleSet(filenames)
 

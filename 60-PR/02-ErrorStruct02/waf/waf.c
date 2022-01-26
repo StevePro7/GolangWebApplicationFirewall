@@ -21,8 +21,6 @@ static void initializeModSecurityImpl()
 
 void LoadModSecurityCoreRuleSet( struct CoreRuleSetErrorObject *coreRuleSetErrorObject, char *file )
 {
-    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
-
     const char *error = NULL;
     if ( modsec == NULL )
     {
@@ -36,8 +34,6 @@ void LoadModSecurityCoreRuleSet( struct CoreRuleSetErrorObject *coreRuleSetError
     }
 
     error = NULL;
-
-    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
 }
 
 /*

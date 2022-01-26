@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ImgInfo
-{
-    char *imgPath;
-};
+//struct ImgInfo
+//{
+//    char *imgPath;
+//};
 
 struct CoreRuleSetErrorObject
 {
