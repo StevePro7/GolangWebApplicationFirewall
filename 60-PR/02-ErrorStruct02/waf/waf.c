@@ -1,4 +1,5 @@
 #include "waf.h"
+#include "_cgo_export.h"
 #include "modsecurity/modsecurity.h"
 #include "modsecurity/rules_set.h"
 
@@ -8,6 +9,15 @@ RulesSet *rules = NULL;
 // Private helper function to initialize ModSecurity.
 static void initializeModSecurityImpl();
 
+// Function prototype must match modsecurity.cc ModSecLogCb callback signature.
+void CModSecurityLoggingCallback( void *referenceAPI, const void *ruleMessage )
+{
+    // Remove constness and coerce to char* to be compatible with Golang API.
+    char *payload = (char *)ruleMessage;
+    GoModSecurityLoggingCallback( payload );
+}
+
+// General public APIs.
 void InitializeModSecurity()
 {
     initializeModSecurityImpl();

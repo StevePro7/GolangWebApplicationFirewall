@@ -5,6 +5,7 @@ package waf
 // #include "waf.h"
 import "C"
 import (
+	"fmt"
 	log "github.com/sirupsen/logrus"
 	"unsafe"
 )
@@ -23,7 +24,7 @@ func DefineRulesSetDirectory(directory string) {
 	rulesetDirectory = directory
 }
 
-func LoadModSecurityCoreRuleSet(filenames []string) {
+func LoadModSecurityCoreRuleSet(filenames []string) int {
 
 	size := len(filenames)
 	load := 0
@@ -40,6 +41,8 @@ func LoadModSecurityCoreRuleSet(filenames []string) {
 	if size != load {
 		log.Infof("WAF Process load %d Core Rule Set files  FAILURE", size-load)
 	}
+
+	return load
 }
 
 func loadModSecurityCoreRuleSetImpl(filename string) bool {
@@ -64,4 +67,12 @@ func loadModSecurityCoreRuleSetImpl(filename string) bool {
 	}
 
 	return success
+}
+
+//export GoModSecurityLoggingCallback
+func GoModSecurityLoggingCallback(Cpayload *C.char) {
+
+	payload := C.GoString(Cpayload)
+	fmt.Println(payload)
+
 }
