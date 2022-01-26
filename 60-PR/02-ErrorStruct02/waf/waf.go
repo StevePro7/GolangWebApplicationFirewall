@@ -30,9 +30,9 @@ func LoadModSecurityCoreRuleSet(filenames []string) {
 
 	log.Infof("WAF Attempt load %d Core Rule Set files", size)
 
-	for _, filenameX := range filenames {
-		log.Infof("filname '%v'", filenameX)
-	}
+	//for _, filenameX := range filenames {
+	//	log.Infof("filname '%v'", filenameX)
+	//}
 
 	filename := filenames[0]
 	success := loadModSecurityCoreRuleSetImpl(filename)
@@ -64,7 +64,9 @@ func loadModSecurityCoreRuleSetImpl(filename string) bool {
 
 	var message = C.GoString(coreRuleSetErrorObject.error_message)
 	if len(message) > 0 {
-		log.Errorf("WAF issue loading file '%v'", message)
+		//bob := string([]rune(message))
+		log.Errorf("WAF Error attempt load file '%s' => '%v'", filename, message)
+		//log.Errorf("WAF Error attempt load file '%s' => '%v'", filename, bob)
 		success = false
 	}
 

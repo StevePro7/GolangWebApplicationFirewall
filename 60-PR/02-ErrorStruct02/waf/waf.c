@@ -35,26 +35,3 @@ void LoadModSecurityCoreRuleSet( struct CoreRuleSetErrorObject *coreRuleSetError
 
     error = NULL;
 }
-
-/*
-void LoadModSecurityCoreRuleSetX( struct ImgInfo *imgInfo, char *file )
-{
-    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
-
-    const char *error = NULL;
-    if ( modsec == NULL )
-    {
-        initializeModSecurityImpl();
-    }
-
-    msc_rules_add_file( rules, file, &error );
-    if ( error != NULL )
-    {
-        imgInfo->imgPath = (char *)error;
-    }
-
-    error = NULL;
-
-    fprintf(stdout, "C.LoadModSecurityCoreRuleSet2() '%s'\n", file);
-}
-*/
