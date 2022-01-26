@@ -1,0 +1,4 @@
+readme
+25/01/2022
+
+fprintf(stderr, "C.initializeModSecurityImpl()!!\n");
