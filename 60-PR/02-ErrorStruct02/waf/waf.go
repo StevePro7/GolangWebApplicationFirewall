@@ -55,12 +55,14 @@ func loadModSecurityCoreRuleSetImpl(filename string) bool {
 	Cfilename := C.CString(filename)
 	defer C.free(unsafe.Pointer(Cfilename))
 
-	imgInfo := C.struct_ImgInfo{}
-	defer C.free(unsafe.Pointer(imgInfo.imgPath))
+	//imgInfo := C.struct_ImgInfo{}
+	//defer C.free(unsafe.Pointer(imgInfo.imgPath))
+	coreRuleSetErrorObject := C.struct_CoreRuleSetErrorObject{}
+	defer C.free(unsafe.Pointer(coreRuleSetErrorObject.error_message))
 
-	C.LoadModSecurityCoreRuleSet(&imgInfo, Cfilename)
+	C.LoadModSecurityCoreRuleSet(&coreRuleSetErrorObject, Cfilename)
 
-	msg := C.GoString(imgInfo.imgPath)
+	msg := C.GoString(coreRuleSetErrorObject.error_message)
 	if len(msg) > 0 {
 		log.Errorf("WAF issue loading file '%s'", msg)
 		success = false
