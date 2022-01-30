@@ -2,7 +2,7 @@
 
 void Hello()
 {
-    printf("Hello world\n");
+    printf("Hello there\n");
 }
 
 int sum( int a, int b )

@@ -17,11 +17,13 @@ func main() {
 	}
 
 	// Call to int function with two params
-	res, err := makeSum(5, 4)
+	a := 1
+	b := 4
+	res, err := makeSum(a, b)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Sum of 5 + 4 = %d\n", res)
+	fmt.Printf("Sum of %d + %d = %d\n", a, b, res)
 
 	fmt.Println("end")
 }
