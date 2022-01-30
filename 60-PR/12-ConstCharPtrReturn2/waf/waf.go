@@ -53,7 +53,7 @@ func loadModSecurityCoreRuleSetImpl2(filename string) bool {
 	defer C.free(unsafe.Pointer(Cfilename))
 
 	// Attempt to load core rule set file;
-	// any error generated from ModSec will be populated in struct.
+	// any error generated from ModSec will be returned directly.
 	Cpayload := C.LoadModSecurityCoreRuleSet2(Cfilename)
 	defer C.free(unsafe.Pointer(Cpayload))
 
