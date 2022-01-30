@@ -1,6 +1,6 @@
 package main
 
-//#include "hello.c"
+//#include "hello.h"
 import "C"
 import (
 	"errors"
