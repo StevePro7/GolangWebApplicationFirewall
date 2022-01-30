@@ -17,8 +17,8 @@ func main() {
 	}
 
 	// Call to int function with two params
-	a := 1
-	b := 4
+	a := 3
+	b := 0
 	res, err := makeSum(a, b)
 	if err != nil {
 		log.Fatal(err)

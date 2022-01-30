@@ -7,5 +7,6 @@ void Hello()
 
 int sum( int a, int b )
 {
-    return a + b;
+    int c = a / b;
+    return c;
 }
