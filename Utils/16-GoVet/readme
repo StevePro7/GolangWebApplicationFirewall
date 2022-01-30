@@ -1,0 +1,8 @@
+Concurrency Bugs in Go
+30/01/2022
+
+https://medium.com/a-journey-with-go/go-concurrency-bugs-in-go-7d3677a1f2a2
+
+
+go vet
+./main.go:11:6: loop variable i captured by func literal
