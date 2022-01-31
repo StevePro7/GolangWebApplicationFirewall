@@ -18,7 +18,10 @@ var filenamesX []string
 
 const defaultRulesetDirectory = "/etc/waf/"
 
-func Check(directory string) error {
+// CheckRulesSetExists
+// invoke this WAF function first passing in the Core Rule Set directory or /etc/waf/ as per default;
+// if this directory does not exist OR zero *.conf Core Rule Sets files exist then do not enable WAF.
+func CheckRulesSetExists(directory string) error {
 
 	DefineRulesSetDirectory(directory)
 
@@ -32,8 +35,7 @@ func Check(directory string) error {
 		return err
 	}
 
-	log.Info("WAF is Enabled!")
-	wafIsEnabled = true
+	wafIsEnabled = len(filenamesX) > 0
 	return nil
 }
 
@@ -70,19 +72,9 @@ func ExtractRulesSetFilenames() error {
 		return err
 	}
 
-	// todo remove
-	for _, item := range items {
-		log.Printf("'%s'\n", item.Name())
-	}
-
 	// Sort files descending to ensure lower cased files like crs-setup.conf are loaded first.
 	// This is a requirement for Core Rules Set and REQUEST-901-INITIALIZATION.conf bootstrap.
 	sortFileNameDescend(items)
-
-	// todo remove
-	for _, item := range items {
-		log.Printf("'%s'\n", item.Name())
-	}
 
 	count := 1
 	for _, item := range items {
@@ -109,22 +101,22 @@ func ExtractRulesSetFilenames() error {
 	return nil
 }
 
-// CheckRulesSetExists
-// invoke this WAF function first passing in the Core Rule Set directory or /etc/waf/ as per default;
-// if this directory does not exist OR zero *.conf Core Rule Sets files exist then do not enable WAF.
-func CheckRulesSetExists() {
-
-	if _, err := os.Stat(rulesetDirectory); os.IsNotExist(err) {
-		log.Printf("WAF Core Rules Set directory: '%s'  does not exist.  WAF not enabled!", rulesetDirectory)
-		return
-	}
-
-	//items, err := ioutil.ReadDir(rulesetDirectory); os.IsNotExist(err) {
-	//}
-
-	log.Printf("WAF Core Rules Set directory: '%s'  Total Core Rules Set files: 0.  WAF not enabled!", rulesetDirectory)
-	wafIsEnabled = true
-}
+//// CheckRulesSetExists
+//// invoke this WAF function first passing in the Core Rule Set directory or /etc/waf/ as per default;
+//// if this directory does not exist OR zero *.conf Core Rule Sets files exist then do not enable WAF.
+//func CheckRulesSetExists() {
+//
+//	if _, err := os.Stat(rulesetDirectory); os.IsNotExist(err) {
+//		log.Printf("WAF Core Rules Set directory: '%s'  does not exist.  WAF not enabled!", rulesetDirectory)
+//		return
+//	}
+//
+//	//items, err := ioutil.ReadDir(rulesetDirectory); os.IsNotExist(err) {
+//	//}
+//
+//	log.Printf("WAF Core Rules Set directory: '%s'  Total Core Rules Set files: 0.  WAF not enabled!", rulesetDirectory)
+//	wafIsEnabled = true
+//}
 
 // IsEnabled helper function used by client calling cod
 func IsEnabled() bool {
