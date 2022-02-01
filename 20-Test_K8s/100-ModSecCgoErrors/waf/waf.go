@@ -37,6 +37,6 @@ func LoadModSecurityCoreRuleSet(filename string) error {
 }
 
 func CleanupModSecurity() {
-	//C.CleanupModSecurity()
+	C.CleanupModSecurity()
 	log.Printf("WAF Cleanup Mod Security.")
 }

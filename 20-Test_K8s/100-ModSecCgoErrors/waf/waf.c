@@ -34,3 +34,18 @@ const char* LoadModSecurityCoreRuleSet( char *file )
     error = NULL;
     return error_message;
 }
+
+void CleanupModSecurity()
+{
+    if ( rules != NULL )
+    {
+        msc_rules_cleanup( rules );
+    }
+    if ( modsec != NULL )
+    {
+        msc_cleanup( modsec );
+    }
+
+    rules = NULL;
+    modsec = NULL;
+}
