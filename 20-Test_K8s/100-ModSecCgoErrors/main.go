@@ -6,7 +6,7 @@ import (
 	"waftesting/waf"
 )
 
-func main() {
+func MyTest01() {
 	var err error
 	waf.InitializeModSecurity()
 
@@ -28,7 +28,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("hello!!")
+
 	waf.CleanupModSecurity()
+}
+
+func main() {
+	fmt.Println("hello!!")
+	MyTest01()
 	fmt.Println("bye")
 }
