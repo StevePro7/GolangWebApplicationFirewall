@@ -50,6 +50,15 @@ void CleanupModSecurity()
     modsec = NULL;
 }
 
+typedef enum tag_enum_msc_retval
+{
+	msc_retval_connection = -1,
+	msc_retval_uri = -2,
+	msc_retval_request_headers = -3,
+	msc_retval_request_body = -4,
+
+} enum_msc_retval;
+
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
     int retVal = 0;
@@ -77,8 +86,24 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
 
                     retVal = msc_intervention( transaction, &intervention );
                 }
+                else
+                {
+                    retVal = msc_retval_request_body;
+                }
+            }
+            else
+            {
+                retVal = msc_retval_request_headers;
             }
         }
+        else
+        {
+            retVal = msc_retval_uri;
+        }
+    }
+    else
+    {
+        retVal = msc_retval_connection;
     }
 
     if ( transaction != NULL )
