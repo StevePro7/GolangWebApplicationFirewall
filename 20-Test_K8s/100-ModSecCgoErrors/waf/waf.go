@@ -11,9 +11,14 @@ import (
 	"unsafe"
 )
 
-func InitializeModSecurity() {
+func InitializeModSecurity() error {
 	log.Printf("WAF Initialize Mod Security.")
-	C.InitializeModSecurity()
+	_, err := C.InitializeModSecurity()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func LoadModSecurityCoreRuleSet(filename string) error {
@@ -36,9 +41,14 @@ func LoadModSecurityCoreRuleSet(filename string) error {
 	return nil
 }
 
-func CleanupModSecurity() {
-	C.CleanupModSecurity()
+func CleanupModSecurity() error {
+	_, err := C.CleanupModSecurity()
+	if err != nil {
+		return err
+	}
+
 	log.Printf("WAF Cleanup Mod Security.")
+	return nil
 }
 
 func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientHost string, clientPort uint32, serverHost string, serverPort uint32) error {
