@@ -60,7 +60,8 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	CclientPort := C.int(clientPort)
 	CserverPort := C.int(serverPort)
 
-	verdict := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
+	result := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
+	verdict := int(result)
 	if verdict > 0 {
 		return errors.New("uh oh")
 	}
