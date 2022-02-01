@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	rulesetDirectory := "/etc/waf2"
+	rulesetDirectory := ""
 	fmt.Println(rulesetDirectory)
 
 	err := waf.CheckRulesSetExists(rulesetDirectory)
@@ -16,9 +16,8 @@ func main() {
 	}
 
 	if waf.IsEnabled() {
-		log.Info("WAF Web Application Firewal is enabled.")
+		log.Info("WAF is enabled...")
 	} else {
-		log.Info("WAF Web Application Firewal is NOT enabled!")
+		log.Info("WAF is NOT enabled!")
 	}
-	fmt.Println("hello")
 }

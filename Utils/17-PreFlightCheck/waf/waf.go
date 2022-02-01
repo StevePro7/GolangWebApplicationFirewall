@@ -14,7 +14,8 @@ var wafIsEnabled = false
 // Directory where the Core Rules Set are stored.
 var rulesetDirectory string
 
-var filenamesX []string
+// Slice of filenames read from Core Rules Set directory.
+var filenames []string
 
 const defaultRulesetDirectory = "/etc/waf/"
 
@@ -35,7 +36,7 @@ func CheckRulesSetExists(directory string) error {
 		return err
 	}
 
-	wafIsEnabled = len(filenamesX) > 0
+	wafIsEnabled = len(filenames) > 0
 	return nil
 }
 
@@ -65,8 +66,8 @@ func CheckRulesSetDirectoryExists() error {
 }
 
 func ExtractRulesSetFilenames() error {
+
 	// Read all core rule set file names from rules directory.
-	var files []string
 	items, err := ioutil.ReadDir(rulesetDirectory)
 	if err != nil {
 		return err
@@ -91,40 +92,23 @@ func ExtractRulesSetFilenames() error {
 		}
 
 		file := rulesetDirectory + filename
-		files = append(files, file)
-		filenamesX = append(filenamesX, file)
+		filenames = append(filenames, file)
 		log.Infof("WAF Found Rules File[%d]('%s')", count, file)
 		count++
 	}
 
-	log.Infof("WAF Total Core Rules Set files: %d", len(files))
+	log.Infof("WAF Total Core Rules Set files: %d", len(filenames))
 	return nil
 }
 
-//// CheckRulesSetExists
-//// invoke this WAF function first passing in the Core Rule Set directory or /etc/waf/ as per default;
-//// if this directory does not exist OR zero *.conf Core Rule Sets files exist then do not enable WAF.
-//func CheckRulesSetExists() {
-//
-//	if _, err := os.Stat(rulesetDirectory); os.IsNotExist(err) {
-//		log.Printf("WAF Core Rules Set directory: '%s'  does not exist.  WAF not enabled!", rulesetDirectory)
-//		return
-//	}
-//
-//	//items, err := ioutil.ReadDir(rulesetDirectory); os.IsNotExist(err) {
-//	//}
-//
-//	log.Printf("WAF Core Rules Set directory: '%s'  Total Core Rules Set files: 0.  WAF not enabled!", rulesetDirectory)
-//	wafIsEnabled = true
-//}
-
-// IsEnabled helper function used by client calling cod
+// IsEnabled helper function used by client calling code.
 func IsEnabled() bool {
 	return wafIsEnabled
 }
 
-func GetFilenames() []string {
-	return filenamesX
+// GetRulesSetFilenames helper function used for unit tests.
+func GetRulesSetFilenames() []string {
+	return filenames
 }
 
 func sortFileNameDescend(items []os.FileInfo) {
