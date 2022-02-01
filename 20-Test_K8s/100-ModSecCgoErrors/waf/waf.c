@@ -97,19 +97,19 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
         //fprintf(stdout, "error2!!\n");
     }
 
-        ModSecurityIntervention intervention;
-        intervention.status = 200;
-        intervention.url = NULL;
-        intervention.log = NULL;
-        intervention.disruptive = 0;
+    ModSecurityIntervention intervention;
+    intervention.status = 200;
+    intervention.url = NULL;
+    intervention.log = NULL;
+    intervention.disruptive = 0;
 
-        detection = msc_intervention( transaction, &intervention );
-        fprintf(stdout, "detection = %d\n", detection);
-        if ( transaction != NULL )
-        {
-            msc_transaction_cleanup( transaction );
-            transaction = NULL;
-        }
+    detection = msc_intervention( transaction, &intervention );
+    fprintf(stdout, "detection = %d\n", detection);
+    if ( transaction != NULL )
+    {
+        msc_transaction_cleanup( transaction );
+        transaction = NULL;
+    }
 
-        return detection;
+    return detection;
 }
