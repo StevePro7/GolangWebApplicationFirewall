@@ -52,6 +52,11 @@ void CleanupModSecurity()
 
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
+    return 7;
+}
+
+int ProcessHttpRequestX( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
+{
     int detection = 0;
     int test1 = 0;
     int test2 = 0;
@@ -112,4 +117,10 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
     }
 
     return detection;
+}
+
+int StevePro()
+{
+    fprintf(stdout, "C.StevePro()\n");
+    return 2;
 }

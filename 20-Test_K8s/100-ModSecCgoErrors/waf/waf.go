@@ -70,16 +70,30 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	CclientPort := C.int(clientPort)
 	CserverPort := C.int(serverPort)
 
-	result := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
-	verdict := int(result)
+	detectionX, err := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
+	if err != nil {
+		return err
+	}
+
+	detection := int(detectionX)
 
 	log.Println("")
-	log.Printf("URL '%s' Detection=%d", url, verdict)
+	log.Printf("URL '%s' Detection=%d", url, detection)
 	log.Println("")
-	if verdict > 0 {
-		errMsg := fmt.Sprintf("ERROR URL '%s' Detection=%d", url, verdict)
+	if detection > 0 {
+		errMsg := fmt.Sprintf("ERROR URL '%s' Detection=%d", url, detection)
 		return errors.New(errMsg)
 	}
 
+	return nil
+}
+
+func StevePro() error {
+	result, err := C.StevePro()
+	if err != nil {
+		return err
+	}
+	verdict := int(result)
+	log.Printf("Verdict %d\n", verdict)
 	return nil
 }

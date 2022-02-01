@@ -87,8 +87,13 @@ func MyTest03() {
 	waf.CleanupModSecurity()
 }
 
+func MyTest04() {
+
+	waf.StevePro()
+}
+
 func main() {
 	fmt.Println("hello!!")
-	MyTest02()
+	MyTest01()
 	fmt.Println("bye")
 }
