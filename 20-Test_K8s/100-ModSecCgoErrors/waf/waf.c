@@ -53,17 +53,49 @@ void CleanupModSecurity()
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
     int detection = 0;
-//        if ( modsec == NULL )
-//        {
-//            initializeModSecurityImpl();
-//        }
+    int test1 = 0;
+    int test2 = 0;
+    int test3 = 0;
+    int test4 = 0;
 
-        Transaction *transaction = NULL;
-        transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
-        msc_process_connection( transaction, client_host, client_port, server_host, server_port );
-        msc_process_uri( transaction, uri, http_protocol, http_version );
-        msc_process_request_headers( transaction );
-        msc_process_request_body( transaction );
+    Transaction *transaction = NULL;
+    transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
+
+    test1 = msc_process_connection( transaction, client_host, client_port, server_host, server_port );
+    fprintf(stdout, "test1 = %d\n", test1);
+    test1 = 0;
+    //fprintf(stdout, "test1 = %d\n", test1);
+    if ( !test1 )
+    {
+        //fprintf(stdout, "error1!!\n");
+    }
+
+    test2 = msc_process_uri( transaction, uri, http_protocol, http_version );
+    fprintf(stdout, "test2 = %d\n", test2);
+    test2 = 0;
+    //fprintf(stdout, "test2 = %d\n", test2);
+    if ( !test2 )
+    {
+        //fprintf(stdout, "error2!!\n");
+    }
+
+    test3 = msc_process_request_headers( transaction );
+    fprintf(stdout, "test3 = %d\n", test3);
+    test3 = 0;
+    //fprintf(stdout, "test3 = %d\n", test3);
+    if ( !test3 )
+    {
+        //fprintf(stdout, "error3!!\n");
+    }
+
+    test4 = msc_process_request_body( transaction );
+    fprintf(stdout, "test4 = %d\n", test4);
+    test4 = 0;
+    //fprintf(stdout, "test4 = %d\n", test4);
+    if ( !test4 )
+    {
+        //fprintf(stdout, "error2!!\n");
+    }
 
         ModSecurityIntervention intervention;
         intervention.status = 200;
@@ -72,6 +104,7 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
         intervention.disruptive = 0;
 
         detection = msc_intervention( transaction, &intervention );
+        fprintf(stdout, "detection = %d\n", detection);
         if ( transaction != NULL )
         {
             msc_transaction_cleanup( transaction );

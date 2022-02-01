@@ -67,7 +67,7 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	log.Printf("URL '%s' Detection=%d", url, verdict)
 	log.Println("")
 	if verdict > 0 {
-		errMsg := fmt.Sprintf("URL '%s' Detection=%d", url, verdict)
+		errMsg := fmt.Sprintf("ERROR URL '%s' Detection=%d", url, verdict)
 		return errors.New(errMsg)
 	}
 
