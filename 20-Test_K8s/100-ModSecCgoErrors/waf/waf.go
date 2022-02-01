@@ -40,3 +40,29 @@ func CleanupModSecurity() {
 	C.CleanupModSecurity()
 	log.Printf("WAF Cleanup Mod Security.")
 }
+
+func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, clientHost string, clientPort uint32, serverHost string, serverPort uint32) error {
+
+	Cid := C.CString(id)
+	defer C.free(unsafe.Pointer(Cid))
+	Curi := C.CString(url)
+	defer C.free(unsafe.Pointer(Curi))
+	ChttpMethod := C.CString(httpMethod)
+	defer C.free(unsafe.Pointer(ChttpMethod))
+	ChttpProtocol := C.CString(httpProtocol)
+	defer C.free(unsafe.Pointer(ChttpProtocol))
+	ChttpVersion := C.CString(httpVersion)
+	defer C.free(unsafe.Pointer(ChttpVersion))
+	CclientHost := C.CString(clientHost)
+	defer C.free(unsafe.Pointer(CclientHost))
+	CserverHost := C.CString(serverHost)
+	defer C.free(unsafe.Pointer(CserverHost))
+	CclientPort := C.int(clientPort)
+	CserverPort := C.int(serverPort)
+
+	verdict := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
+	if verdict > 0 {
+		return errors.New("uh oh")
+	}
+	return nil
+}
