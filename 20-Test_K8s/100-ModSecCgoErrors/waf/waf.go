@@ -70,12 +70,12 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 	CclientPort := C.int(clientPort)
 	CserverPort := C.int(serverPort)
 
-	detectionX, err := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
+	retVal, err := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
 	if err != nil {
 		return err
 	}
 
-	detection := int(detectionX)
+	detection := int(retVal)
 
 	log.Println("")
 	log.Printf("URL '%s' Detection=%d", url, detection)
