@@ -4,6 +4,7 @@
 #include "modsecurity/transaction.h"
 #include "modsecurity/intervention.h"
 #include <stdio.h>
+#include <errno.h>
 
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
@@ -181,6 +182,12 @@ int ProcessHttpRequestX( char *id, char *uri, char *http_method, char *http_prot
 
 int StevePro()
 {
-    fprintf(stdout, "C.StevePro()\n");
-    return 2;
+    //int k = 1 / 0;
+    int k = 1;
+    fprintf(stdout, "C.StevePro()..\n");
+    fprintf(stdout, "ans=%d\n", k);
+//    return 2;
+
+    errno = 7;
+    return errno;
 }

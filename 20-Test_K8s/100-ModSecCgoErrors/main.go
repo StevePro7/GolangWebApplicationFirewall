@@ -87,13 +87,16 @@ func MyTest03() {
 	waf.CleanupModSecurity()
 }
 
-//func MyTest04() {
-//
-//	waf.StevePro()
-//}
+func MyTest04() {
+
+	err := waf.StevePro()
+	if err != nil {
+		log.Println("ERROR from sp %v\n", err)
+	}
+}
 
 func main() {
 	fmt.Println("hello!!")
-	MyTest03()
+	MyTest04()
 	fmt.Println("bye")
 }
