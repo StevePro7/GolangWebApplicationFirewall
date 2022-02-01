@@ -62,8 +62,13 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 
 	result := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
 	verdict := int(result)
+
+	log.Println("")
+	log.Printf("URL '%s' Detection=%d", url, verdict)
+	log.Println("")
 	if verdict > 0 {
 		return errors.New("uh oh")
 	}
+
 	return nil
 }

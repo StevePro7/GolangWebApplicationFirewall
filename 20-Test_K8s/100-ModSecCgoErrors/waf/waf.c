@@ -52,7 +52,31 @@ void CleanupModSecurity()
 
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
-    int detection = 2;
+    int detection = 0;
+//        if ( modsec == NULL )
+//        {
+//            initializeModSecurityImpl();
+//        }
 
-    return detection;
+        Transaction *transaction = NULL;
+        transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
+        msc_process_connection( transaction, client_host, client_port, server_host, server_port );
+        msc_process_uri( transaction, uri, http_protocol, http_version );
+        msc_process_request_headers( transaction );
+        msc_process_request_body( transaction );
+
+        ModSecurityIntervention intervention;
+        intervention.status = 200;
+        intervention.url = NULL;
+        intervention.log = NULL;
+        intervention.disruptive = 0;
+
+        detection = msc_intervention( transaction, &intervention );
+        if ( transaction != NULL )
+        {
+            msc_transaction_cleanup( transaction );
+            transaction = NULL;
+        }
+
+        return detection;
 }
