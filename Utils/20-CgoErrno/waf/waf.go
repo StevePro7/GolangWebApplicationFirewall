@@ -7,6 +7,9 @@ import "fmt"
 func StevePro() {
 
 	fmt.Println("beg")
-	C.Adriana()
+	_, err := C.Adriana()
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 	fmt.Println("end")
 }

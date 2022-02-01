@@ -12,6 +12,7 @@ RulesSet *rules = NULL;
 // General public APIs.
 void InitializeModSecurity()
 {
+    errno = 0;
     modsec = msc_init();
     //msc_set_log_cb( modsec, CModSecurityLoggingCallback );
     rules = msc_create_rules_set();
@@ -113,6 +114,12 @@ int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_proto
         transaction = NULL;
     }
 
+    // Set errno for any potential ModSec return value failures to trigger Go err value to be returned upstream.
+    if ( retVal < 0 )
+    {
+        errno = retVal;
+    }
+
     return retVal;
 }
 
@@ -188,6 +195,6 @@ int StevePro()
     fprintf(stdout, "ans=%d\n", k);
 //    return 2;
 
-    errno = 7;
+    errno = 1;
     return errno;
 }

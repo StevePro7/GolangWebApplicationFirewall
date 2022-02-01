@@ -72,7 +72,8 @@ func ProcessHttpRequest(id, url, httpMethod, httpProtocol, httpVersion string, c
 
 	retVal, err := C.ProcessHttpRequest(Cid, Curi, ChttpMethod, ChttpProtocol, ChttpVersion, CclientHost, CclientPort, CserverHost, CserverPort)
 	if err != nil {
-		return err
+		errMsg2 := fmt.Sprintf("ModSec error '%v'", err.Error())
+		return errors.New(errMsg2)
 	}
 
 	detection := int(retVal)

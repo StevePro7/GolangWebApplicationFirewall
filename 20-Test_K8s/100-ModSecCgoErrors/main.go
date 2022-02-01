@@ -9,7 +9,10 @@ import (
 func MyTest01() {
 	log.Println("MyTest01")
 	var err error
-	waf.InitializeModSecurity()
+	err = waf.InitializeModSecurity()
+	if err != nil {
+		log.Println(err)
+	}
 
 	_ = waf.LoadModSecurityCoreRuleSet("waf/test_files/core-rules/crs-setup.conf")
 	_ = waf.LoadModSecurityCoreRuleSet("waf/test_files/core-rules/modsecdefault.conf")
@@ -97,6 +100,6 @@ func MyTest04() {
 
 func main() {
 	fmt.Println("hello!!")
-	MyTest04()
+	MyTest03()
 	fmt.Println("bye")
 }

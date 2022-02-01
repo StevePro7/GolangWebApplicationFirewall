@@ -1,7 +1,9 @@
 #include "waf.h"
 #include <stdio.h>
+#include <errno.h>
 
 void Adriana()
 {
-    fprintf(stdout, "Hello from C\n");
+    errno = 1;
+    fprintf(stdout, "Hello from C..!!\n");
 }
