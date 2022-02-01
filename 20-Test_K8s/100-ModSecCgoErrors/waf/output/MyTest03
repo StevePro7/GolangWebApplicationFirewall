@@ -1,0 +1,9 @@
+hello!!
+2022/02/01 14:25:27 MyTest02
+2022/02/01 14:25:27 WAF Initialize Mod Security.
+Server log callback is not set -- [client http://localhost] ModSecurity: Warning. detected SQLi using libinjection. [file "waf/test_files/custom-rules/custom-REQUEST-942-APPLICATION-ATTACK-SQLI.conf"] [line "45"] [id "942100"] [rev ""] [msg ""] [data ""] [severity "0"] [ver "OWASP_CRS/3.3.2"] [maturity "0"] [accuracy "0"] [hostname "http://localhost"] [uri "/test/artists.php"] [unique_id "7ce62288-d6dd-4be0-8b31-ae27876aeeea"] [ref "v30,53"] [hostname "http://localhost"] [uri "/test/artists.php"] [unique_id "7ce62288-d6dd-4be0-8b31-ae27876aeeea"]
+2022/02/01 14:25:27
+2022/02/01 14:25:27 URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user' Detection=1
+2022/02/01 14:25:27
+2022/02/01 14:25:27 URL '/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user' Detection=1
+

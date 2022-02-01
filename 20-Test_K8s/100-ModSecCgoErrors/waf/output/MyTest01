@@ -1,0 +1,8 @@
+hello!!
+2022/02/01 14:25:40 MyTest01
+2022/02/01 14:25:40 WAF Initialize Mod Security.
+2022/02/01 14:25:40
+2022/02/01 14:25:40 URL '/foo.com' Detection=0
+2022/02/01 14:25:40
+2022/02/01 14:25:40 WAF Cleanup Mod Security.
+bye
