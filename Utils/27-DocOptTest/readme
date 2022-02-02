@@ -1,6 +1,7 @@
 DocOpt
 02/02/2022
 
+http://docopt.org/
 https://golangrepo.com/repo/docopt-docopt-go-go-command-line-option-parsers
 
 
@@ -9,3 +10,7 @@ go get github.com/docopt/docopt-go
 
 #1
 go run main.go --version
+
+
+#2
+go run main.go server --debug
