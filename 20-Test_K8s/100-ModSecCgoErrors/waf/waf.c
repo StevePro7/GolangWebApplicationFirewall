@@ -69,6 +69,66 @@ void CleanupModSecurity()
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
     int retVal = 0;
+    if ( modsec == NULL )
+    {
+        initializeModSecurityImpl();
+    }
+
+    Transaction *transaction = NULL;
+    transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
+
+    retVal = msc_process_connection( transaction, client_host, client_port, server_host, server_port );
+    if ( !retVal )
+    {
+        retVal = msc_retval_connection;
+        goto out;
+    }
+
+    retVal = msc_process_uri( transaction, uri, http_protocol, http_version );
+    if ( !retVal )
+    {
+        retVal = msc_retval_uri;
+        goto out;
+    }
+
+    retVal = msc_process_request_headers( transaction );
+    if ( !retVal )
+    {
+        retVal = msc_retval_request_headers;
+        goto out;
+    }
+
+    retVal = msc_process_request_body( transaction );
+    if ( !retVal )
+    {
+        retVal = msc_retval_request_body;
+        goto out;
+    }
+
+    ModSecurityIntervention intervention;
+    intervention.status = 200;
+    intervention.url = NULL;
+    intervention.log = NULL;
+    intervention.disruptive = 0;
+
+    retVal = msc_intervention( transaction, &intervention );
+
+out:
+    if ( transaction != NULL )
+    {
+        msc_transaction_cleanup( transaction );
+        transaction = NULL;
+    }
+
+    // Set errno for any potential ModSec return value failures to trigger Go err value to be returned upstream.
+    errno = ( retVal < 0 ) ? retVal : 0;
+
+    return retVal;
+}
+
+int ProcessHttpRequestY( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
+{
+    int retVal = 0;
 
     Transaction *transaction = NULL;
     transaction = msc_new_transaction_with_id( modsec, rules, id, NULL );
