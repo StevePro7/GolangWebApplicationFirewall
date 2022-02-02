@@ -21,3 +21,8 @@ go run main.go server --debug
 https://levelup.gitconnected.com/go-libraries-docopt-9205414e75e9
 go run main.go letters --count 9
 go run main.go letters --count 9 --lang en
+
+
+#4
+go run main.go server --debug
+go run main.go server --rules /etc/waf
