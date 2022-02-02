@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/docopt/docopt-go"
+	"waftesting/waf"
 )
 
 const usage = `Dikastes - the decider.
@@ -31,25 +32,27 @@ func main() {
 		fmt.Println("server now")
 	}
 
-	////rulesetDirectory := arguments["--rules"].(string)
-	////fmt.Printf("rules directory : '%v'\n", rulesetDirectory)
-	//
-	//if arguments["--debug"].(bool) {
-	//	fmt.Println("debugging...!!")
+	rulesetArgument := arguments["--rules"]
+
+	// Check if WAF should be enabled first before proceeding...
+	err := waf.CheckRulesSetExists(rulesetArgument)
+	if err != nil {
+		//log.Errorf("WAF Core Rules Set check: '%s'", err.Error())
+		fmt.Println("bob")
+	}
+
+	//test := arguments["--rules"]
+	//if test == nil {
+	//	fmt.Println("NO rules test!")
 	//}
-
-	test := arguments["--rules"]
-	if test == nil {
-		fmt.Println("NO rules test!")
-	}
-	if test != nil {
-		fmt.Println("testing OK..!!")
-
-		rulesetDirectory := test.(string)
-		if len(rulesetDirectory) > 0 {
-			fmt.Printf("rules directory!! : '%v'\n", rulesetDirectory)
-		}
-	}
+	//if test != nil {
+	//	fmt.Println("testing OK..!!")
+	//
+	//	rulesetDirectory := test.(string)
+	//	if len(rulesetDirectory) > 0 {
+	//		fmt.Printf("rules directory!! : '%v'\n", rulesetDirectory)
+	//	}
+	//}
 
 	//dial := arguments["--dial"].(string)
 	//fmt.Println(dial)
