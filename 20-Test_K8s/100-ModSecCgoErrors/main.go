@@ -100,6 +100,6 @@ func MyTest04() {
 
 func main() {
 	fmt.Println("hello!!")
-	MyTest01()
+	MyTest03()
 	fmt.Println("bye")
 }
