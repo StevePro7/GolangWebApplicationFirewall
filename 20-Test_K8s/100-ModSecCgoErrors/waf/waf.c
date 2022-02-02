@@ -9,6 +9,18 @@
 ModSecurity *modsec = NULL;
 RulesSet *rules = NULL;
 
+typedef enum tag_enum_msc_retval
+{
+	msc_retval_connection = -1,
+	msc_retval_uri = -2,
+	msc_retval_request_headers = -3,
+	msc_retval_request_body = -4,
+
+} enum_msc_retval;
+
+// Private helper function to initialize ModSecurity.
+static void initializeModSecurityImpl();
+
 // General public APIs.
 void InitializeModSecurity()
 {
@@ -52,14 +64,7 @@ void CleanupModSecurity()
     modsec = NULL;
 }
 
-typedef enum tag_enum_msc_retval
-{
-	msc_retval_connection = -1,
-	msc_retval_uri = -2,
-	msc_retval_request_headers = -3,
-	msc_retval_request_body = -4,
 
-} enum_msc_retval;
 
 int ProcessHttpRequest( char *id, char *uri, char *http_method, char *http_protocol, char *http_version, char *client_host, int client_port, char *server_host, int server_port )
 {
@@ -197,4 +202,8 @@ int StevePro()
 
     errno = 1;
     return errno;
+}
+
+static void initializeModSecurityImpl()
+{
 }
