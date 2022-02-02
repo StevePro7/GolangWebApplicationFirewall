@@ -14,3 +14,10 @@ go run main.go --version
 
 #2
 go run main.go server --debug
+
+
+
+#3
+https://levelup.gitconnected.com/go-libraries-docopt-9205414e75e9
+go run main.go letters --count 9
+go run main.go letters --count 9 --lang en
