@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -8,6 +10,29 @@ import (
 
 func main() {
 	log.Info("beg")
+
+	owasp_host := "dictionary[ParserHostname]"
+	owasp_file := "dictionary[ParserFile]"
+	owasp_line := "dictionary[ParserLine]"
+	owasp_id := "dictionary[ParserId]"
+	owasp_data := "dictionary[ParserData]"
+	owasp_severity := "dictionary[ParserSeverity]"
+	owasp_version := "dictionary[ParserVersion]"
+
+	fmt.Println("aa")
+	rule_info := fmt.Sprintf("%s %s %s %s %s %s %s", owasp_host, owasp_file, owasp_line, owasp_id, owasp_data, owasp_severity, owasp_version)
+	fmt.Println(rule_info)
+	fmt.Println("bb")
+
+	m := make(map[string]string)
+	m["k1"] = "7"
+	m["k2"] = "13"
+	jsonObj, _ := json.UnMarshal(m)
+
+	//jsonStr := []string{"1", "2", "3"}
+	log.WithFields(log.Fields{
+		"stevepro": jsonObj,
+	}).Info("adriana")
 
 	jsonStr := []string{"1", "2", "3"}
 	log.WithFields(log.Fields{
