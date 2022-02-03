@@ -32,7 +32,9 @@ func main() {
 		fmt.Println("server now")
 	}
 
+
 	rulesetArgument := arguments["--rules"]
+	//rulesetArgument = "test_files/core-rules"
 
 	// Check if WAF should be enabled first before proceeding...
 	err := waf.CheckRulesSetExists(rulesetArgument)

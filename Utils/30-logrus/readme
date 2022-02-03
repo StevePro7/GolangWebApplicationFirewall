@@ -1,0 +1,10 @@
+readme
+03/02/2022
+
+https://github.com/Sirupsen/logrus/issues/338
+
+
+tasks:
+get nested JSON normal logrus
+
+wrap in custom Logger
