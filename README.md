@@ -103,4 +103,3 @@ detect_sqi.h
 Do I need to modify the SecRule to something like this?
 SecRule REQUEST_BODY  "blocktest" "id:2,phase:2,deny,status:400,msg:'Test rule'"
 
-https://github.com/tigera/envoy-modsec-prototype/blob/initial/daemonset/envoy-config.yaml

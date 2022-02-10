@@ -1,7 +1,6 @@
 Read Me
 28/10/2021
 
-https://github.com/tigera/app-policy-private/blob/master/checker/server.go
 
 
 	log.WithFields(log.Fields{

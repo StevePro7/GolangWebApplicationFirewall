@@ -369,11 +369,7 @@ replace-cni-pin:
 git-status:
 	git status --porcelain
 
-git-config:
-ifdef CONFIRM
-	git config --global user.name "marvin-tigera"
-	git config --global user.email "marvin@projectcalico.io"
-endif
+
 
 git-commit:
 	git diff --quiet HEAD || git commit -m "Semaphore Automatic Update" go.mod go.sum $(EXTRA_FILES_TO_COMMIT)
@@ -565,8 +561,8 @@ install-git-hooks:
 foss-checks:
 	$(DOCKER_RUN) -e FOSSA_API_KEY=$(FOSSA_API_KEY) $(CALICO_BUILD) /usr/local/bin/fossa
 
-.PHONY: check-module-path-tigera-api
-check-module-path-tigera-api:
+.PHONY: check-module-path-api
+check-module-path-api:
 	@echo "Checking the repo importing tigera/api and not importing projectcalico/api"
 	@IMPORT_TIGERA_API=$$($(DOCKER_GO_BUILD) sh -c 'go list -m github.com/tigera/api > /dev/null 2>&1 && echo yes || echo no'); \
 	echo Is tigera/api imported? $$IMPORT_TIGERA_API; \
