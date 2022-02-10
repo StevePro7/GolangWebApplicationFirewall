@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-// #include "hello.c"
+// #include "hello.h"
 import "C"
 
 func main() {
@@ -15,5 +15,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	obj, err2 := C.msc_intervention()
+	if err2 != nil {
+		log.Fatal(err2)
+	}
+	val := int(obj)
+	fmt.Printf("VAL = %d\n", val)
 	fmt.Println("-end-")
 }
