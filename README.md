@@ -1,9 +1,46 @@
 # GolangWebApplicationFirewall
 Test repository for Web Application Firewall code experiments in Golang
 
-Web Application Firewall in Go
-OWASP ModSecurity Core RuleSet
-https://medium.com/lightbaseio/web-application-firewall-in-go-feat-owasp-modsecurity-core-rule-set-3f97a26e3311
+int retVal = msc_intervention( transaction, &intervention );
+
+what sets this retVal?
+
+deny.cc			evaluate()
+drop.cc			evaluate()
+redirect.cc		evaluate()
+
+~/ModSecurity/src/actions/disruptive
+transaction->m_it.disruptive = true;
+
+transaction object has ModSecurityIntervention property
+ModSecurityIntervention object has disruptive  property int
+
+so what code calls e.g.
+deny.cc
+evaluate()
+
+msc_append_request_body
+msc_append_response_body
+
+e.g.
+msc_append_response_body
+this->m_rules->evaluate(modsecurity::RequestBodyPhase, this);
+
+which calls deny.cc			evaluate()
+which sets  transaction->m_it.disruptive = true;
+
+
+then by the time msc_intervention() is called this evalates to true
+bool Transaction::intervention(ModSecurityIntervention *it) {
+
+thus the code con'ts and sets
+it->disruptive = m_it.disruptive;
+
+which is the disruptive flag of the ModSecurityIntervention object passed in to the function 
+and the msc_intervention() ends as
+
+return it->disruptive;
+
 
 
 
@@ -103,3 +140,7 @@ detect_sqi.h
 Do I need to modify the SecRule to something like this?
 SecRule REQUEST_BODY  "blocktest" "id:2,phase:2,deny,status:400,msg:'Test rule'"
 
+
+Web Application Firewall in Go
+OWASP ModSecurity Core RuleSet
+https://medium.com/lightbaseio/web-application-firewall-in-go-feat-owasp-modsecurity-core-rule-set-3f97a26e3311
