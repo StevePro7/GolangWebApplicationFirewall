@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"waftesting/waf"
 )
 
 func unpackDictionary(dictionary map[string]string) ([]string, []string) {
 
-	keys := []string{}
-	values := []string{}
+	var keys []string
+	var values []string
 
 	for key, value := range dictionary {
 		keys = append(keys, key)
@@ -19,12 +20,13 @@ func unpackDictionary(dictionary map[string]string) ([]string, []string) {
 
 func main() {
 	reqHeaders := make(map[string]string)
-	reqHeaders["key"] = "val"
+	//reqHeaders["key"] = "val"
 	reqHeaders["User-Agent"] = "Microsoft Internet Explorer"
 	reqHeaders["content-type"] = "application/xml"
 
 	fmt.Println(reqHeaders)
-	keys, values := unpackDictionary(reqHeaders)
-	fmt.Println(len(keys))
-	fmt.Println(len(values))
+	reqHeaderKeys, reqHeaderValues := unpackDictionary(reqHeaders)
+
+	bob := waf.LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderValues)
+	fmt.Println(bob)
 }
