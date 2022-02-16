@@ -20,13 +20,15 @@ func unpackDictionary(dictionary map[string]string) ([]string, []string) {
 
 func main() {
 	reqHeaders := make(map[string]string)
-	//reqHeaders["key"] = "val"
+	reqHeaders["key"] = "val"
 	reqHeaders["User-Agent"] = "Microsoft Internet Explorer"
 	reqHeaders["content-type"] = "application/xml"
 
 	fmt.Println(reqHeaders)
 	reqHeaderKeys, reqHeaderVals := unpackDictionary(reqHeaders)
 
-	bob := waf.LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals)
+	//reqBody := "{\"key\":\"val\"}";
+	reqBody := "{stevepro}"
+	bob := waf.LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals, reqBody)
 	fmt.Println(bob)
 }
