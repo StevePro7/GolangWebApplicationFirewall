@@ -43,7 +43,7 @@ int AddRequestHeaders(char **reqHeaderKeys, char **reqHeaderVals, int reqHeaderS
         fprintf(stdout, "Key : '%s'\n", reqHeaderKey);
         fprintf(stdout, "Val : '%s'\n", reqHeaderVal);
 
-        retVal = msc_add_request_header(transaction, reqHeaderKey, reqHeaderVal);
+        retVal = msc_add_request_header( transaction, reqHeaderKey, reqHeaderVal );
         fprintf(stdout, "SGB : [%d]\n", retVal);
 
         if ( !retVal )
@@ -59,9 +59,20 @@ int AddRequestHeaders(char **reqHeaderKeys, char **reqHeaderVals, int reqHeaderS
     fprintf(stdout, "Body : '%s'\n", reqBodyText);
     fprintf(stdout, "size : [%d]\n", reqBodySize);
 
+    retVal = msc_append_request_body( transaction, reqBodyText, reqBodySize );
+    fprintf(stdout, "XYZ : [%d]\n", retVal);
+    if ( !retVal )
+    {
+        //retVal = -5;  //TODO
+        goto out;
+    }
+
+// Request Body.
+    fprintf(stdout, "Body : '%s'\n", reqBodyText);
+    fprintf(stdout, "size : [%d]\n", reqBodySize);
 out:
     msc_transaction_cleanup(transaction);
-    return 6;
+    return 8;
 }
 
 // Helper functions to store all core rule set file names in memory.
