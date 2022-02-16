@@ -24,8 +24,11 @@ func LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals []string) int {
 		C.setArrayString(CreqHeaderVals, C.CString(reqHeaderVal), C.int(index))
 	}
 
+	result := C.AddRequestHeaders(CreqHeaderKeys, CreqHeaderVals, CreqHeaderSize)
+	answer := int(result)
+
 	fmt.Println(len(reqHeaderKeys))
 	fmt.Println(len(reqHeaderVals))
 
-	return 9
+	return answer
 }

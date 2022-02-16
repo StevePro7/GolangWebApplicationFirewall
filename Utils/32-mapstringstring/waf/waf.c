@@ -1,8 +1,46 @@
 #include "waf.h"
+//#include "_cgo_export.h"
+#include "modsecurity/modsecurity.h"
+#include "modsecurity/rules_set.h"
+#include "modsecurity/transaction.h"
+#include "modsecurity/intervention.h"
 
+ModSecurity *modsec = NULL;
+RulesSet *rules = NULL;
 
-int AddRequestHeaders(char **array, int size)
+static void initializeModSecurityImpl()
 {
+    modsec = msc_init();
+//    msc_set_log_cb(modsec, MyFuncPtr);  // TODO
+    rules = msc_create_rules_set();
+}
+
+int AddRequestHeaders(char **reqHeaderKeys, char **reqHeaderVals, int size)
+{
+    const char *reqHeaderKey;
+    const char *reqHeaderVal;
+
+    int index = 0;
+    if (modsec == NULL)
+    {
+        //initializeModSecurityImpl();
+    }
+
+    for( index = 0; index < size; index++ )
+    {
+        reqHeaderKey = reqHeaderKeys[ index ];
+        reqHeaderVal = reqHeaderVals[ index ];
+
+        fprintf(stdout, "Key : '%s'\n", reqHeaderKey);
+        fprintf(stdout, "Val : '%s'\n", reqHeaderVal);
+
+//        msc_rules_add_file(rules, file, &error);
+//        if (error != NULL)
+//        {
+//            break;
+//        }
+    }
+
     return 0;
 }
 
