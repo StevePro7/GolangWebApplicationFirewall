@@ -6,10 +6,26 @@ package waf
 import "C"
 import "fmt"
 
-func LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderValues []string) int {
+func LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals []string) int {
+
+	size := len(reqHeaderKeys)
+
+	CreqHeaderSize := C.int(size)
+	CreqHeaderKeys := C.makeCharArray(CreqHeaderSize)
+	defer C.freeCharArray(CreqHeaderKeys, CreqHeaderSize)
+	CreqHeaderVals := C.makeCharArray(CreqHeaderSize)
+	defer C.freeCharArray(CreqHeaderVals, CreqHeaderSize)
+
+	for index, reqHeaderKey := range reqHeaderKeys {
+		C.setArrayString(CreqHeaderKeys, C.CString(reqHeaderKey), C.int(index))
+	}
+
+	for index, reqHeaderVal := range reqHeaderVals {
+		C.setArrayString(CreqHeaderVals, C.CString(reqHeaderVal), C.int(index))
+	}
 
 	fmt.Println(len(reqHeaderKeys))
-	fmt.Println(len(reqHeaderValues))
+	fmt.Println(len(reqHeaderVals))
 
-	return 7
+	return 9
 }

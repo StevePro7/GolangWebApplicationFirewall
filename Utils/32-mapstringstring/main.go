@@ -8,25 +8,25 @@ import (
 func unpackDictionary(dictionary map[string]string) ([]string, []string) {
 
 	var keys []string
-	var values []string
+	var vals []string
 
-	for key, value := range dictionary {
+	for key, val := range dictionary {
 		keys = append(keys, key)
-		values = append(values, value)
+		vals = append(vals, val)
 	}
 
-	return keys, values
+	return keys, vals
 }
 
 func main() {
 	reqHeaders := make(map[string]string)
-	//reqHeaders["key"] = "val"
+	reqHeaders["key"] = "val"
 	reqHeaders["User-Agent"] = "Microsoft Internet Explorer"
 	reqHeaders["content-type"] = "application/xml"
 
 	fmt.Println(reqHeaders)
-	reqHeaderKeys, reqHeaderValues := unpackDictionary(reqHeaders)
+	reqHeaderKeys, reqHeaderVals := unpackDictionary(reqHeaders)
 
-	bob := waf.LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderValues)
+	bob := waf.LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals)
 	fmt.Println(bob)
 }

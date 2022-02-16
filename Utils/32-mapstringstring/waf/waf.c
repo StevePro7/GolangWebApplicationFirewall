@@ -21,7 +21,7 @@ void freeCharArray(char **array, int size)
 
     free(array);
 }
-void setArrayString(char **array, char *filename, int index)
+void setArrayString(char **array, char *input, int index)
 {
-    array[index] = filename;
+    array[index] = input;
 }
