@@ -20,7 +20,7 @@ func unpackDictionary(dictionary map[string]string) ([]string, []string) {
 
 func main() {
 	reqHeaders := make(map[string]string)
-	reqHeaders["key"] = "val"
+	//reqHeaders["key"] = "val"
 	reqHeaders["User-Agent"] = "Microsoft Internet Explorer"
 	reqHeaders["content-type"] = "application/xml"
 

@@ -4,7 +4,6 @@ package waf
 // #cgo LDFLAGS: -L/usr/local/modsecurity/lib/ -Wl,-rpath -Wl,/usr/local/modsecurity/lib/ -lmodsecurity
 // #include "waf.h"
 import "C"
-import "fmt"
 
 func LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals []string) int {
 
@@ -27,8 +26,8 @@ func LoadModSecurityCoreRuleSet(reqHeaderKeys, reqHeaderVals []string) int {
 	result := C.AddRequestHeaders(CreqHeaderKeys, CreqHeaderVals, CreqHeaderSize)
 	answer := int(result)
 
-	fmt.Println(len(reqHeaderKeys))
-	fmt.Println(len(reqHeaderVals))
+	//	fmt.Println(len(reqHeaderKeys))
+	//	fmt.Println(len(reqHeaderVals))
 
 	return answer
 }

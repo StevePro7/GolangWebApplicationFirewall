@@ -17,15 +17,23 @@ static void initializeModSecurityImpl()
 
 int AddRequestHeaders(char **reqHeaderKeys, char **reqHeaderVals, int size)
 {
+     int retVal = 0;
+
+    Transaction *transaction = NULL;
+
     const char *reqHeaderKey;
     const char *reqHeaderVal;
 
     int index = 0;
     if (modsec == NULL)
     {
-        //initializeModSecurityImpl();
+        initializeModSecurityImpl();
     }
 
+
+    transaction = msc_new_transaction(modsec, rules, NULL);
+
+    fprintf(stdout, "Beg\n");
     for( index = 0; index < size; index++ )
     {
         reqHeaderKey = reqHeaderKeys[ index ];
@@ -34,14 +42,13 @@ int AddRequestHeaders(char **reqHeaderKeys, char **reqHeaderVals, int size)
         fprintf(stdout, "Key : '%s'\n", reqHeaderKey);
         fprintf(stdout, "Val : '%s'\n", reqHeaderVal);
 
-//        msc_rules_add_file(rules, file, &error);
-//        if (error != NULL)
-//        {
-//            break;
-//        }
+        retVal = msc_add_request_header(transaction, reqHeaderKey, reqHeaderVal);
+        fprintf(stdout, "SGB : [%d]\n", retVal);
     }
+    fprintf(stdout, "end\n");
 
-    return 0;
+    msc_transaction_cleanup(transaction);
+    return 4;
 }
 
 // Helper functions to store all core rule set file names in memory.
