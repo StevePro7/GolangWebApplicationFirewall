@@ -81,6 +81,11 @@ kubectl apply -f k8s-deployment.yml
 kubectl apply -f k8s-service.yml
 kubectl get nodes -o wide
 kubectl get services
-curl http://172.18.0.2:31196/test
-kubectl delete -f Kubernetes.yaml
+curl http://172.18.0.2:31196/
+curl http://172.18.0.2:31809/test/artists.php
+curl http://172.18.0.2:31809/test/artists.php?artist=0+div+1+union%23foo*%2F*bar%0D%0Aselect%23foo%0D%0A1%2C2%2Ccurrent_user
+kubectl get po
+kubectl logs -f mytestapi-69d464946d-qltb8
+kubectl delete -f k8s-service.yml
+kubectl delete -f k8s-deployment.yml
 kind delete cluster
